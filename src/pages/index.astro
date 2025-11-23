@@ -1,16 +1,711 @@
 ---
+import '../styles/global.css'; 
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
 
+const steps = [
+        { 
+          step: "01", 
+          title: "Nosotros configuramos todo", 
+          text: "Olvidate de cargar datos. Pasanos tu lista de precios y horarios, y nosotros armamos tu perfil profesional a medida.", 
+          icon: "M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" // Icono Edit/Setup
+        },
+        { 
+          step: "02", 
+          title: "Compartí tu link único", 
+          text: "Recibís tu enlace personalizado (ej: doppercut.com/tu-barberia). Pegalo en tu Instagram, WhatsApp y Google Maps.", 
+          icon: "M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" // Icono Link
+        },
+        { 
+          step: "03", 
+          title: "Tu agenda se llena sola", 
+          text: "Los clientes reservan sus turnos sin llamarte. Vos solo recibís la notificación y te enfocás en cortar.", 
+          icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" // Icono Clock/Time
+        }
+      ]
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="DopperCut | Gestión inteligente para Barberías y Peluquerías">
+	<Navbar />
+
+	<main>
+		<!-- 1. HERO SECTION -->
+		<section class="relative pt-32 pb-20 lg:pt-48 lg:pb-40 overflow-hidden bg-slate-50 selection:bg-primary selection:text-white">
+    
+      <!-- === FONDO INTERACTIVO (Solo Desktop) === -->
+      <div class="hidden lg:block absolute inset-0 w-full h-full pointer-events-none z-0">
+          
+          <!-- ELEMENTO 1: Notificación de Turno (Arriba Izquierda) -->
+          <div class="absolute top-[10%] left-[5%] animate-float-slow bg-white p-4 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 flex items-center gap-3 w-64">
+              <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              </div>
+              <div>
+                  <div class="text-xs text-slate-500 font-medium">Nuevo turno confirmado</div>
+                  <div class="text-sm font-bold text-navy">Juan P. - Corte Clásico</div>
+              </div>
+          </div>
+  
+          <!-- ELEMENTO 2: Tarjeta de Ingresos (Arriba Derecha) -->
+          <div class="absolute top-[10%] right-[5%] animate-float-medium delay-200 bg-white p-4 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 w-56">
+              <div class="flex justify-between items-center mb-2">
+                  <span class="text-xs text-slate-500">Ingresos hoy</span>
+                  <span class="text-xs font-bold text-green-500 bg-green-50 px-2 py-0.5 rounded-full">+12%</span>
+              </div>
+              <div class="text-2xl font-bold text-navy">$45.800</div>
+              <div class="h-1 w-full bg-slate-100 rounded-full mt-2 overflow-hidden">
+                  <div class="h-full bg-primary w-[70%] rounded-full"></div>
+              </div>
+          </div>
+  
+          <!-- ELEMENTO 3: Perfil de Cliente (Abajo Izquierda) -->
+          <div class="absolute top-[35%] left-[5%] animate-float-fast delay-100 bg-white/80 backdrop-blur-sm p-3 rounded-xl shadow-lg border border-white/50 flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-primary-gradient"></div>
+              <div class="text-sm font-medium text-navy">Agenda llena mañana 🔥</div>
+          </div>
+  
+          <!-- ELEMENTO 4: Icono 3D/Shape Abstracto (Abajo Derecha) -->
+          <div class="absolute top-[40%] right-[15%] animate-float-x-slow">
+               <!-- Círculo decorativo con gradiente -->
+              <div class="w-24 h-24 rounded-full bg-linear-to-tr from-accent to-white opacity-60 blur-xl"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                  <div class="w-16 h-16 bg-navy rounded-2xl flex items-center justify-center shadow-2xl text-white transform rotate-12">
+                      <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  </div>
+              </div>
+          </div>
+  
+          <!-- ELEMENTO 5: Blur Turquesa gigante de fondo (Para dar atmósfera) -->
+          <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl -z-10"></div>
+      </div>
+  
+      <!-- === CONTENIDO CENTRAL === -->
+      <div class="max-w-6xl mx-auto px-6 text-center relative z-10">
+        <div class="reveal inline-block mb-4 px-3 py-1 rounded-full bg-accent/50 border border-primary-light/30 text-primary-dark text-xs font-semibold tracking-wide uppercase">
+					Novedad v1.0: Lanzamiento de la Plataforma
+				</div>
+          
+        <h1 class="reveal delay-100 text-5xl lg:text-7xl font-bold tracking-tight text-navy mb-6 leading-[1.1]">
+					La forma moderna de organizar <br class="hidden lg:block"/>
+					<span class="bg-primary-gradient bg-clip-text text-transparent">tu negocio y enfocarte en tus clientes.</span>
+				</h1>
+          
+          <p class="reveal delay-100 text-lg lg:text-xl text-slate max-w-2xl mx-auto mb-10">
+              Deja de perder tiempo en WhatsApp. Gestiona turnos, caja y clientes en una sola plataforma centralizada.
+          </p>
+          
+          <div class="reveal delay-200 flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <a href="#contacto" class="px-8 py-4 bg-navy text-white rounded-full font-medium shadow-lg shadow-navy/25 hover:shadow-navy/40 hover:-translate-y-1 transition-all">
+                  Solicitar Demo
+              </a>
+              <a href="#como-funciona" class="px-8 py-4 bg-white text-navy border border-slate-200 rounded-full font-medium hover:bg-slate-50 transition-colors">
+                Cómo funciona
+              </a>
+          </div>
+  
+          <!-- MOCKUP PRINCIPAL (Ancla visual) -->
+          <div class="reveal delay-300 mt-16 relative">
+              <div class="absolute inset-0 bg-primary/20 blur-[80px] rounded-full transform scale-75"></div>
+              <img src="/dashboard-mockup.png" alt="App Dashboard" class="relative rounded-xl shadow-2xl border border-slate-200/50 w-full max-w-4xl mx-auto" />
+          </div>
+      </div>
+    </section>
+
+		<!-- 2. PROBLEMA / AGITACIÓN (Bento Grid Style) -->
+    <section class="py-24 bg-white relative overflow-hidden">
+  <!-- Fondo decorativo abstracto (Patrón de puntos sutil) -->
+  <div class="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-size-[20px_20px] opacity-50"></div>
+  
+  <div class="max-w-6xl mx-auto px-6 relative z-10">
+      <!-- Encabezado de Sección -->
+      <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+          <h2 class="text-3xl lg:text-4xl font-bold text-navy mb-6">Tu talento es cortar, <br/><span class="text-primary">no ser recepcionista 24/7.</span></h2>
+          <p class="text-slate text-lg leading-relaxed">
+              ¿Sentís que trabajás todo el día pero tu negocio no escala? 
+              El caos administrativo es el techo invisible que te impide crecer.
+          </p>
+      </div>
+
+      <!-- Grid de Problemas (Bento Grid) -->
+      <div class="grid md:grid-cols-3 gap-8">
+          
+          <!-- TARJETA 1: El Caos de WhatsApp -->
+          <div class="reveal group relative bg-slate-50 rounded-3xl border border-slate-200 p-8 hover:shadow-xl hover:shadow-navy/5 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+              <div class="absolute top-0 right-0 w-32 h-32 bg-red-100 rounded-full blur-3xl opacity-0 group-hover:opacity-50 transition-opacity"></div>
+              
+              <!-- Icono -->
+              <div class="w-12 h-12 bg-white rounded-xl border border-slate-100 shadow-sm flex items-center justify-center mb-6 text-red-500">
+                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+              </div>
+
+              <h3 class="text-xl font-bold text-navy mb-3">Esclavitud de WhatsApp</h3>
+              <p class="text-slate text-sm mb-8 leading-relaxed">Responder mensajes a las 11 de la noche, audios eternos y confusiones de fechas.</p>
+
+              <!-- Visual Mini-Mockup: Chat Caótico -->
+              <div class="relative bg-white rounded-lg border border-slate-200 p-3 shadow-sm w-full opacity-80 group-hover:opacity-100 transition-opacity">
+                  <div class="flex flex-col gap-2">
+                      <div class="self-start bg-slate-100 rounded-lg rounded-tl-none p-2 text-[10px] text-slate-600 max-w-[80%]">
+                          Hola, ¿tenés turno para hoy?
+                      </div>
+                      <div class="self-end bg-green-100 rounded-lg rounded-tr-none p-2 text-[10px] text-green-800 max-w-[80%]">
+                          Déjame ver... mmm no, hoy no.
+                      </div>
+                      <div class="self-start bg-slate-100 rounded-lg rounded-tl-none p-2 text-[10px] text-slate-600 max-w-[80%]">
+                          Uh bueno avísame.
+                      </div>
+                      <!-- Notificación de error -->
+                      <div class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm animate-bounce">
+                          +15 sin leer
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <!-- TARJETA 2: Ausencias (No-Show) -->
+          <div class="reveal delay-100 group relative bg-slate-50 rounded-3xl border border-slate-200 p-8 hover:shadow-xl hover:shadow-navy/5 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+              <div class="absolute top-0 right-0 w-32 h-32 bg-orange-100 rounded-full blur-3xl opacity-0 group-hover:opacity-50 transition-opacity"></div>
+              
+              <!-- Icono -->
+              <div class="w-12 h-12 bg-white rounded-xl border border-slate-100 shadow-sm flex items-center justify-center mb-6 text-orange-500">
+                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              </div>
+
+              <h3 class="text-xl font-bold text-navy mb-3">El "Fantasma" de las 5PM</h3>
+              <p class="text-slate text-sm mb-8 leading-relaxed">Clientes que se olvidan del turno y te dejan el hueco. Dinero perdido que no recuperás.</p>
+
+              <!-- Visual Mini-Mockup: Calendario con Huecos -->
+              <div class="bg-white rounded-lg border border-slate-200 p-4 shadow-sm w-full opacity-80 group-hover:opacity-100 transition-opacity">
+                  <div class="grid grid-cols-1 gap-2">
+                      <div class="flex items-center gap-2 opacity-40">
+                          <div class="w-1 h-8 bg-slate-300 rounded-full"></div>
+                          <div class="flex-1 h-8 bg-slate-100 rounded flex items-center px-2 text-[10px]">Corte Juan</div>
+                      </div>
+                      <div class="flex items-center gap-2">
+                          <div class="w-1 h-8 bg-red-400 rounded-full"></div>
+                          <div class="flex-1 h-8 bg-red-50 rounded border border-red-100 flex items-center justify-between px-2 text-[10px] text-red-500 font-medium">
+                              <span>17:00 PM</span>
+                              <span class="bg-red-100 px-1.5 rounded text-[9px]">AUSENTE</span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <!-- TARJETA 3: Caja Negra (Finanzas) -->
+          <div class="reveal delay-200 group relative bg-slate-50 rounded-3xl border border-slate-200 p-8 hover:shadow-xl hover:shadow-navy/5 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+              <div class="absolute top-0 right-0 w-32 h-32 bg-blue-100 rounded-full blur-3xl opacity-0 group-hover:opacity-50 transition-opacity"></div>
+              
+              <!-- Icono -->
+              <div class="w-12 h-12 bg-white rounded-xl border border-slate-100 shadow-sm flex items-center justify-center mb-6 text-primary">
+                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+              </div>
+
+              <h3 class="text-xl font-bold text-navy mb-3">Caja a Ciegas</h3>
+              <p class="text-slate text-sm mb-8 leading-relaxed">Anotar en cuadernos hace imposible saber si ganaste o perdiste plata este mes.</p>
+
+              <!-- Visual Mini-Mockup: Ticket vs Gráfico -->
+              <div class="relative h-24 w-full">
+                   <!-- Papel arrugado (Representación abstracta) -->
+                  <div class="absolute left-0 bottom-0 w-24 h-20 bg-white border border-slate-200 -rotate-6 shadow-sm p-2 flex flex-col gap-1 z-10">
+                      <div class="h-1 w-1/2 bg-slate-200 rounded"></div>
+                      <div class="h-1 w-3/4 bg-slate-200 rounded"></div>
+                      <div class="h-1 w-2/3 bg-slate-200 rounded"></div>
+                  </div>
+                  <!-- Flecha de solución -->
+                  <div class="absolute left-28 top-8 text-slate-300">
+                      <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                  </div>
+                  <!-- Gráfico Moderno -->
+                  <div class="absolute right-0 bottom-2 w-28 h-16 bg-white border border-primary/20 rounded-lg shadow-sm p-2 flex items-end justify-around gap-1 z-10">
+                      <div class="w-2 bg-primary/40 h-[40%] rounded-t-sm"></div>
+                      <div class="w-2 bg-primary/60 h-[70%] rounded-t-sm"></div>
+                      <div class="w-2 bg-primary h-full rounded-t-sm shadow-[0_0_10px_rgba(0,168,232,0.4)]"></div>
+                  </div>
+              </div>
+          </div>
+          
+      </div>
+
+      <!-- Conector Visual (Flecha hacia abajo) -->
+      <div class="mt-30 flex justify-center reveal delay-300">
+          <div class="flex flex-col items-center gap-3">
+              <span class="text-md font-semibold text-primary uppercase tracking-wider">Hay una mejor forma</span>
+              <div class="w-px h-15 bg-linear-to-b from-slate-200 to-primary"></div>
+          </div>
+      </div>
+  </div>
+    </section>
+
+		<!-- 3. BENEFICIOS (Grid 3 Cols - Final Polish) -->
+    <section class="py-20 bg-slate-50/50 relative">
+      <!-- Decoración de fondo sutil -->
+      <div class="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.03] pointer-events-none"></div>
+
+      <div class="max-w-6xl mx-auto px-6 relative z-10">
+        
+        <!-- Header -->
+        <div class="text-center max-w-3xl mx-auto mb-20 reveal">
+          <h2 class="text-3xl lg:text-4xl font-bold text-navy mb-4 tracking-tight">
+            Todo lo que necesitas para escalar
+          </h2>
+          <p class="text-slate-500 text-lg leading-relaxed">
+            Herramientas potentes diseñadas específicamente para la industria de la belleza.
+          </p>
+        </div>
+
+        <!-- Grid de Tarjetas -->
+        <div class="grid md:grid-cols-3 gap-8">
+          {[
+            { 
+              title: "Agenda Inteligente 24/7", 
+              desc: "Tus clientes reservan mientras duermes. Olvídate de responder mensajes a las 11 de la noche.",
+              iconPath: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" 
+            },
+            { 
+              title: "Anti-Ausencias", 
+              desc: "Recordatorios automáticos por WhatsApp. Reduce el ausentismo de tus citas drásticamente.",
+              iconPath: "M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" 
+            },
+            { 
+              title: "Control Financiero", 
+              desc: "Reportes de caja diarios, comisiones de empleados y métricas de crecimiento en tiempo real.",
+              iconPath: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" 
+            }
+          ].map((feature, i) => (
+            <div class={`reveal delay-${i * 100} group relative bg-white rounded-3xl p-8 border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-cyan-500/10 transition-all duration-500 hover:-translate-y-2 overflow-hidden flex flex-col h-full`}>
+                
+                <!-- Barra inferior animada (Detalle Premium) -->
+                <div class="absolute bottom-0 left-0 w-full h-1.5 bg-slate-50">
+                    <div class="w-full h-full bg-primary-gradient opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500 ease-out"></div>
+                </div>
+
+                <div class="relative z-10 flex-1 flex flex-col items-start"> <!-- items-start fuerza alineación izquierda -->
+                    
+                    <!-- Icono -->
+                    <div class="w-14 h-14 rounded-2xl bg-cyan-50 text-cyan-700 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:text-white transition-all duration-300 shadow-sm group-hover:shadow-cyan-200/50 relative overflow-hidden">
+                        
+                        <!-- Fondo gradiente que aparece suavemente -->
+                        <div class="absolute inset-0 bg-primary-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        
+                        <!-- SVG -->
+                        <svg class="w-7 h-7 relative z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d={feature.iconPath}></path>
+                        </svg>
+                    </div>
+
+                    <!-- Título: Cambia de color en Hover -->
+                    <h3 class="text-xl font-bold text-navy mb-3 group-hover:text-cyan-600 transition-colors duration-300">
+                        {feature.title}
+                    </h3>
+                    
+                    <!-- Texto: Se mantiene GRIS (Fixed) -->
+                    <p class="text-slate-600 leading-relaxed mb-4">
+                        {feature.desc}
+                    </p>
+                </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+		<!-- 4. MÉTRICAS SOCIALES & LOGOS -->
+    <section class="py-20 bg-navy overflow-hidden text-white relative">
+  <!-- Fondo decorativo sutil -->
+  <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0 opacity-20">
+      <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-primary rounded-full blur-[100px]"></div>
+      <div class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-primary-dark rounded-full blur-[100px]"></div>
+  </div>
+
+  <div class="max-w-6xl mx-auto px-6 mb-16 relative z-10">
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-8 text-center border-b border-white/10 pb-12">
+          {[
+              { value: 500, label: "Negocios activos", prefix: "+", suffix: "" },
+              { value: 120, label: "Turnos completados", prefix: "+", suffix: "k" },
+              { value: 1500, label: "Profesionales", prefix: "+", suffix: "" }
+          ].map(metric => (
+              <div class="reveal">
+                  <div class="text-4xl lg:text-5xl font-bold bg-primary-gradient bg-clip-text text-transparent mb-2 flex justify-center items-baseline">
+                      <span>{metric.prefix}</span>
+                      <!-- El atributo data-target tiene el número final -->
+                      <span class="counter-animate" data-target={metric.value}>0</span>
+                      <span>{metric.suffix}</span>
+                  </div>
+                  <div class="text-slate-300 font-medium">{metric.label}</div>
+              </div>
+          ))}
+      </div>
+      <p class="text-center text-slate-400 text-sm mt-8 uppercase tracking-widest">Barberías y salones líderes confían en nosotros</p>
+  </div>
+
+  <!-- Carrusel Infinito de Logos -->
+  <div class="relative w-full flex overflow-hidden py-4 z-10">
+      <!-- Máscaras de desvanecimiento a los costados -->
+      <div class="absolute left-0 top-0 bottom-0 w-20 bg-linear-to-r from-navy to-transparent z-20"></div>
+      <div class="absolute right-0 top-0 bottom-0 w-20 bg-linear-to-l from-navy to-transparent z-20"></div>
+
+      <div class="animate-scroll flex gap-16 min-w-full items-center justify-center px-8">
+          <!-- Logos Placeholder (Repetidos para el loop infinito) -->
+          {[1,2,3,4,5,6,1,2,3,4,5,6].map((n) => (
+              <div class="h-8 w-32 bg-white/10 rounded flex items-center justify-center text-xs text-slate-500 font-bold uppercase tracking-widest hover:bg-white/20 transition-colors cursor-pointer">
+                  LOGO {n}
+              </div> 
+          ))}
+      </div>
+  </div>
+    </section>
+
+		<!-- 5. FEATURES (Bento Grid Style - High Fidelity) -->
+    <section class="py-32 bg-white relative overflow-hidden">
+      <div class="max-w-7xl mx-auto px-6 relative z-10">
+
+        <!-- Header -->
+        <div class="max-w-2xl mx-auto text-center mb-20">
+          <h2 class="text-base font-bold uppercase tracking-wide text-cyan-600 mb-2">
+            Plataforma All-in-One
+          </h2>
+          <p class="text-4xl font-bold tracking-tight text-navy sm:text-5xl mb-6">
+            Todo lo que necesitas para crecer
+          </p>
+          <p class="text-lg leading-relaxed text-slate-600">
+            Hemos empaquetado las mejores herramientas en una interfaz intuitiva. 
+            Potencia, velocidad y diseño trabajando juntos para ti.
+          </p>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-6">
+          
+          <!-- Card Grande: Panel Administrativo -->
+          <div class="reveal lg:col-span-2 bg-slate-50 rounded-[2.5rem] p-8 lg:p-12 border border-slate-200 overflow-hidden relative group">
+            
+            <!-- Texto -->
+            <div class="relative z-10 max-w-md mb-8">
+              <div class="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center mb-6 text-cyan-600">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+              </div>
+              <h3 class="text-2xl font-bold text-navy mb-4">Panel Administrativo Integral</h3>
+              <p class="text-slate-500 leading-relaxed">
+                Gestiona turnos, visualiza métricas en tiempo real y administra tu base de datos de clientes. Todo sincronizado en la nube.
+              </p>
+            </div>
+            
+            <!-- Contenedor de la imagen con Efecto 3D -->
+            <div class="absolute right-0 bottom-0 w-[85%] h-[72%] translate-x-12 translate-y-12 group-hover:translate-x-8 group-hover:translate-y-8 transition-transform duration-700 ease-out">
+              
+                <!-- Mockup Browser Frame (Simulado con CSS) -->
+                <div class="w-full h-full bg-white rounded-tl-xl shadow-2xl border border-slate-200/60 overflow-hidden">
+                    
+                    <!-- Barra superior del navegador simulada -->
+                    <div class="h-8 bg-slate-50 border-b border-slate-100 flex items-center gap-2 px-4">
+                        <div class="w-2.5 h-2.5 rounded-full bg-red-400/50"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-amber-400/50"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-green-400/50"></div>
+                    </div>
+
+                    <!-- IMAGEN DASHBOARD -->
+                    <!-- Nota: object-left-top asegura que se vea el logo y el menú -->
+                    <img 
+                        src="/turnos.png" 
+                        alt="Dashboard UI DopperCut" 
+                        class="w-full h-full object-cover object-top-left"
+                    >
+                </div>
+
+                <!-- Sombra decorativa detrás para dar profundidad -->
+                <div class="absolute -inset-4 bg-cyan-500/10 blur-2xl -z-10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            </div>
+          </div>
+        
+          <!-- Card Pequeña: Mobile First -->
+          <div class="reveal delay-100 lg:col-span-1 bg-navy rounded-[2.5rem] p-8 border border-slate-800 relative overflow-hidden text-white flex flex-col group">
+            
+            <!-- Efecto de luz de fondo (Branding Color) -->
+            <!-- Usamos cyan-500 para que coincida con tu marca -->
+            <div class="absolute top-0 right-0 w-64 h-64 bg-cyan-500 rounded-full blur-[120px] opacity-20 group-hover:opacity-40 transition-opacity duration-700"></div>
+            
+            <div class="relative z-10 mb-8">
+              <div class="w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm border border-white/10 flex items-center justify-center mb-6 text-cyan-300">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+              </div>
+              <h3 class="text-xl font-bold mb-3">Mobile First</h3>
+              <p class="text-slate-300 text-sm leading-relaxed">
+                Tus clientes reservan en 3 clics desde cualquier celular. Sin descargar apps.
+              </p>
+            </div>
+        
+            <!-- Contenedor del Celular -->
+            <div class="mt-auto flex justify-center relative translate-y-8 group-hover:translate-y-4 transition-transform duration-700 ease-out">
+              
+              <!-- Marco del celular (iPhone Style CSS) -->
+              <div class="relative w-[240px] h-[480px] bg-white rounded-[3rem] border-8 border-slate-800 shadow-2xl ring-1 ring-white/10 overflow-hidden">
+                
+                <!-- Notch / Isla Dinámica -->
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 h-7 w-24 bg-black rounded-b-2xl z-20 flex items-center justify-center gap-2">
+                    <div class="w-12 h-1.5 bg-slate-800/50 rounded-full"></div>
+                </div>
+
+                <!-- IMAGEN MOBILE -->
+                <!-- TRUCO: Como la imagen tiene azul fuerte, podemos usar un filtro para acercarlo al cyan si fuera necesario, pero mejor dejarla natural si ya tiene tu logo -->
+                <img 
+                  src="/mobile-mockup.png" 
+                  alt="Mobile Booking Interface" 
+                  class="w-full h-full object-cover bg-white mt-4"
+                >
+                
+                <!-- Brillo sobre la pantalla (Glass Reflection) -->
+                <div class="absolute inset-0 bg-linear-to-tr from-transparent via-white/5 to-transparent pointer-events-none z-10"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+		<!-- 6. CÓMO FUNCIONA (Timeline Service) -->
+    <section id="como-funciona" class="py-24 bg-slate-50 relative overflow-hidden">
+      <div class="max-w-5xl mx-auto px-6 relative z-10">
+        
+        <!-- Título -->
+        <div class="text-center max-w-3xl mx-auto mb-20 reveal">
+          <h2 class="text-3xl lg:text-4xl font-bold text-navy mb-4">
+            Tan simple como contar hasta 3
+          </h2>
+          <p class="text-slate-500 text-lg">
+            Sin curvas de aprendizaje. Hacemos que la tecnología trabaje para vos, no al revés.
+          </p>
+        </div>
+        
+        <div class="relative">
+          <!-- Línea vertical central (Solo desktop) -->
+          <div class="absolute left-8 lg:left-1/2 top-0 bottom-0 w-0.5 bg-slate-200 -translate-x-1/2 hidden lg:block"></div>
+          
+          {steps.map((item, i) => (
+            <div class={`reveal relative flex flex-col lg:flex-row gap-8 mb-16 lg:mb-32 ${i % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
+              
+              <!-- CONTENIDO TEXTO -->
+              <div class="flex-1 lg:text-right">
+                <div class={`hidden lg:block ${i % 2 !== 0 ? 'lg:text-left' : ''}`}>
+                  <h3 class="text-2xl font-bold text-navy mb-3">{item.title}</h3>
+                  <p class="text-slate-600 text-lg leading-relaxed">{item.text}</p>
+                </div>
+              </div>
+
+              <!-- CIRCULO CENTRAL (El Paso) -->
+              <div class="relative shrink-0 flex justify-center z-10">
+                <!-- Círculo con gradiente -->
+                <div class="w-16 h-16 rounded-full bg-white shadow-lg flex items-center justify-center relative">
+                    <!-- Borde gradiente simulado -->
+                    <div class="absolute inset-0 rounded-full p-[3px] bg-primary-gradient -z-10"></div>
+                    <div class="w-full h-full bg-white rounded-full flex items-center justify-center">
+                        <span class="text-xl font-bold text-transparent bg-clip-text bg-primary-gradient">
+                            {item.step}
+                        </span>
+                    </div>
+                </div>
+              </div>
+
+              <!-- CONTENIDO VISUAL (Imagen/Card) -->
+              <div class="flex-1">
+                <!-- Texto visible solo en Mobile -->
+                <div class={`lg:hidden mb-6 pl-4 border-l-4 border-cyan-400`}>
+                  <h3 class="text-xl font-bold text-navy">{item.title}</h3>
+                  <p class="text-slate-600 mt-2">{item.text}</p>
+                </div>
+
+                <!-- Card Visual (Simulación de la UI) -->
+                <div class="bg-white rounded-2xl border border-slate-100 shadow-xl hover:shadow-2xl transition-shadow duration-500 overflow-hidden relative group h-48 md:h-64 flex items-center justify-center">
+                  
+                  <!-- Opción A: Si tienes imágenes reales -->
+                  <!-- <img src={item.imagen} class="absolute inset-0 w-full h-full object-cover" /> -->
+
+                  <!-- Opción B: Placeholder elegante (Si no tienes imágenes aun) -->
+                  <div class="text-center p-6">
+                      <div class="w-16 h-16 mx-auto bg-cyan-50 text-cyan-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d={item.icon}></path>
+                        </svg>
+                      </div>
+                      <p class="text-sm font-semibold text-slate-400 uppercase tracking-widest">Paso {item.step}</p>
+                  </div>
+                  
+                </div>
+              </div>
+
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+		<!-- 7. PRICING TEASER (Clean Style) -->
+    <section class="py-24 bg-white relative">
+      <div class="max-w-4xl mx-auto px-6">
+        
+        <!-- Header minimalista -->
+        <div class="text-center max-w-2xl mx-auto mb-12">
+          <h2 class="reveal text-3xl md:text-4xl font-bold text-navy mb-4 tracking-tight">
+            Tu agenda llena. Tu mente tranquila.
+          </h2>
+          <p class="text-slate-500 text-lg">
+            El sistema se paga solo evitando un par de ausencias al mes.
+          </p>
+        </div>
+
+        <!-- Card Horizontal "Bento-like" -->
+        <div class="reveal delay-100 relative group">
+          <div class="relative bg-slate-50 rounded-3xl p-8 md:p-10 border border-slate-200 hover:border-primary/30 transition-colors duration-300">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+              
+              <!-- Izquierda: Valor -->
+              <div class="text-left flex-1">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-slate-200 text-navy text-xs font-bold uppercase tracking-wide mb-4 shadow-sm">
+                  <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                  Configuración inicial bonificada
+                </div>
+                <h3 class="text-2xl font-bold text-navy mb-3">Prueba el sistema completo por 14 días</h3>
+                <p class="text-slate-600 leading-relaxed mb-6">
+                  Sin costos de alta. Nosotros cargamos tus servicios y horarios para que recibas la cuenta lista para trabajar.
+                </p>
+                
+                <!-- Features micro -->
+                <div class="flex flex-wrap gap-4">
+                    <div class="flex items-center gap-2 text-sm text-slate-700 font-medium bg-white px-3 py-1.5 rounded-lg border border-slate-100">
+                        <svg class="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                        Sin tarjeta de crédito
+                    </div>
+                    <div class="flex items-center gap-2 text-sm text-slate-700 font-medium bg-white px-3 py-1.5 rounded-lg border border-slate-100">
+                        <svg class="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        Soporte prioritario
+                    </div>
+                </div>
+              </div>
+
+              <!-- Derecha: Acción suave -->
+              <div class="flex flex-col items-center gap-3 w-full md:w-auto shrink-0">
+                <a href="/precios" class="w-full md:w-auto px-8 py-3 bg-white text-navy border border-slate-200 font-semibold rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm text-center flex items-center justify-center gap-2 group">
+                  Ver oferta de lanzamiento
+                  <svg class="w-4 h-4 text-slate-400 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                </a>
+                <span class="text-xs text-slate-400">Oferta por tiempo limitado</span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+		<!-- 8. FINAL CTA & CONTACT (Navy Section) -->
+    <section id="contacto" class="py-24 bg-navy relative overflow-hidden">
+      <!-- Decoración de fondo sutil (Grid técnico) -->
+      <div class="absolute top-0 left-0 w-full h-full bg-[url('/grid.svg')] opacity-[0.03]"></div>
+      
+      <!-- Círculo de luz muy sutil en una esquina -->
+      <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+      <div class="max-w-6xl mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-16 items-start pt-8">
+        
+        <!-- COLUMNA IZQUIERDA: Mensaje + WhatsApp Directo -->
+        <div class="reveal text-white flex flex-col h-full justify-center">
+          <h2 class="text-4xl lg:text-5xl font-bold mb-6 leading-tight tracking-tight">
+            Dedicate a tu negocio, <br/> nosotros hacemos el resto.
+          </h2>
+          <p class="text-slate-300 text-lg mb-10 leading-relaxed">
+            Dejá las planillas de papel en el pasado. Da el salto de calidad que tus clientes esperan y empezá a gestionar tu facturación como un profesional.
+          </p>
+
+          <!-- Opción A: WhatsApp Card -->
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-sm hover:bg-white/10 transition-colors cursor-pointer group">
+            <a href="https://wa.me/549XXXXXXXXXX" target="_blank" class="flex items-center gap-5">
+                <div class="w-14 h-14 bg-green-500 rounded-full flex items-center justify-center shadow-lg shadow-green-500/20 group-hover:scale-110 transition-transform duration-300">
+                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                </div>
+                <div>
+                    <h3 class="text-white font-bold text-lg group-hover:text-green-400 transition-colors">Chatear por WhatsApp</h3>
+                    <p class="text-slate-400 text-sm">Respuesta promedio: 5 minutos</p>
+                </div>
+                <div class="ml-auto text-slate-500 group-hover:translate-x-1 transition-transform">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                </div>
+            </a>
+          </div>
+
+          <!-- Datos de contacto extra (Opcional) -->
+          <div class="mt-8 flex items-center gap-6 text-slate-400 text-sm">
+            <span class="flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                hola@doppercut.com
+            </span>
+            <span class="flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                Datos protegidos
+            </span>
+          </div>
+        </div>
+
+        <!-- COLUMNA DERECHA: Opción B - Formulario Formal -->
+        <div class="reveal delay-200 bg-white rounded-2xl p-8 shadow-2xl shadow-black/20 border border-slate-100">
+          <h3 class="text-navy font-bold text-2xl mb-2">Solicitar Alta de Cuenta</h3>
+          <p class="text-slate-500 text-sm mb-6">Déjanos tus datos y te contactamos para la configuración.</p>
+          
+          <form id="form-alta" action="https://api.web3forms.com/submit" method="POST" class="space-y-4">
+            <!-- 1. TU ACCESS KEY (REEMPLAZA CON LA TUYA) -->
+        <input type="hidden" name="access_key" value="3fde33d2-47f2-4cf1-ab21-7f97bd461f5d">
+        
+        <!-- 2. Configuración Extra -->
+        <input type="hidden" name="subject" value="Nuevo Lead - One Page (DopperCut)">
+        <input type="hidden" name="from_name" value="DopperCut Web">
+        <!-- Evita SPAM (Honeypot) -->
+        <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
+            <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-1">
+                    <label class="text-xs font-semibold text-navy uppercase tracking-wider">Nombre</label>
+                    <input type="text" name="name" required class="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-navy focus:ring-1 focus:ring-navy outline-none transition-all placeholder:text-slate-300" placeholder="Tu nombre" />
+                </div>
+                <div class="space-y-1">
+                    <label class="text-xs font-semibold text-navy uppercase tracking-wider">Apellido</label>
+                    <input type="text" name="lastname" required class="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-navy focus:ring-1 focus:ring-navy outline-none transition-all placeholder:text-slate-300" placeholder="Tu apellido" />
+                </div>
+            </div>
+            
+            <div class="space-y-1">
+              <label class="text-xs font-semibold text-navy uppercase tracking-wider">Negocio</label>
+              <input type="text" name="business_name" required class="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-navy focus:ring-1 focus:ring-navy outline-none transition-all placeholder:text-slate-300" placeholder="Ej: Barbería Style" />
+            </div>
+            
+            <div class="space-y-1">
+              <label class="text-xs font-semibold text-navy uppercase tracking-wider">WhatsApp</label>
+              <input type="tel" name="phone_number" required class="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-navy focus:ring-1 focus:ring-navy outline-none transition-all placeholder:text-slate-300" placeholder="351..." />
+            </div>
+
+            <button id="btn-submit" type="submit" class="cursor-pointer w-full py-4 bg-navy text-white font-bold rounded-lg hover:bg-slate-800 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 mt-2">
+              <span>Solicitar mis 14 días gratis</span>
+
+               <!-- Spinner de carga (oculto por defecto) -->
+          <svg id="icon-loading" class="animate-spin h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+            </button>
+
+            <!-- Mensaje de éxito (oculto por defecto) -->
+        <div id="result-message" class="hidden text-center p-3 bg-green-50 text-green-700 rounded-lg text-sm border border-green-100 mt-4">
+          ¡Solicitud enviada! Te contactaremos en breve.
+      </div>
+            
+            <p class="text-center text-xs text-slate-400 mt-4">
+                Tus datos no serán compartidos con nadie.
+            </p>
+          </form>
+        </div>
+
+      </div>
+    </section>
+	</main>
+
+	<Footer />
+</Layout>

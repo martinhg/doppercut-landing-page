@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* 1. Importamos Tailwind v4 */
+@import 'tailwindcss';
+
+/* 3. Configuración del TEMA (Esto reemplaza a tailwind.config.js) */
+@theme {
+  /* --- TIPOGRAFÍA --- */
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  /* --- COLORES --- */
+  /* Al declararlos así, Tailwind crea automágicamente bg-primary, text-primary, etc. */
+  --color-primary: #00a8e8;
+  --color-primary-dark: hsl(195 100% 39%);
+  --color-primary-light: hsl(195 100% 55%);
+
+  --color-navy: #0a1a2f;
+  --color-slate: #6a7a89;
+  --color-accent: #ccf7ff;
+
+  /* Color blanco/negro ya vienen por defecto, pero puedes añadir extras */
+  --color-surface: #f8fafc;
+
+  /* --- ANIMACIONES --- */
+  --animate-scroll: scroll 40s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-slow: float-y 6s ease-in-out infinite;
+  --animate-float-medium: float-y 5s ease-in-out infinite;
+  --animate-float-fast: float-y 4s ease-in-out infinite;
+  
+  --animate-float-x-slow: float-x 7s ease-in-out infinite;
+
+  /* Definimos el movimiento vertical */
+  @keyframes float-y {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+
+  /* Definimos un movimiento horizontal suave */
+  @keyframes float-x {
+    0%, 100% { transform: translateX(0px); }
+    50% { transform: translateX(15px); }
+  }
+
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+}
+
+/* 4. Utilidades Personalizadas */
+@layer utilities {
+  /* Tu gradiente personalizado */
+  .bg-primary-gradient {
+    background-image: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary-light));
+  }
+
+  /* Estilos Reveal (Scroll Animation) */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+  }
+
+  .reveal.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Delays de utilidad */
+  .delay-100 {
+    transition-delay: 100ms;
+  }
+  .delay-200 {
+    transition-delay: 200ms;
+  }
+  .delay-300 {
+    transition-delay: 300ms;
+  }
+}

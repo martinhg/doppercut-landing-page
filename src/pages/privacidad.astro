@@ -1,0 +1,67 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title='Política de Privacidad | DopperCut'>
+  <Navbar />
+  <main class='pt-32 pb-20 bg-slate-50 min-h-screen'>
+    <div class='max-w-4xl mx-auto px-6'>
+      <div class='bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-slate-200'>
+        <h1 class='text-3xl font-bold text-navy mb-6'>Política de Privacidad</h1>
+
+        <div class='space-y-8 text-slate-600'>
+          <div class='bg-indigo-50 p-6 rounded-xl border border-indigo-100'>
+            <h3 class='text-indigo-900 font-bold text-lg mb-2'>Resumen</h3>
+            <p class='text-indigo-800 text-sm'>
+              Tus datos son tuyos. No vendemos tu información a terceros. Utilizamos encriptación estándar de la industria para proteger tu negocio y el de tus clientes. Cumplimos con la Ley 25.326 de Protección de Datos Personales de Argentina.
+            </p>
+          </div>
+
+          <section class="mt-10">
+            <h3 class='text-xl font-bold text-navy mb-3'>1. Información que recopilamos</h3>
+            <p class='mb-2'>Para brindar el servicio, recopilamos dos tipos de datos:</p>
+            <ul class='list-disc pl-5 space-y-1'>
+              <li><strong>Datos de tu Negocio:</strong> Nombre, dirección, CUIT/DNI, teléfono y empleados.</li>
+              <li><strong>Datos de tus Clientes:</strong> Información que tú cargas en el sistema (nombres, teléfonos para recordatorios, historial de turnos). Actuamos como encargados del tratamiento de estos datos bajo tus instrucciones.</li>
+            </ul>
+          </section>
+
+          <section class="mt-8">
+            <h3 class='text-xl font-bold text-navy mb-3'>2. Uso de la información</h3>
+            <p>Utilizamos los datos exclusivamente para:</p>
+            <ul class='list-disc pl-5 space-y-1'>
+              <li>- Proveer el servicio de agendamiento y gestión.</li>
+              <li>- Enviar recordatorios automáticos por WhatsApp (vía API de terceros).</li>
+              <li>- Generar tus reportes financieros y estadísticos.</li>
+              <li>- Facturación del servicio.</li>
+            </ul>
+          </section>
+
+          <section class="mt-8">
+            <h3 class='text-xl font-bold text-navy mb-3'>3. Seguridad y Almacenamiento</h3>
+            <p>
+              Tus datos se alojan en servidores seguros con copias de seguridad diarias. Utilizamos protocolos SSL/TLS para encriptar la comunicación entre tu dispositivo y nuestros servidores. El acceso a tu cuenta está protegido por contraseña, la
+              cual es tu responsabilidad resguardar.
+            </p>
+          </section>
+
+          <section class="mt-8">
+            <h3 class='text-xl font-bold text-navy mb-3'>4. Tus Derechos (Derechos ARCO)</h3>
+            <p>Como titular de los datos, tienes derecho a Acceder, Rectificar, Cancelar u Oponerte al tratamiento de tu información personal. Para ejercer estos derechos, puedes enviar un correo a soporte@doppercut.com.</p>
+          </section>
+
+          <section class="mt-8">
+            <h3 class='text-xl font-bold text-navy mb-3'>5. Servicios de Terceros</h3>
+            <p>
+              Para funcionalidades específicas (como el envío de WhatsApps o procesamiento de pagos), compartimos los datos estrictamente necesarios con proveedores de confianza (ej: Meta/WhatsApp, Mercado Pago), quienes también están obligados a
+              proteger la información.
+            </p>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>

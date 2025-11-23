@@ -1,0 +1,40 @@
+---
+const { pathname } = Astro.url;
+const isHome = pathname === '/' || pathname === '';
+---
+
+<nav class='fixed w-full z-50 top-0 transition-all duration-300' id='navbar'>
+  <div class='absolute inset-0 bg-white/80 backdrop-blur-md border-b border-slate-100' id='nav-bg'></div>
+  <div class='max-w-7xl mx-auto px-6 h-20 flex items-center justify-between relative z-10'>
+    <a href='/' class='text-2xl font-bold text-navy flex items-center gap-2'>
+      <div class='w-8 h-8 bg-primary-gradient rounded-lg'></div>
+      DopperCut
+    </a>
+
+    <div class='hidden md:flex items-center gap-8'>
+      <a href='/' class='text-sm font-medium text-slate hover:text-navy transition-colors'>Inicio</a>
+      <a href={isHome ? '#como-funciona' : '/#como-funciona'} class='text-sm font-medium text-slate hover:text-navy transition-colors'>Cómo funciona</a>
+      <a href='/precios' class='text-sm font-medium text-slate hover:text-navy transition-colors'>Precios</a>
+      <a href='/contacto' class='text-sm font-medium text-slate hover:text-navy transition-colors'>Contáctanos</a>
+    </div>
+
+    <div class='flex items-center gap-4'>
+      <a href='#' class='hidden sm:block text-sm font-medium text-navy hover:text-primary transition-colors'>Ingresar</a>
+      <a href={isHome ? '#contacto' : '/#contacto'} class='px-5 py-2.5 bg-navy text-white text-sm font-medium rounded-full hover:bg-slate-800 transition-colors'> Prueba Gratis </a>
+    </div>
+  </div>
+</nav>
+
+<script>
+  // Efecto de sombra al hacer scroll
+  const nav = document.getElementById('nav-bg');
+  window.addEventListener('scroll', () => {
+    if (!nav) return;
+
+    if (window.scrollY > 20) {
+      nav.classList.add('shadow-sm');
+    } else {
+      nav.classList.remove('shadow-sm');
+    }
+  });
+</script>

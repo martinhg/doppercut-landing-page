@@ -1,0 +1,193 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+const features = [
+  'Agenda inteligente y turnos ilimitados',
+  'Recordatorios automáticos por WhatsApp (Ahorra ausencias)',
+  'Caja diaria y reportes de ganancias',
+  'Base de datos de clientes',
+  'Soporte técnico humano y directo',
+  'Configuración inicial "Llave en mano"',
+];
+
+const roadmapFeatures = [
+  {
+    title: "Desarrollo Colaborativo",
+    desc: "¿Necesitas una función específica? La priorizamos en nuestro roadmap.",
+    icon: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>`
+  },
+  {
+    title: "Configuración VIP",
+    desc: "Nosotros cargamos tus datos y configuramos tus horarios. Tú solo empiezas a trabajar.",
+    icon: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>`
+  }
+];
+
+---
+
+<Layout title='Planes y Precios | DopperCut'>
+  <Navbar />
+
+  <main class='pt-32 pb-24 bg-slate-50 min-h-screen'>
+    <!-- HERO -->
+    <div class='max-w-4xl mx-auto px-6 text-center mb-12'>
+      <h1 class='text-4xl md:text-5xl font-bold text-navy mb-6 tracking-tight'>
+        Tu negocio organizado,<br />
+        <span class='text-primary'>por el valor de 1 corte al mes.</span>
+      </h1>
+      <p class='text-lg text-slate-600 max-w-2xl mx-auto'>Una inversión mínima para recuperar horas de tu vida y profesionalizar tu barbería o peluquería.</p>
+    </div>
+
+    <!-- OFERTA DE LANZAMIENTO (La herramienta de venta) -->
+    <div class='max-w-5xl mx-auto px-6 mb-12'>
+      <div class='bg-linear-to-r from-indigo-600 to-purple-700 rounded-2xl p-1 shadow-lg transform hover:scale-[1.01] transition-transform'>
+        <div class='bg-white/10 backdrop-blur-sm rounded-xl p-6 text-white flex flex-col md:flex-row items-center justify-between gap-6'>
+          <div class='flex items-start gap-4'>
+            <div class='bg-yellow-400 text-indigo-900 font-bold px-3 py-1 rounded text-xs uppercase tracking-wider mt-1 animate-pulse'>Oferta Lanzamiento</div>
+            <div>
+              <h3 class='text-xl font-bold text-white'>¡Sé un Socio Fundador! (Cupos Limitados)</h3>
+              <p class='text-indigo-100 text-sm mt-1'>
+                Abonando ahora congelas el precio con un <span class='font-bold text-white underline decoration-yellow-400'>25% OFF</span> por 6 meses.
+              </p>
+            </div>
+          </div>
+          <div class='text-right'>
+            <div class='text-sm text-indigo-200 line-through'>$20.000</div>
+            <div class='text-3xl font-bold text-white'>$15.000 <span class='text-sm font-normal'>/mes</span></div>
+            <div class='text-xs text-indigo-200'>Abonando semestral</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRICING CARD PRINCIPAL -->
+    <div class='max-w-5xl mx-auto px-6 mb-24'>
+      <div class='bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden flex flex-col lg:flex-row relative'>
+        <!-- Etiqueta de Garantía -->
+        <div class='absolute top-0 right-0 bg-green-500 text-white text-xs font-bold px-4 py-2 rounded-bl-xl z-20'>Prueba 14 días GRATIS</div>
+
+        <!-- Left Side: Price Anchor -->
+        <div class='lg:w-1/2 p-8 md:p-12 flex flex-col justify-center border-b lg:border-b-0 lg:border-r border-slate-100 bg-slate-50/50'>
+          <div class='text-center lg:text-left'>
+            <h3 class='text-xl font-semibold text-navy mb-2'>Plan Profesional</h3>
+            <p class='text-slate-500 text-sm mb-6'>Todo incluido. Sin sorpresas.</p>
+
+            <div class='flex items-baseline justify-center lg:justify-start gap-2 mb-2'>
+              <span class='text-2xl text-slate-400'>$</span>
+              <span class='text-6xl font-bold text-navy tracking-tighter'>20.000</span>
+              <span class='text-xl text-slate-400 font-medium'>ARS/mes</span>
+            </div>
+
+            <p class='text-slate-500 text-sm mb-8'>Se abona recién al finalizar tus 14 días de prueba gratuita si decides continuar.</p>
+
+            <!-- CTA Principal -->
+            <a href='/contacto' class='inline-flex justify-center items-center w-full px-8 py-4 bg-navy text-white text-lg font-bold rounded-xl hover:bg-slate-800 transition-all shadow-lg shadow-navy/20 hover:-translate-y-1 group'>
+              Solicitar demo + 14 días gratis
+              <svg class='w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform' fill='none' viewBox='0 0 24 24' stroke='currentColor'
+                ><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M14 5l7 7m0 0l-7 7m7-7H3'></path></svg
+              >
+            </a>
+            <div class='mt-4 flex items-center justify-center lg:justify-start gap-2 text-xs text-slate-500'>
+              <svg class='w-4 h-4 text-green-500' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'></path></svg>
+              Cancelas cuando quieras. Sin ataduras.
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: Value Stack -->
+        <div class='lg:w-1/2 p-8 md:p-12 bg-white'>
+          <h4 class='text-lg font-bold text-navy mb-6'>¿Qué incluye tu inversión?</h4>
+          <ul class='space-y-4'>
+            {
+              features.map((item) => (
+                <li class='flex items-start gap-3'>
+                  <div class='bg-indigo-50 p-1 rounded-full mt-0.5 shrink-0'>
+                    <svg class='w-4 h-4 text-indigo-600' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+                      <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7' />
+                    </svg>
+                  </div>
+                  <span class='text-slate-700 text-sm font-medium leading-relaxed'>{item}</span>
+                </li>
+              ))
+            }
+          </ul>
+
+          <!-- Multi-sucursal Upsell -->
+          <div class='mt-8 pt-6 border-t border-slate-100 bg-indigo-50/50 -mx-8 -mb-12 p-8'>
+            <h5 class='font-bold text-navy text-sm mb-1'>¿Tienes más de una sucursal?</h5>
+            <p class='text-slate-600 text-xs'>Gestiona múltiples locales centralizados. Contáctanos para un precio especial por volumen.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- THE "WHY US" SECTION (Roadmap & Service) -->
+    <div class='max-w-5xl mx-auto px-6 mb-20'>
+      <div class='grid md:grid-cols-2 gap-8'>
+        {
+          roadmapFeatures.map((feature) => (
+            <div class='bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow flex gap-6 items-start'>
+              <div class='p-4 bg-primary/10 text-primary rounded-xl shrink-0' set:html={feature.icon} />
+              <div>
+                <h3 class='text-xl font-bold text-navy mb-2'>{feature.title}</h3>
+                <p class='text-slate-600'>{feature.desc}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- STEP BY STEP (Reducing Friction) -->
+    <div class='max-w-4xl mx-auto px-6 text-center'>
+      <h2 class='text-2xl font-bold text-navy mb-12'>¿Cómo comenzar? Es muy simple.</h2>
+      <div class='relative flex flex-col md:flex-row justify-between items-center gap-8 z-10'>
+        <!-- Line connector for desktop -->
+        <div class='hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-slate-200 -z-10 -translate-y-1/2'></div>
+
+        <!-- Step 1 -->
+        <div class='bg-white p-6 rounded-xl border border-slate-200 shadow-sm w-full md:w-64'>
+          <div class='w-10 h-10 bg-navy text-white rounded-full flex items-center justify-center font-bold mx-auto mb-4 text-lg'>1</div>
+          <h4 class='font-bold text-navy mb-2'>Solicitas tu Demo</h4>
+          <p class='text-sm text-slate-500'>Envíanos un mensaje o llena el formulario.</p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class='bg-white p-6 rounded-xl border border-slate-200 shadow-sm w-full md:w-64'>
+          <div class='w-10 h-10 bg-navy text-white rounded-full flex items-center justify-center font-bold mx-auto mb-4 text-lg'>2</div>
+          <h4 class='font-bold text-navy mb-2'>Configuramos todo</h4>
+          <p class='text-sm text-slate-500'>Cargamos tus servicios y te enseñamos a usarlo.</p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class='bg-white p-6 rounded-xl border border-primary ring-2 ring-primary/20 shadow-md w-full md:w-64'>
+          <div class='w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold mx-auto mb-4 text-lg'>3</div>
+          <h4 class='font-bold text-navy mb-2'>Prueba de 14 días</h4>
+          <p class='text-sm text-slate-500'>Disfruta del sistema completo. Sin pagar nada.</p>
+        </div>
+      </div>
+
+      <div class='mt-12'>
+        <a href='/contacto' class='text-primary font-semibold hover:text-primary-dark transition-colors'> ¿Tienes dudas? Hablemos por WhatsApp &rarr; </a>
+      </div>
+    </div>
+
+    <!-- FAQ / OBJECTIONS -->
+    <div class='max-w-3xl mx-auto px-6 mt-10'>
+      <h2 class='text-2xl font-bold text-navy mb-8 text-center'>Preguntas Frecuentes</h2>
+      <div class='grid gap-6'>
+        <div class='bg-white p-6 rounded-xl border border-slate-100 shadow-sm'>
+          <h3 class='font-bold text-navy'>¿Cómo funciona el descuento de lanzamiento?</h3>
+          <p class='text-slate-600 text-sm mt-2'>Es exclusivo para los primeros 20 clientes. Si decides abonar un plan trimestral o semestral por adelantado, te congelamos el precio con un 25% de descuento.</p>
+        </div>
+        <div class='bg-white p-6 rounded-xl border border-slate-100 shadow-sm'>
+          <h3 class='font-bold text-navy'>¿Cómo pago el servicio?</h3>
+          <p class='text-slate-600 text-sm mt-2'>Aceptamos transferencia bancaria o Mercado Pago. Te enviamos la factura mensualmente.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>

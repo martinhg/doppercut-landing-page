@@ -1,0 +1,219 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'La forma moderna de organizar tu negocio y enfocarte en tus clientes. Gestiona turnos, caja y clientes en una sola plataforma.' } = Astro.props;
+
+const ogImage = '/og-image.jpg'; // Debes crear esta imagen
+const siteUrl = 'https://doppercut.com'; // Tu URL real
+---
+
+<!doctype html>
+<html lang='es' class='scroll-smooth'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='description' content={description} />
+    <meta name='viewport' content='width=device-width' />
+    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+    <link href='https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap' rel='stylesheet' />
+    <meta name='generator' content={Astro.generator} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property='og:type' content='website' />
+    <meta property='og:url' content={siteUrl} />
+    <meta property='og:title' content={title} />
+    <meta property='og:description' content={description} />
+    <meta property='og:image' content={ogImage} />
+
+    <!-- Twitter -->
+    <meta property='twitter:card' content='summary_large_image' />
+    <meta property='twitter:url' content={siteUrl} />
+    <meta property='twitter:title' content={title} />
+    <meta property='twitter:description' content={description} />
+    <meta property='twitter:image' content={ogImage} />
+
+    <title>{title}</title>
+  </head>
+  <body class='bg-white text-navy font-sans antialiased selection:bg-accent selection:text-primary-dark overflow-x-hidden'>
+    <slot />
+
+    <!-- Script para animaciones Reveal (Estilo Stripe) -->
+    <script>
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1,
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.reveal').forEach((el) => {
+        observer.observe(el);
+      });
+
+      function easeOutQuart(x: number) {
+        return 1 - Math.pow(1 - x, 4);
+      }
+
+      const animateCounters = () => {
+        const counters = document.querySelectorAll('.counter-animate');
+        const speed = 2000; // Duración en milisegundos (2 segundos)
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const counter = entry.target as HTMLElement | null;
+                const targetAttr = counter?.getAttribute('data-target');
+                const target = targetAttr ? +targetAttr : 0;
+
+                let startTime: number | null = null;
+
+                const updateCount = (currentTime: number) => {
+                  if (startTime === null) startTime = currentTime;
+                  const progress = currentTime - (startTime as number);
+
+                  // Calcular porcentaje completado (0 a 1)
+                  let percentage = Math.min(progress / speed, 1);
+
+                  // Aplicar easing
+                  percentage = easeOutQuart(percentage);
+
+                  // Calcular número actual
+                  const currentNum = Math.floor(percentage * target);
+
+                  // Formatear con puntos de mil (ej: 1.500)
+                  (counter as HTMLElement).innerText = currentNum.toLocaleString('es-AR');
+
+                  if (progress < speed) {
+                    window.requestAnimationFrame(updateCount);
+                  } else {
+                    (counter as HTMLElement).innerText = target.toLocaleString('es-AR'); // Asegurar número final exacto
+                  }
+                };
+
+                window.requestAnimationFrame(updateCount);
+                if (counter instanceof Element) {
+                  observer.unobserve(counter); // Solo animar una vez
+                }
+              }
+            });
+          },
+          { threshold: 0.5 },
+        ); // Se activa cuando el 50% del elemento es visible
+
+        counters.forEach((counter) => observer.observe(counter));
+      };
+
+      // Ejecutar cuando el DOM esté listo
+      document.addEventListener('DOMContentLoaded', animateCounters);
+    </script>
+
+    <!-- SCRIPT PARA MANEJAR EL ENVÍO SIN RECARGAR -->
+    <script is:inline>
+      const form = document.getElementById('form-alta');
+      const result = document.getElementById('result-message');
+      const btn = document.getElementById('btn-submit');
+      const btnText = btn.querySelector('span');
+      const iconArrow = document.getElementById('icon-arrow');
+      const iconLoading = document.getElementById('icon-loading');
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault(); // Evita que la página se recargue
+        const formData = new FormData(form);
+        const object = Object.fromEntries(formData);
+        const json = JSON.stringify(object);
+
+        // 1. Estado de "Cargando"
+        result.classList.add('hidden');
+        btn.disabled = true;
+        btn.classList.add('opacity-75', 'cursor-not-allowed');
+        btnText.textContent = 'Enviando...';
+        iconArrow.classList.add('hidden');
+        iconLoading.classList.remove('hidden');
+
+        fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: json,
+        })
+          .then(async (response) => {
+            let json = await response.json();
+            if (response.status == 200) {
+              // 2. Éxito
+              result.innerHTML = '¡Recibido! Bienvenido a DopperCut. Te escribiremos al WhatsApp.';
+              result.classList.remove('hidden');
+              result.classList.remove('bg-red-50', 'text-red-700', 'border-red-100'); // Quitar estilo error si hubo
+              result.classList.add('bg-green-50', 'text-green-700', 'border-green-100');
+
+              form.reset(); // Limpiar campos
+            } else {
+              // Error del servidor
+              console.log(response);
+              result.innerHTML = json.message;
+              result.classList.remove('hidden');
+              result.classList.add('bg-red-50', 'text-red-700', 'border-red-100');
+            }
+          })
+          .catch((error) => {
+            // Error de red
+            console.log(error);
+            result.innerHTML = 'Hubo un error. Por favor intenta por WhatsApp.';
+            result.classList.remove('hidden');
+          })
+          .then(function () {
+            // 3. Restaurar botón
+            btn.disabled = false;
+            btn.classList.remove('opacity-75', 'cursor-not-allowed');
+            btnText.textContent = 'Solicitar mis 14 días gratis';
+            iconArrow.classList.remove('hidden');
+            iconLoading.classList.add('hidden');
+
+            // Ocultar mensaje de éxito después de 5 segundos
+            setTimeout(() => {
+              result.classList.add('hidden');
+            }, 5000);
+          });
+      });
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  /* Animación Reveal suave */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+  }
+
+  .reveal.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Stagger delay utilidades */
+  .delay-100 {
+    transition-delay: 100ms;
+  }
+  .delay-200 {
+    transition-delay: 200ms;
+  }
+  .delay-300 {
+    transition-delay: 300ms;
+  }
+</style>
