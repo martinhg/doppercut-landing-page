@@ -17,7 +17,7 @@ interface Props {
 // 1. Valores por Defecto (Tu Marca)
 const defaultTitle = 'DopperCut - Gestión Inteligente para Barberías y Peluquerías';
 const defaultDescription = 'La forma moderna de organizar tu negocio. Deja de perder tiempo en WhatsApp. Gestiona turnos, caja, clientes y empleados en una sola plataforma en la nube.';
-const defaultImage = '/og-image.png';
+const defaultImage = '/doppercut-og.png';
 
 const { title = defaultTitle, description = defaultDescription, image = defaultImage, noindex = false } = Astro.props;
 
@@ -55,6 +55,7 @@ const pageTitle = title === defaultTitle ? title : `${title} | DopperCut`;
     <meta property='og:title' content={pageTitle} />
     <meta property='og:description' content={description} />
     <meta property='og:image' content={socialImageURL} />
+    <meta property="og:image:type" content="image/png" />
     <meta property='og:image:alt' content='DopperCut Dashboard y Logo' />
     <meta property='og:image:width' content='1200' />
     <meta property='og:image:height' content='630' />
