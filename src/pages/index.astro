@@ -1,5 +1,8 @@
 ---
 import '../styles/global.css'; 
+import dashboardImg from '../assets/dashboard.webp';
+import mobileImg from '../assets/mobile.webp';
+import websiteImg from '../assets/website.webp';
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
@@ -107,10 +110,12 @@ const steps = [
           <!-- MOCKUP PRINCIPAL (Ancla visual) -->
           <div class="reveal delay-300 mt-16 relative">
               <div class="absolute inset-0 bg-primary/20 blur-[80px] rounded-full transform scale-75"></div>
-              <img src="/dashboard.webp" 
-                class="relative rounded-xl shadow-2xl border border-slate-200/50 w-full max-w-4xl mx-auto" 
+              <img 
+                src={dashboardImg.src}
+                class="relative rounded-xl shadow-2xl border border-slate-200/50 max-w-4xl mx-auto w-full h-auto object-cover" 
                 alt="DopperCut Dashboard"
-                class="w-full h-auto object-cover"
+                width={dashboardImg.width}
+                height={dashboardImg.height}
                 sizes="(max-width: 768px) 100vw, 600px"
                 loading="eager"
                 fetchpriority="high"
@@ -413,7 +418,7 @@ const steps = [
                     <!-- IMAGEN DASHBOARD -->
                     <!-- Nota: object-left-top asegura que se vea el logo y el menú -->
                     <img 
-                        src="/turnos.png" 
+                        src={websiteImg.src} 
                         alt="Dashboard UI DopperCut" 
                         class="w-full h-full object-cover object-top-left"
                     >
@@ -455,7 +460,7 @@ const steps = [
                 <!-- IMAGEN MOBILE -->
                 <!-- TRUCO: Como la imagen tiene azul fuerte, podemos usar un filtro para acercarlo al cyan si fuera necesario, pero mejor dejarla natural si ya tiene tu logo -->
                 <img 
-                  src="/mobile-mockup.png" 
+                  src={mobileImg.src}
                   alt="Mobile Booking Interface" 
                   class="w-full h-full object-cover bg-white mt-4"
                 >
