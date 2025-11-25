@@ -17,13 +17,13 @@ interface Props {
 // 1. Valores por Defecto (Tu Marca)
 const defaultTitle = 'DopperCut - Gestión Inteligente para Barberías y Peluquerías';
 const defaultDescription = 'La forma moderna de organizar tu negocio. Deja de perder tiempo en WhatsApp. Gestiona turnos, caja, clientes y empleados en una sola plataforma en la nube.';
-const defaultImage = '/doppercut-og.jpg';
+const defaultImage = '/og-doppercut.jpg';
 
 const { title = defaultTitle, description = defaultDescription, image = defaultImage, noindex = false } = Astro.props;
 
 const canonicalURL = new URL(Astro.props.canonicalURL ?? Astro.url.pathname, Astro.site);
 // Asegura que la imagen tenga la URL completa (ej. https://doppercut.com/images/og.jpg)
-const socialImageURL = new URL('/doppercut-og.jpg', Astro.site);
+const socialImageURL = new URL('/og-doppercut.jpg', Astro.site);
 
 const pageTitle = title === defaultTitle ? title : `${title} | DopperCut`;
 ---
