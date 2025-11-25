@@ -6,15 +6,6 @@ import websiteImg from '../assets/website.webp';
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
-import { getImage } from 'astro/assets';
-
-const optimizedHeroImage = await getImage({
-  src: dashboardImg,
-  props: { alt: "Dashboard DopperCut" }
-}, {
-  format: 'webp',
-  width: 800
-});
 
 const steps = [
         { 
@@ -120,7 +111,7 @@ const steps = [
           <div class="reveal delay-300 mt-16 relative">
               <div class="absolute inset-0 bg-primary/20 blur-[80px] rounded-full transform scale-75"></div>
               <img 
-                src={optimizedHeroImage.src}
+                src={dashboardImg.src}
                 class="relative rounded-xl shadow-2xl border border-slate-200/50 max-w-4xl mx-auto w-full h-auto object-cover" 
                 alt="DopperCut Dashboard"
                 width={dashboardImg.width}
