@@ -103,7 +103,7 @@ const pageTitle = title === defaultTitle ? title : `${title} | DopperCut`;
     <meta name='twitter:title' content={pageTitle} />
     <meta name='twitter:description' content={description} />
     <meta name='twitter:image' content={socialImageURL} />
-    
+
     <link rel='preconnect' href='https://fonts.googleapis.com' />
     <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
 
@@ -122,8 +122,8 @@ const pageTitle = title === defaultTitle ? title : `${title} | DopperCut`;
         },
         offers: {
           '@type': 'Offer',
-          price: '15000',
-          priceCurrency: 'ARS',
+          price: numericPrice,
+          priceCurrency: currentCountryData.currency,
           availability: 'https://schema.org/InStock',
         },
         description: description,
