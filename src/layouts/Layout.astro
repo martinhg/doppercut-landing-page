@@ -6,13 +6,16 @@ import '@fontsource/inter/500.css';
 import '@fontsource/inter/600.css';
 import '@fontsource/inter/700.css';
 
+import { countries } from '../i18n/config';
+
 interface Props {
-  title?: string; // Opcional, si no se pasa usa el default
-  description?: string; // Opcional
-  image?: string; // URL relativa de la imagen OG (ej: '/images/og-main.jpg')
-  canonicalURL?: string | URL; // Para evitar contenido duplicado
+  title?: string;
+  description?: string;
+  image?: string;
+  canonicalURL?: string | URL;
   noindex?: boolean;
   lang?: string;
+  country?: string;
 }
 
 // 1. Valores por Defecto (Tu Marca)
@@ -20,7 +23,24 @@ const defaultTitle = 'DopperCut - Gestión Inteligente para Barberías y Peluque
 const defaultDescription = 'La forma moderna de organizar tu negocio. Deja de perder tiempo en WhatsApp. Gestiona turnos, caja, clientes y empleados en una sola plataforma en la nube.';
 const defaultImage = '/og-doppercut.jpg';
 
-const { title = defaultTitle, description = defaultDescription, image = defaultImage, noindex = false, lang = 'es' } = Astro.props;
+const { title = defaultTitle, description = defaultDescription, image = defaultImage, noindex = false, lang = 'es_ar', country = 'ar' } = Astro.props;
+
+const currentCountryData = countries[country] || countries.ar;
+
+const canonicalURL = new URL(Astro.props.canonicalURL ?? Astro.url.pathname, Astro.site);
+const socialImageURL = new URL('/og-doppercut.jpg', Astro.site);
+
+const { pathname } = Astro.url;
+const cleanPath = pathname.replace(new RegExp(`^/${country}`), '') || '';
+
+const getIsoCode = (cCode: string, cLang: string) => {
+  if (cCode === 'br') return 'pt-BR';
+  if (cCode === 'us') return 'en-US';
+  if (cCode === 'es') return 'es-ES';
+  return `es-${cCode.toUpperCase()}`; // Genera es-AR, es-MX, es-CO, etc.
+};
+
+const numericPrice = currentCountryData.price_promo.replace(/[^0-9.,]+/g, '').replace(',', '.');
 
 const seoData = {
   es: {
@@ -31,15 +51,12 @@ const seoData = {
     title: 'Sistema de Agendamento para Barbearias | DopperCut',
     desc: 'Software de gestão para barbearias e salões. Agenda online, lembretes via WhatsApp e controle financeiro. Teste grátis.',
   },
-};
+} as const;
 
-const currentSEO = seoData[lang] || seoData.es;
+const langKey = lang.slice(0, 2) as keyof typeof seoData;
+const currentSEO = seoData[langKey] || seoData.es;
 const finalTitle = title === defaultTitle ? currentSEO.title : title;
 const finalDesc = description === defaultDescription ? currentSEO.desc : description;
-
-const canonicalURL = new URL(Astro.props.canonicalURL ?? Astro.url.pathname, Astro.site);
-// Asegura que la imagen tenga la URL completa (ej. https://doppercut.com/images/og.jpg)
-const socialImageURL = new URL('/og-doppercut.jpg', Astro.site);
 
 const pageTitle = title === defaultTitle ? title : `${title} | DopperCut`;
 ---
@@ -55,13 +72,13 @@ const pageTitle = title === defaultTitle ? title : `${title} | DopperCut`;
     <!-- SEO Principal -->
     <title>{finalTitle}</title>
     <meta name='description' content={finalDesc} />
-    <link rel='alternate' hreflang='es' href='https://doppercut.com' />
-    <link rel='alternate' hreflang='pt' href='https://doppercut.com/pt' />
-    <link rel='alternate' hreflang='x-default' href='https://doppercut.com' />
     <link rel='canonical' href={canonicalURL} />
     <meta name='theme-color' content='#0A1A2F' />
-    {noindex && <meta name='robots' content='noindex, nofollow' />}
-    {!noindex && <meta name='robots' content='index, follow' />}
+
+    {noindex ? <meta name='robots' content='noindex, nofollow' /> : <meta name='robots' content='index, follow' />}
+
+    {Object.values(countries).map((c) => <link rel='alternate' hreflang={getIsoCode(c.code, c.lang)} href={`https://doppercut.com/${c.code}${cleanPath}`} />)}
+    <link rel="alternate" hreflang="x-default" href={`https://doppercut.com/us${cleanPath}`} />
 
     <!-- Palabras Clave (Keywords) - Opcional pero ayuda contexto -->
     <meta name='keywords' content='sistema barbería, agenda online, turnos peluquería, software gestión, doppercut, argentina, app turnos, gestion estetica, app gestion, app, plataforma, plataforma gestion' />
@@ -86,6 +103,7 @@ const pageTitle = title === defaultTitle ? title : `${title} | DopperCut`;
     <meta name='twitter:title' content={pageTitle} />
     <meta name='twitter:description' content={description} />
     <meta name='twitter:image' content={socialImageURL} />
+    
     <link rel='preconnect' href='https://fonts.googleapis.com' />
     <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
 
