@@ -1,4 +1,14 @@
 ---
+import { countries } from '../i18n/config';
+import { ui } from '../i18n/content';
+
+const country = (Astro.props.country ?? 'ar') as keyof typeof countries;
+const currentCountry = countries[country] ?? countries.ar;
+const lang = (currentCountry.lang ?? 'es_ar') as keyof typeof ui;
+const t = ui[lang];
+
+const link = (path: string) => `/${country}${path}`;
+
 const currentYear = new Date().getFullYear();
 ---
 
@@ -10,11 +20,11 @@ const currentYear = new Date().getFullYear();
     <div class='grid md:grid-cols-4 gap-12 mb-16'>
       <!-- Columna 1: Branding -->
       <div class='md:col-span-2'>
-        <a href='/' class='text-2xl font-bold text-white flex items-center gap-2 mb-4'>
+        <a href={link('/')} class='text-2xl font-bold text-white flex items-center gap-2 mb-4'>
           <div class='w-6 h-6 bg-primary-gradient rounded-md'></div>
           DopperCut
         </a>
-        <p class='text-slate-400 text-sm leading-relaxed max-w-xs mb-6'>La plataforma todo en uno para modernizar tu negocio. Gestiona turnos y clientes sin estrés.</p>
+        <p class='text-slate-400 text-sm leading-relaxed max-w-xs mb-6'>{t.footer.description}</p>
 
         <!-- Redes Sociales -->
         <div class='flex gap-4'>
@@ -37,12 +47,12 @@ const currentYear = new Date().getFullYear();
 
       <!-- Columna 2: Producto -->
       <div>
-        <h4 class='text-white font-semibold mb-6 text-sm uppercase tracking-wider'>Producto</h4>
+        <h4 class='text-white font-semibold mb-6 text-sm uppercase tracking-wider'>{t.footer.product}</h4>
         <ul class='space-y-3 text-sm'>
-          <li><a href='/' class='hover:text-primary-light transition-colors'>Inicio</a></li>
-          <li><a href='/#como-funciona' class='hover:text-primary-light transition-colors'>Cómo funciona</a></li>
-          <li><a href='/precios' class='hover:text-primary-light transition-colors'>Planes y Precios</a></li>
-          <li><a href='/#contacto' class='hover:text-primary-light transition-colors'>Solicitar Demo</a></li>
+          <li><a href={link('/')} class='hover:text-primary-light transition-colors'>{t.nav.home}</a></li>
+          <li><a href={link('/#como-funciona')} class='hover:text-primary-light transition-colors'>{t.nav.how}</a></li>
+          <li><a href={link('/precios')} class='hover:text-primary-light transition-colors'>{t.nav.pricing}</a></li>
+          <li><a href={link('/contacto')} class='hover:text-primary-light transition-colors'>{t.nav.trial}</a></li>
         </ul>
       </div>
 
@@ -50,9 +60,9 @@ const currentYear = new Date().getFullYear();
       <div>
         <h4 class='text-white font-semibold mb-6 text-sm uppercase tracking-wider'>Legal</h4>
         <ul class='space-y-3 text-sm'>
-          <li><a href='/privacidad' class='hover:text-primary-light transition-colors'>Política de Privacidad</a></li>
-          <li><a href='/terminos' class='hover:text-primary-light transition-colors'>Términos de Uso</a></li>
-          <li><a href='/contacto' class='hover:text-primary-light transition-colors'>Contacto</a></li>
+          <li><a href={link('/privacidad')} class='hover:text-primary-light transition-colors'>{t.footer.privacy}</a></li>
+          <li><a href={link('/terminos')} class='hover:text-primary-light transition-colors'>{t.footer.terms}</a></li>
+          <li><a href={link('/contacto')} class='hover:text-primary-light transition-colors'>{t.nav.contact}</a></li>
         </ul>
       </div>
     </div>
@@ -60,12 +70,12 @@ const currentYear = new Date().getFullYear();
     <!-- Separador -->
     <div class='border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4'>
       <p class='text-xs text-slate-500'>
-        &copy; {currentYear} DopperCut. Todos los derechos reservados.
+        &copy; {currentYear} DopperCut. {t.footer.all_rights_reserved}
       </p>
       <div class='flex gap-6'>
         <span class='text-xs text-slate-600 flex items-center gap-1'>
           <span class='w-2 h-2 rounded-full bg-green-500'></span>
-          Sistemas operativos
+          {t.footer.systems}
         </span>
       </div>
     </div>

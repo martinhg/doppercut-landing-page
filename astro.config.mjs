@@ -5,11 +5,26 @@ import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap'; // ¡Nuevo!
 import robotsTxt from 'astro-robots-txt';
 
-// https://astro.build/config
+import vercel from '@astrojs/vercel';
+
 export default defineConfig({
   site: 'https://doppercut.com',
+
+  i18n: {
+    defaultLocale: 'ar',
+    locales: ['ar', 'mx', 'br', 'cl', 'us'],
+    routing: {
+      prefixDefaultLocale: true,
+      redirectToDefaultLocale: false,
+    },
+  },
+
   vite: {
     plugins: [tailwindcss()],
   },
+
   integrations: [react(), sitemap(), robotsTxt()],
+  adapter: vercel({
+    webAnalytics: { enabled: true },
+  }),
 });
