@@ -5,6 +5,8 @@ import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 import { site } from '../../config/site';
+import PricingMath from '../../components/PricingMath.astro';
+import { htmlLangFor, type CountryCode } from '../../i18n/locale';
 import { chrome } from '../../i18n/chrome';
 
 // i18n
@@ -25,12 +27,17 @@ const tr = (text: string) => text.replace(/{appointment}/g, terms.appointment);
 
 const titleSEO = `${t.nav.pricing}: ${chrome[lang].seo_short} | ${site.name} ${currentCountry.name}`;
 const withSymbol = (price: string) => (/^[\d.,]+$/.test(price) ? `$${price}` : price);
+const p = t.pricing;
+const faqs = [
+  [p.faq1_title, p.faq1_desc],
+  [p.faq3_title, p.faq3_desc],
+  [p.faq4_title, p.faq4_desc],
+  [p.faq5_title, p.faq5_desc],
+  [p.faq2_title, p.faq2_desc],
+];
 const faqSchema = {
   '@type': 'FAQPage',
-  mainEntity: [
-    { '@type': 'Question', name: t.pricing.faq1_title, acceptedAnswer: { '@type': 'Answer', text: t.pricing.faq1_desc } },
-    { '@type': 'Question', name: t.pricing.faq2_title, acceptedAnswer: { '@type': 'Answer', text: t.pricing.faq2_desc } },
-  ],
+  mainEntity: faqs.map(([name, text]) => ({ '@type': 'Question', name, acceptedAnswer: { '@type': 'Answer', text } })),
 };
 
 const roadmapFeatures = [
@@ -63,8 +70,8 @@ const roadmapFeatures = [
     <div class='max-w-5xl mx-auto px-6 mb-12'>
       <div class='bg-primary-gradient rounded-2xl p-1 shadow-[0_10px_30px_-10px_rgb(0_168_232/0.5)]'>
         <div class='rounded-xl p-6 text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-6'>
-          <div class='flex items-start gap-4'>
-            <div class='bg-white text-primary-dark font-bold px-3 py-1 rounded-full text-xs mt-1 shrink-0'>{t.pricing.launch_offer}</div>
+          <div class='flex flex-col sm:flex-row items-start gap-3 sm:gap-4'>
+            <div class='bg-white text-primary-dark font-bold px-3 py-1 rounded-full text-xs sm:mt-1 shrink-0'>{t.pricing.launch_offer}</div>
             <div>
               <h2 class='text-xl font-bold text-white'>{t.pricing.founder_offer}</h2>
               <p class='text-white/90 text-sm mt-1'>
@@ -85,7 +92,7 @@ const roadmapFeatures = [
     <div class='max-w-5xl mx-auto px-6 mb-24'>
       <div class='bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden flex flex-col lg:flex-row relative'>
         <!-- Etiqueta de Garantía -->
-        <div class='absolute top-0 right-0 bg-success text-white text-xs font-bold px-4 py-2 rounded-bl-xl z-20'>{t.pricing.guarantee}</div>
+        <div class='absolute top-0 right-0 bg-primary-dark text-white text-xs font-bold px-4 py-2 rounded-bl-xl z-20'>{t.pricing.guarantee}</div>
 
         <!-- Left Side: Price Anchor -->
         <div class='lg:w-1/2 p-8 md:p-12 flex flex-col justify-center border-b lg:border-b-0 lg:border-r border-slate-100 bg-slate-50/50'>
@@ -139,6 +146,21 @@ const roadmapFeatures = [
           </div>
         </div>
       </div>
+    </div>
+
+    <div class='max-w-3xl mx-auto px-6 -mt-12 mb-24'>
+      <PricingMath
+        copy={t.section_7}
+        planName={p.card_title}
+        monthLabel={p.month}
+        priceRegular={currentCountry.price_regular}
+        pricePromo={currentCountry.price_promo}
+        currency={currentCountry.currency}
+        countryCode={countryParam}
+        locale={htmlLangFor(countryParam as CountryCode)}
+        pricingHref={`/${countryParam}/precios`}
+        mathOnly
+      />
     </div>
 
     <!-- THE "WHY US" SECTION (Roadmap & Service) -->
@@ -195,15 +217,15 @@ const roadmapFeatures = [
     <!-- FAQ / OBJECTIONS -->
     <div class='max-w-3xl mx-auto px-6 mt-10'>
       <h2 class='text-2xl font-bold text-navy mb-8 text-center'>{t.pricing.faq_title}</h2>
-      <div class='grid gap-6'>
-        <div class='bg-white p-6 rounded-xl border border-slate-100 shadow-sm'>
-          <h3 class='font-bold text-navy'>{t.pricing.faq1_title}</h3>
-          <p class='text-slate text-sm mt-2'>{t.pricing.faq1_desc}</p>
-        </div>
-        <div class='bg-white p-6 rounded-xl border border-slate-100 shadow-sm'>
-          <h3 class='font-bold text-navy'>{t.pricing.faq2_title}</h3>
-          <p class='text-slate text-sm mt-2'>{t.pricing.faq2_desc}</p>
-        </div>
+      <div class='grid gap-4'>
+        {
+          faqs.map(([question, answer]) => (
+            <div class='bg-white p-6 rounded-xl border border-slate-100 shadow-sm'>
+              <h3 class='font-bold text-navy'>{question}</h3>
+              <p class='text-slate text-sm mt-2'>{answer}</p>
+            </div>
+          ))
+        }
       </div>
     </div>
   </main>

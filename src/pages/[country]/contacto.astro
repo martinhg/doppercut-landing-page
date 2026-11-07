@@ -30,21 +30,30 @@ const titleSEO = `${t.contact.title} | ${site.name} ${currentCountry.name}`;
 
 <Layout title={titleSEO} description={`${t.contact.subtitle} ${t.contact.first_days}`.slice(0, 158)}>
   <Navbar country={countryParam} />
-  <main id='main' class='pt-28 sm:pt-32 pb-24 bg-surface min-h-svh relative overflow-hidden'>
+  <main id='main' class='pt-28 sm:pt-32 pb-24 bg-surface relative overflow-hidden'>
     <!-- Fondo sutil -->
     <div class='absolute top-0 right-0 w-[800px] h-[800px] bg-accent/60 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none'></div>
 
     <div class='max-w-6xl mx-auto px-6 relative z-10'>
-      <div class='grid lg:grid-cols-2 gap-12 items-center'>
-        <!-- COLUMNA IZQUIERDA: La Venta -->
-        <div>
+      <!-- Phones: intro, form, then reasons. Desktop: intro and reasons on the left, form on the right. -->
+      <div class='grid lg:grid-cols-2 gap-x-12 gap-y-10 lg:items-start'>
+        <div class='lg:col-start-1'>
           <h1 class='text-4xl md:text-5xl font-bold text-navy mb-6'>{t.contact.title}</h1>
-          <p class='text-lg text-slate mb-8 leading-relaxed'>
+          <p class='text-lg text-slate leading-relaxed'>
             {t.contact.subtitle}
-            <br /><strong>{t.contact.remember}:</strong>
+            <br /><strong>{t.contact.remember}:</strong>{' '}
             {t.contact.first_days}
           </p>
+        </div>
 
+        <div class='lg:col-start-2 lg:row-span-2 lg:row-start-1 bg-white p-6 sm:p-8 rounded-3xl shadow-xl shadow-navy/5 border border-slate-200 relative'>
+          <!-- Badge de oferta en el form -->
+          <div class='absolute -top-4 left-1/2 -translate-x-1/2 bg-navy text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg whitespace-nowrap'>{t.contact.form_title}</div>
+
+          <div class='mt-4'><LeadForm lang={lang} country={countryParam} source='contact' /></div>
+        </div>
+
+        <div class='lg:col-start-1'>
           <div class='space-y-6'>
             <!-- Feature 1 -->
             <div class='flex gap-4'>
@@ -70,7 +79,7 @@ const titleSEO = `${t.contact.title} | ${site.name} ${currentCountry.name}`;
           </div>
 
           <!-- Contacto Directo WhatsApp -->
-          <div class='mt-12 p-6 bg-white rounded-2xl border border-slate-200 shadow-sm'>
+          <div class='mt-8 p-6 bg-white rounded-2xl border border-slate-200 shadow-sm'>
             <p class='text-sm text-slate mb-2'>{t.contact.ws_text}</p>
             <a href={whatsappLink(c.whatsapp_message)} target='_blank' rel='noopener noreferrer' class='inline-flex items-center gap-2 text-success font-bold hover:text-navy transition-colors text-lg'>
               <svg class='w-6 h-6' fill='currentColor' viewBox='0 0 24 24' aria-hidden='true'
@@ -81,14 +90,6 @@ const titleSEO = `${t.contact.title} | ${site.name} ${currentCountry.name}`;
               {t.contact.ws_cta}
             </a>
           </div>
-        </div>
-
-        <!-- COLUMNA DERECHA: Formulario de Alta -->
-        <div class='bg-white p-6 sm:p-8 rounded-3xl shadow-xl shadow-navy/5 border border-slate-200 relative'>
-          <!-- Badge de oferta en el form -->
-          <div class='absolute -top-4 left-1/2 -translate-x-1/2 bg-navy text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg whitespace-nowrap'>{t.contact.form_title}</div>
-
-          <div class='mt-4'><LeadForm lang={lang} country={countryParam} source='contact' /></div>
         </div>
       </div>
     </div>
