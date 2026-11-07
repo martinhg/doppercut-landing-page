@@ -1,6 +1,6 @@
 ---
 import { countries } from '../i18n/config';
-import { uiFor, chromeFor } from '../i18n/regional';
+import { uiFor, chromeFor, countryPathFor } from '../i18n/regional';
 import { htmlLangFor, resolveLocale, type CountryCode } from '../i18n/locale';
 import { site } from '../config/site';
 
@@ -10,7 +10,7 @@ const c = chromeFor(locale.code);
 
 const { pathname } = Astro.url;
 const pathWithoutCountry = pathname.replace(new RegExp(`^/${locale.code}(?=/|$)`), '');
-const countryUrl = (code: string) => `/${code}${pathWithoutCountry}`;
+const countryUrl = (code: string) => countryPathFor(locale.code, code, pathWithoutCountry);
 const link = (path: string) => `/${locale.code}${path === '/' ? '' : path}`;
 
 const navLinks = [

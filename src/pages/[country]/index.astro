@@ -12,6 +12,7 @@ import FeatureCards from '../../components/FeatureCards.astro';
 import StepConfigure from '../../components/steps/StepConfigure.astro';
 import StepShare from '../../components/steps/StepShare.astro';
 import StepBookings from '../../components/steps/StepBookings.astro';
+import IndustryStrip from '../../components/IndustryStrip.astro';
 import { uiFor, chromeFor, demoFor } from '../../i18n/regional';
 import { htmlLangFor } from '../../i18n/locale';
 import type { CountryCode } from '../../i18n/locale';
@@ -160,6 +161,13 @@ const link = (path: string) => {
             quality={80}
           />
         </div>
+      </div>
+    </section>
+
+    <!-- Industries strip: lets each visitor find their own business right after the hero. -->
+    <section class='py-14 bg-white border-y border-slate-200/70'>
+      <div class='max-w-5xl mx-auto px-6'>
+        <IndustryStrip country={countryParam} />
       </div>
     </section>
 
