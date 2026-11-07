@@ -25,7 +25,7 @@ const titleSEO = `Política de Privacidad | Protección de Datos - DopperCut ${c
 ---
 
 <Layout title='Términos y Condiciones de Uso | DopperCut' description='Acuerdo legal, derechos y responsabilidades al utilizar la plataforma DopperCut. Información sobre pagos, cancelaciones y propiedad de datos.' noindex={false} lang={lang}>
-  <Navbar country={currentCountry} />
+  <Navbar country={countryParam} />
   <main class='pt-32 pb-20 bg-slate-50 min-h-screen'>
     <div class='max-w-4xl mx-auto px-6'>
       <div class='bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-slate-200'>
@@ -76,5 +76,5 @@ const titleSEO = `Política de Privacidad | Protección de Datos - DopperCut ${c
       </div>
     </div>
   </main>
-  <Footer country={currentCountry} />
+  <Footer country={countryParam} />
 </Layout>
