@@ -6,8 +6,6 @@ import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 import LeadForm from '../../components/LeadForm.astro';
-import DashboardPreview from '../../components/previews/DashboardPreview.astro';
-import BookingPreview from '../../components/previews/BookingPreview.astro';
 import PricingMath from '../../components/PricingMath.astro';
 import FeatureCards from '../../components/FeatureCards.astro';
 import StepConfigure from '../../components/steps/StepConfigure.astro';
@@ -26,6 +24,8 @@ import { ui } from '../../i18n/content';
 
 // Images
 import dashboardImg from '../../assets/dashboard.webp';
+import mobileImg from '../../assets/mobile.webp';
+import websiteImg from '../../assets/website.webp';
 
 export function getStaticPaths() {
   return Object.keys(countries).map((code) => ({ params: { country: code } }));
@@ -338,7 +338,7 @@ const link = (path: string) => {
               <p class='text-slate leading-relaxed'>{tr(t.section_5.c1_desc)}</p>
             </div>
             <!-- Contenedor de la imagen con Efecto 3D -->
-            <div class='relative mt-auto -mr-8 lg:-mr-12 ml-0 sm:ml-4 lg:ml-24 h-72 lg:h-80'>
+            <div class='relative mt-auto -mr-8 lg:-mr-12 ml-4 lg:ml-24 h-56 sm:h-72 lg:h-80'>
               <!-- Mockup Browser Frame (Simulado con CSS) -->
               <div class='w-full h-full bg-white rounded-tl-xl shadow-2xl border border-slate-200/60 overflow-hidden'>
                 <!-- Barra superior del navegador simulada -->
@@ -348,7 +348,7 @@ const link = (path: string) => {
                   <div class='w-2.5 h-2.5 rounded-full bg-green-400/50'></div>
                 </div>
 
-                <DashboardPreview demo={demo} locale={htmlLangFor(countryParam as CountryCode)} countryCode={countryParam} />
+                <Image src={websiteImg} loading='lazy' alt={`${site.name}: ${t.section_5.c1_title}`} widths={[640, 1024, 1600]} sizes='(max-width: 1024px) 100vw, 800px' format='webp' quality={80} class='w-full h-full object-cover object-left-top' />
               </div>
             </div>
           </div>
@@ -369,7 +369,7 @@ const link = (path: string) => {
                   <div class='w-12 h-1.5 bg-slate-800/50 rounded-full'></div>
                 </div>
 
-                <BookingPreview demo={demo} />
+                <Image src={mobileImg} alt={`${site.name}: ${t.section_5.c2_title}`} loading='lazy' widths={[220, 440]} sizes='220px' format='webp' quality={80} class='w-full h-full object-cover object-top bg-white pt-4' />
                 <!-- Brillo sobre la pantalla (Glass Reflection) -->
                 <div class='absolute inset-0 bg-linear-to-tr from-transparent via-white/5 to-transparent pointer-events-none z-10'></div>
               </div>
