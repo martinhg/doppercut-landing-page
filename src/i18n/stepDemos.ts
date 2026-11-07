@@ -14,7 +14,6 @@ export interface StepDemo {
   today: string;
   full: string;
   newBooking: string;
-  confirmed: string;
   bookings: { name: string; when: string }[];
   /** Sample data for the feature cards ("what the system does for you"). */
   features: {
@@ -55,7 +54,6 @@ export const stepDemos: Record<Lang, StepDemo> = {
     today: 'Agenda de hoy',
     full: 'Agenda llena',
     newBooking: 'Nuevo turno',
-    confirmed: 'Turno confirmado',
     bookings: esBookings,
     features: {
       whileAsleep: 'Mientras dormías',
@@ -79,7 +77,6 @@ export const stepDemos: Record<Lang, StepDemo> = {
     today: 'Agenda de hoy',
     full: 'Agenda llena',
     newBooking: 'Nueva cita',
-    confirmed: 'Cita confirmada',
     bookings: esBookings,
     features: {
       whileAsleep: 'Mientras dormías',
@@ -107,7 +104,6 @@ export const stepDemos: Record<Lang, StepDemo> = {
     today: "Today's schedule",
     full: 'Fully booked',
     newBooking: 'New booking',
-    confirmed: 'Booking confirmed',
     bookings: [
       { name: 'Sophie', when: 'Tomorrow 10:30 AM' },
       { name: 'Lucas', when: 'Thu 5:00 PM' },
@@ -141,7 +137,6 @@ export const stepDemos: Record<Lang, StepDemo> = {
     today: 'Agenda de hoje',
     full: 'Agenda cheia',
     newBooking: 'Novo agendamento',
-    confirmed: 'Agendamento confirmado',
     bookings: [
       { name: 'Sofia', when: 'Amanhã 10:30' },
       { name: 'Lucas', when: 'Qui 17:00' },

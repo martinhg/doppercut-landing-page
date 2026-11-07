@@ -96,30 +96,7 @@ const bookings: Builder = (q) => {
   return { sequence: seq, hold: done + 0.3 };
 };
 
-/** Growth section: booking notifications take turns over the dashboard screenshot. */
-const growthToasts: Builder = (q) => {
-  const seq: AnimationSequence = [];
-  for (let i = 0; i < 3; i++) {
-    const t = i * 3;
-    seq.push(
-      [q(`toast-${i}`), { opacity: [0, 1], y: [10, 0], scale: [0.96, 1] }, { at: t + 0.2, duration: 0.4, ease: EASE_OUT }],
-      [q(`toast-${i}`), { opacity: 0, y: -6 }, { at: t + 2.6, duration: 0.3 }],
-    );
-  }
-  return { sequence: seq, hold: 0.8 };
-};
-
-/** Growth section: a "booking confirmed" bubble pops beside the phone screenshot. */
-const growthConfirmed: Builder = (q) => ({
-  sequence: [
-    [q('bubble'), { opacity: [0, 1], y: [12, 0], scale: [0.9, 1] }, { at: 0.3, duration: 0.45, ease: EASE_OUT }],
-    [q('check'), { strokeDashoffset: [1, 0] }, { at: 0.55, duration: 0.35, ease: EASE_OUT }],
-    [q('bubble'), { opacity: 0, y: 8 }, { at: 3.4, duration: 0.3 }],
-  ],
-  hold: 1.2,
-});
-
-const builders: Record<string, Builder> = { configure, share, bookings, 'growth-toasts': growthToasts, 'growth-confirmed': growthConfirmed };
+const builders: Record<string, Builder> = { configure, share, bookings };
 
 /**
  * Scroll-linked depth: elements marked [data-tilt] start tilted back and settle flat as their
