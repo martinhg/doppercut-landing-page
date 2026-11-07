@@ -7,6 +7,7 @@ import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 import LeadForm from '../../components/LeadForm.astro';
 import PricingMath from '../../components/PricingMath.astro';
+import ProblemCards from '../../components/ProblemCards.astro';
 import FeatureCards from '../../components/FeatureCards.astro';
 import StepConfigure from '../../components/steps/StepConfigure.astro';
 import StepShare from '../../components/steps/StepShare.astro';
@@ -165,107 +166,14 @@ const link = (path: string) => {
 
     <!-- 2. PROBLEMA / AGITACIÓN (Bento Grid Style) -->
     <section class='py-24 bg-white relative overflow-hidden'>
-      <!-- Fondo decorativo abstracto (Patrón de puntos sutil) -->
-      <div class='absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-size-[20px_20px] opacity-50'></div>
 
       <div class='max-w-6xl mx-auto px-6 relative z-10'>
-        <!-- Encabezado de Sección -->
-        <div class='text-center max-w-3xl mx-auto mb-16 reveal'>
+        <div class='text-center max-w-3xl mx-auto mb-12 lg:mb-14 reveal'>
           <h2 class='text-3xl lg:text-4xl font-bold text-navy mb-6'>{t.problems.title}<br /><span class='text-primary'>{t.problems.subtitle}</span></h2>
           <p class='text-slate text-lg leading-relaxed'>{t.problems.description}</p>
         </div>
 
-        <!-- Grid de Problemas (Bento Grid) -->
-        <div class='grid md:grid-cols-3 gap-8'>
-          <!-- TARJETA 1: El Caos de WhatsApp -->
-          <div class='reveal group relative bg-slate-50 rounded-3xl border border-slate-200 p-8 hover:shadow-xl hover:shadow-navy/5 transition-shadow duration-300 overflow-hidden'>
-            <div class='absolute top-0 right-0 w-32 h-32 bg-red-100 rounded-full blur-3xl opacity-0 group-hover:opacity-50 transition-opacity'></div>
-            <!-- Icono -->
-            <div class='w-12 h-12 bg-white rounded-xl border border-slate-100 shadow-sm flex items-center justify-center mb-6 text-red-500'>
-              <svg class='w-6 h-6' fill='none' viewBox='0 0 24 24' stroke='currentColor' aria-hidden='true'
-                ><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z'
-                ></path></svg
-              >
-            </div>
-
-            <h3 class='text-xl font-bold text-navy mb-3'>{t.problems.p1_title}</h3>
-            <p class='text-slate text-sm mb-8 leading-relaxed'>{t.problems.p1_desc}</p>
-
-            <!-- Visual Mini-Mockup: Chat Caótico -->
-            <div class='relative bg-white rounded-lg border border-slate-200 p-3 shadow-sm w-full opacity-80 group-hover:opacity-100 transition-opacity'>
-              <div class='flex flex-col gap-2'>
-                <div class='self-start bg-slate-100 rounded-lg rounded-tl-none p-2 text-[10px] text-slate max-w-[80%]'>{t.problems.p1_elem1}</div>
-                <div class='self-end bg-green-100 rounded-lg rounded-tr-none p-2 text-[10px] text-green-800 max-w-[80%]'>{t.problems.p1_elem2}</div>
-                <div class='self-start bg-slate-100 rounded-lg rounded-tl-none p-2 text-[10px] text-slate max-w-[80%]'>{t.problems.p1_elem3}</div>
-                <!-- Notificación de error -->
-                <div class='absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm'>+15 {t.problems.p1_elem4}</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- TARJETA 2: Ausencias (No-Show) -->
-          <div class='reveal delay-100 group relative bg-slate-50 rounded-3xl border border-slate-200 p-8 hover:shadow-xl hover:shadow-navy/5 transition-shadow duration-300 overflow-hidden'>
-            <div class='absolute top-0 right-0 w-32 h-32 bg-orange-100 rounded-full blur-3xl opacity-0 group-hover:opacity-50 transition-opacity'></div>
-            <!-- Icono -->
-            <div class='w-12 h-12 bg-white rounded-xl border border-slate-100 shadow-sm flex items-center justify-center mb-6 text-orange-500'>
-              <svg class='w-6 h-6' fill='none' viewBox='0 0 24 24' stroke='currentColor' aria-hidden='true'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'></path></svg>
-            </div>
-
-            <h3 class='text-xl font-bold text-navy mb-3'>{t.problems.p2_title}</h3>
-            <p class='text-slate text-sm mb-8 leading-relaxed'>{tr(t.problems.p2_desc)}</p>
-
-            <!-- Visual Mini-Mockup: Calendario con Huecos -->
-            <div class='bg-white rounded-lg border border-slate-200 p-4 shadow-sm w-full opacity-80 group-hover:opacity-100 transition-opacity'>
-              <div class='grid grid-cols-1 gap-2'>
-                <div class='flex items-center gap-2 opacity-40'>
-                  <div class='w-1 h-8 bg-slate-300 rounded-full'></div>
-                  <div class='flex-1 h-8 bg-slate-100 rounded flex items-center px-2 text-[10px]'>{t.problems.p2_elem1}</div>
-                </div>
-                <div class='flex items-center gap-2'>
-                  <div class='w-1 h-8 bg-red-400 rounded-full'></div>
-                  <div class='flex-1 h-8 bg-red-50 rounded border border-red-100 flex items-center justify-between px-2 text-[10px] text-red-500 font-medium'>
-                    <span>17:00 PM</span>
-                    <span class='bg-red-100 px-1.5 rounded text-[9px]'>{t.problems.p2_elem2}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- TARJETA 3: Caja Negra (Finanzas) -->
-          <div class='reveal delay-200 group relative bg-slate-50 rounded-3xl border border-slate-200 p-8 hover:shadow-xl hover:shadow-navy/5 transition-shadow duration-300 overflow-hidden'>
-            <div class='absolute top-0 right-0 w-32 h-32 bg-blue-100 rounded-full blur-3xl opacity-0 group-hover:opacity-50 transition-opacity'></div>
-            <!-- Icono -->
-            <div class='w-12 h-12 bg-white rounded-xl border border-slate-100 shadow-sm flex items-center justify-center mb-6 text-primary'>
-              <svg class='w-6 h-6' fill='none' viewBox='0 0 24 24' stroke='currentColor' aria-hidden='true'
-                ><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z'></path></svg
-              >
-            </div>
-
-            <h3 class='text-xl font-bold text-navy mb-3'>{t.problems.p3_title}</h3>
-            <p class='text-slate text-sm mb-8 leading-relaxed'>{t.problems.p3_desc}</p>
-
-            <!-- Visual Mini-Mockup: Ticket vs Gráfico -->
-            <div class='relative h-24 w-full'>
-              <!-- Papel arrugado (Representación abstracta) -->
-              <div class='absolute left-0 bottom-0 w-24 h-20 bg-white border border-slate-200 -rotate-6 shadow-sm p-2 flex flex-col gap-1 z-10'>
-                <div class='h-1 w-1/2 bg-slate-200 rounded'></div>
-                <div class='h-1 w-3/4 bg-slate-200 rounded'></div>
-                <div class='h-1 w-2/3 bg-slate-200 rounded'></div>
-              </div>
-              <!-- Flecha de solución -->
-              <div class='absolute left-28 top-8 text-slate-300'>
-                <svg class='w-6 h-6' fill='none' viewBox='0 0 24 24' stroke='currentColor' aria-hidden='true'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M17 8l4 4m0 0l-4 4m4-4H3'></path></svg>
-              </div>
-              <!-- Gráfico Moderno -->
-              <div class='absolute right-0 bottom-2 w-28 h-16 bg-white border border-primary/20 rounded-lg shadow-sm p-2 flex items-end justify-around gap-1 z-10'>
-                <div class='w-2 bg-primary/40 h-[40%] rounded-t-sm'></div>
-                <div class='w-2 bg-primary/60 h-[70%] rounded-t-sm'></div>
-                <div class='w-2 bg-primary h-full rounded-t-sm '></div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <ProblemCards copy={t.problems} />
 
         <!-- Conector Visual (Flecha hacia abajo) -->
         <div class='mt-20 flex justify-center'>

@@ -1,0 +1,99 @@
+---
+interface Props {
+  copy: {
+    p1_title: string;
+    p1_desc: string;
+    p1_msgs: string[];
+    p1_unread: string;
+    p2_title: string;
+    p2_desc: string;
+    p2_rows: string[][];
+    p2_noshow: string;
+    p3_title: string;
+    p3_desc: string;
+    p3_lines: string[];
+    p3_total: string;
+  };
+}
+
+const { copy } = Astro.props;
+const cards = [
+  { title: copy.p1_title, desc: copy.p1_desc, visual: 'chat' },
+  { title: copy.p2_title, desc: copy.p2_desc, visual: 'agenda' },
+  { title: copy.p3_title, desc: copy.p3_desc, visual: 'notebook' },
+] as const;
+const waveform = [5, 9, 6, 12, 8, 14, 7, 10, 5, 11, 7, 13, 6, 9, 4, 8, 6, 10];
+const noShowRow = 1;
+---
+
+<!-- Same card structure as the solution cards (FeatureCards), so problem and answer read as a pair. -->
+<div class='grid gap-6 md:grid-cols-3'>
+  {
+    cards.map((card, i) => (
+      <article class={`reveal ${i ? `delay-${i * 100}` : ''} flex flex-col rounded-3xl border border-slate-200/80 bg-white p-3 shadow-sm`}>
+        <div class='relative h-52 overflow-hidden rounded-2xl bg-surface' aria-hidden='true'>
+          {card.visual === 'chat' && (
+            <div class='flex h-full flex-col gap-1.5 bg-[#efeae2] p-4'>
+              <div class='mb-1 flex items-center justify-between'>
+                <span class='tabular text-[11px] font-semibold text-ink'>23:40</span>
+                <span class='rounded-full bg-danger px-2 py-0.5 text-[10px] font-semibold text-white'>{copy.p1_unread}</span>
+              </div>
+              {copy.p1_msgs.slice(0, 2).map((message) => (
+                <span class='w-fit max-w-[85%] rounded-xl rounded-tl-sm bg-white px-2.5 py-1.5 text-xs text-ink shadow-sm'>{message}</span>
+              ))}
+              <span class='flex w-fit items-center gap-2 rounded-xl rounded-tl-sm bg-white px-2.5 py-1.5 shadow-sm'>
+                <svg class='h-4 w-4 text-slate' viewBox='0 0 24 24' fill='currentColor'>
+                  <path d='M8 5v14l11-7z' />
+                </svg>
+                <span class='flex items-center gap-[2px]'>
+                  {waveform.map((height) => (
+                    <span class='w-[2px] rounded-full bg-slate-300' style={`height: ${height}px`} />
+                  ))}
+                </span>
+                <span class='tabular text-[10px] text-slate'>2:34</span>
+              </span>
+              <span class='w-fit max-w-[85%] rounded-xl rounded-tl-sm bg-white px-2.5 py-1.5 text-xs text-ink shadow-sm'>{copy.p1_msgs[2]}</span>
+            </div>
+          )}
+
+          {card.visual === 'agenda' && (
+            <ul class='flex h-full flex-col justify-center gap-2 p-4'>
+              {copy.p2_rows.map(([time, name], row) => (
+                <li class='flex items-center gap-3 text-xs'>
+                  <span class='tabular w-14 shrink-0 text-slate'>{time}</span>
+                  {row === noShowRow ? (
+                    <span class='flex flex-1 items-center justify-between gap-2 rounded-lg border border-dashed border-danger/50 bg-danger-surface px-3 py-2.5'>
+                      <span class='text-danger line-through decoration-danger/50'>{name}</span>
+                      <span class='rounded-full bg-danger px-2 py-0.5 text-[10px] font-semibold text-white'>{copy.p2_noshow}</span>
+                    </span>
+                  ) : (
+                    <span class='flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-ink'>{name}</span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {card.visual === 'notebook' && (
+            <div class='flex h-full items-center justify-center p-4'>
+              <div class='relative w-full max-w-[15rem] -rotate-2 rounded-sm bg-[#fffdf3] py-3 pl-9 pr-4 shadow-md [background-image:repeating-linear-gradient(to_bottom,transparent_0,transparent_21px,#dbe4f0_21px,#dbe4f0_22px)]'>
+                <span class='absolute inset-y-0 left-6 w-px bg-danger/40' />
+                <ul class='text-[13px] italic leading-[22px] text-ink/80 [font-family:"Bradley_Hand","Segoe_Print","Comic_Sans_MS",cursive]'>
+                  {copy.p3_lines.map((line, k) => (
+                    <li class:list={[k === 0 && 'text-ink/40 line-through']}>{line}</li>
+                  ))}
+                  <li class='font-semibold text-danger'>{copy.p3_total}</li>
+                </ul>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div class='px-4 pb-4 pt-5'>
+          <h3 class='text-lg font-bold text-navy'>{card.title}</h3>
+          <p class='mt-2 leading-relaxed text-slate'>{card.desc}</p>
+        </div>
+      </article>
+    ))
+  }
+</div>
