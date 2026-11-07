@@ -1,87 +1,74 @@
 ---
 export const prerender = true;
 
-import Layout from '../../layouts/Layout.astro';
-import Navbar from '../../components/Navbar.astro';
-import Footer from '../../components/Footer.astro';
-
-// i18n
-import { countries, countryTerms } from '../../i18n/config';
-import { ui } from '../../i18n/content';
+import LegalPage from '../../layouts/LegalPage.astro';
+import { countries } from '../../i18n/config';
+import { site } from '../../config/site';
 
 export function getStaticPaths() {
   return Object.keys(countries).map((code) => ({ params: { country: code } }));
 }
 
-const countryParam = typeof Astro.params?.country === 'string' ? Astro.params.country : 'ar';
-const currentCountry = countries[countryParam as keyof typeof countries] ?? countries.ar;
-const lang = (currentCountry.lang ?? 'es_ar') as keyof typeof ui;
-const t = ui[lang];
-const terms = countryTerms[countryParam as keyof typeof countryTerms];
-
-const tr = (text: string) => text.replace(/{appointment}/g, terms.appointment);
-
-const titleSEO = `Política de Privacidad | Protección de Datos - DopperCut ${currentCountry.name}`;
+const country = String(Astro.params.country);
 ---
 
-<Layout title={titleSEO} description='Conoce cómo protegemos los datos de tu negocio y tus clientes. Cumplimiento con la Ley 25.326 de Protección de Datos Personales en Argentina.' noindex={false} lang={lang}>
-  <Navbar country={countryParam} />
-  <main class='pt-32 pb-20 bg-slate-50 min-h-screen'>
-    <div class='max-w-4xl mx-auto px-6'>
-      <div class='bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-slate-200'>
-        <h1 class='text-3xl font-bold text-navy mb-6'>Política de Privacidad</h1>
+<LegalPage
+  title='Política de privacidad'
+  description={`Cómo ${site.name} recopila, usa y protege los datos de tu negocio y de tus clientes. Tus datos son tuyos y no los vendemos a terceros.`}
+  updated='noviembre de 2026'
+  summary='Tus datos son tuyos. No vendemos tu información a terceros, usamos conexiones cifradas y cumplimos con la Ley 25.326 de Protección de Datos Personales de la República Argentina.'
+>
+  <h2>1. Quién es responsable de tus datos</h2>
+  <p>
+    El responsable del tratamiento de los datos recopilados en este sitio es {site.legal.holder}. Podés contactarnos en <a href={`mailto:${site.email}`}>{site.email}</a>. Los datos identificatorios completos figuran en el
+    <a href={`/${country}/aviso-legal`}>aviso legal</a>.
+  </p>
 
-        <div class='space-y-8 text-slate-600'>
-          <div class='bg-indigo-50 p-6 rounded-xl border border-indigo-100'>
-            <h3 class='text-indigo-900 font-bold text-lg mb-2'>Resumen</h3>
-            <p class='text-indigo-800 text-sm'>
-              Tus datos son tuyos. No vendemos tu información a terceros. Utilizamos encriptación estándar de la industria para proteger tu negocio y el de tus clientes. Cumplimos con la Ley 25.326 de Protección de Datos Personales de Argentina.
-            </p>
-          </div>
+  <h2>2. Qué información recopilamos</h2>
+  <ul>
+    <li><strong>Datos que nos enviás en el formulario:</strong> nombre, apellido, nombre del negocio, teléfono y el mensaje opcional. Los usamos solo para contactarte y darte de alta.</li>
+    <li><strong>Datos de tu negocio dentro de la plataforma:</strong> nombre, dirección, CUIT/DNI, teléfono, servicios, horarios y equipo.</li>
+    <li><strong>Datos de tus clientes:</strong> la información que cargás en el sistema (nombres, teléfonos para recordatorios, historial de turnos). Sobre estos datos actuamos como encargados del tratamiento, siguiendo tus instrucciones.</li>
+    <li><strong>Datos de navegación:</strong> métricas agregadas y anónimas de visitas (páginas vistas, país, tipo de dispositivo). No usan cookies ni identifican a personas.</li>
+  </ul>
 
-          <section class='mt-10'>
-            <h3 class='text-xl font-bold text-navy mb-3'>1. Información que recopilamos</h3>
-            <p class='mb-2'>Para brindar el servicio, recopilamos dos tipos de datos:</p>
-            <ul class='list-disc pl-5 space-y-1'>
-              <li><strong>Datos de tu Negocio:</strong> Nombre, dirección, CUIT/DNI, teléfono y empleados.</li>
-              <li><strong>Datos de tus Clientes:</strong> Información que tú cargas en el sistema (nombres, teléfonos para recordatorios, historial de turnos). Actuamos como encargados del tratamiento de estos datos bajo tus instrucciones.</li>
-            </ul>
-          </section>
+  <h2>3. Para qué usamos la información</h2>
+  <ul>
+    <li>Prestar el servicio de agenda online y gestión.</li>
+    <li>Enviar recordatorios automáticos por WhatsApp a través de proveedores de mensajería.</li>
+    <li>Generar tus reportes financieros y estadísticos.</li>
+    <li>Facturar el servicio y responder tus consultas.</li>
+    <li>Mejorar el sitio a partir de métricas agregadas.</li>
+  </ul>
 
-          <section class='mt-8'>
-            <h3 class='text-xl font-bold text-navy mb-3'>2. Uso de la información</h3>
-            <p>Utilizamos los datos exclusivamente para:</p>
-            <ul class='list-disc pl-5 space-y-1'>
-              <li>- Proveer el servicio de agendamiento y gestión.</li>
-              <li>- Enviar recordatorios automáticos por WhatsApp (vía API de terceros).</li>
-              <li>- Generar tus reportes financieros y estadísticos.</li>
-              <li>- Facturación del servicio.</li>
-            </ul>
-          </section>
+  <h2>4. Seguridad y conservación</h2>
+  <p>
+    Los datos se alojan en servidores seguros con copias de seguridad periódicas. Toda la comunicación viaja cifrada con HTTPS (TLS). El acceso a tu cuenta está protegido por contraseña, cuya custodia es tu responsabilidad. Conservamos los
+    datos mientras tu cuenta esté activa y hasta 30 días después de su baja, salvo obligación legal de conservarlos por más tiempo.
+  </p>
 
-          <section class='mt-8'>
-            <h3 class='text-xl font-bold text-navy mb-3'>3. Seguridad y Almacenamiento</h3>
-            <p>
-              Tus datos se alojan en servidores seguros con copias de seguridad diarias. Utilizamos protocolos SSL/TLS para encriptar la comunicación entre tu dispositivo y nuestros servidores. El acceso a tu cuenta está protegido por contraseña, la
-              cual es tu responsabilidad resguardar.
-            </p>
-          </section>
+  <h2>5. Proveedores que intervienen</h2>
+  <p>Compartimos solo los datos estrictamente necesarios con proveedores obligados a protegerlos:</p>
+  <ul>
+    <li><strong>Vercel:</strong> alojamiento del sitio y analítica web sin cookies.</li>
+    <li><strong>Web3Forms:</strong> recepción de los formularios de contacto.</li>
+    <li><strong>Meta (WhatsApp):</strong> envío de mensajes y recordatorios.</li>
+    <li><strong>Mercado Pago u otros medios de pago:</strong> procesamiento de cobros.</li>
+  </ul>
 
-          <section class='mt-8'>
-            <h3 class='text-xl font-bold text-navy mb-3'>4. Tus Derechos (Derechos ARCO)</h3>
-            <p>Como titular de los datos, tienes derecho a Acceder, Rectificar, Cancelar u Oponerte al tratamiento de tu información personal. Para ejercer estos derechos, puedes enviar un correo a soporte@doppercut.com.</p>
-          </section>
+  <h2>6. Tus derechos</h2>
+  <p>
+    Como titular de los datos podés acceder, rectificar, actualizar o pedir la supresión de tu información personal en forma gratuita. Escribinos a <a href={`mailto:${site.email}`}>{site.email}</a> y te respondemos dentro de los plazos
+    legales (10 días corridos para el acceso y 5 días hábiles para la rectificación o supresión).
+  </p>
+  <p>
+    La Agencia de Acceso a la Información Pública, en su carácter de órgano de control de la Ley 25.326, tiene la atribución de atender las denuncias y reclamos que interpongan quienes resulten afectados en sus derechos por incumplimiento de
+    las normas vigentes en materia de protección de datos personales.
+  </p>
 
-          <section class='mt-8'>
-            <h3 class='text-xl font-bold text-navy mb-3'>5. Servicios de Terceros</h3>
-            <p>
-              Para funcionalidades específicas (como el envío de WhatsApps o procesamiento de pagos), compartimos los datos estrictamente necesarios con proveedores de confianza (ej: Meta/WhatsApp, Mercado Pago), quienes también están obligados a
-              proteger la información.
-            </p>
-          </section>
-        </div>
-      </div>
-    </div>
-  </main>
-  <Footer country={countryParam} />
-</Layout>
+  <h2>7. Cookies</h2>
+  <p>Este sitio no usa cookies publicitarias ni de rastreo. El detalle está en la <a href={`/${country}/cookies`}>política de cookies</a>.</p>
+
+  <h2>8. Cambios en esta política</h2>
+  <p>Si modificamos esta política, publicaremos la nueva versión en esta página con su fecha de actualización.</p>
+</LegalPage>
