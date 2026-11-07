@@ -7,7 +7,7 @@ import sitemap from '@astrojs/sitemap';
 import vercel from '@astrojs/vercel';
 
 export default defineConfig({
-  site: 'https://doppercut.com',
+  site: 'https://turnosplus.com',
 
   output: 'server',
 
@@ -24,7 +24,12 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  integrations: [react(), sitemap()],
+  integrations: [
+    react(),
+    sitemap({
+      filter: (page) => !page.includes('/404'),
+    }),
+  ],
   adapter: vercel({
     webAnalytics: { enabled: true },
   }),

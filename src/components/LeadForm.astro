@@ -1,0 +1,83 @@
+---
+import { ui } from '../i18n/content';
+import type { Lang } from '../i18n/locale';
+import { site } from '../config/site';
+
+interface Props {
+  lang: Lang;
+  country: string;
+  /** Identifies the form in the lead email and analytics. */
+  source: 'home' | 'contact';
+}
+
+const { lang, country, source } = Astro.props;
+const t = ui[lang];
+const id = (field: string) => `${source}-${field}`;
+
+const inputClass =
+  'w-full px-4 py-3 rounded-xl bg-white border border-slate-300 text-ink placeholder:text-slate focus:border-primary-dark focus:outline-none focus:ring-2 focus:ring-primary/25 transition-[border-color,box-shadow] duration-150';
+const labelClass = 'block text-sm font-medium text-navy mb-1.5';
+---
+
+<form action='https://api.web3forms.com/submit' method='POST' class='relative space-y-4' data-lead-form={source} novalidate>
+  <input type='hidden' name='access_key' value={site.web3formsKey} />
+  <input type='hidden' name='subject' value={`Nuevo lead ${source === 'home' ? 'home' : 'contacto'} (${site.name} ${country.toUpperCase()})`} />
+  <input type='hidden' name='from_name' value={`${site.name} Web`} />
+  <input type='hidden' name='country' value={country} />
+
+  <!-- Honeypots: invisible to people, irresistible to bots. Web3Forms also rejects `botcheck`. -->
+  <input type='checkbox' name='botcheck' class='hidden' tabindex='-1' autocomplete='off' aria-hidden='true' />
+  <div class='absolute -left-[9999px] w-px h-px overflow-hidden' aria-hidden='true'>
+    <label for={id('website')}>Website</label>
+    <input type='text' id={id('website')} name='website' tabindex='-1' autocomplete='off' />
+  </div>
+
+  <div class='grid grid-cols-1 sm:grid-cols-2 gap-4'>
+    <div>
+      <label for={id('name')} class={labelClass}>{t.section_8.form_name}</label>
+      <input id={id('name')} type='text' name='name' required autocomplete='given-name' maxlength='80' class={inputClass} />
+    </div>
+    <div>
+      <label for={id('lastname')} class={labelClass}>{t.section_8.form_lastname}</label>
+      <input id={id('lastname')} type='text' name='lastname' required autocomplete='family-name' maxlength='80' class={inputClass} />
+    </div>
+  </div>
+
+  <div>
+    <label for={id('business')} class={labelClass}>{t.section_8.form_business_name}</label>
+    <input id={id('business')} type='text' name='business_name' required autocomplete='organization' maxlength='120' class={inputClass} />
+  </div>
+
+  <div>
+    <label for={id('phone')} class={labelClass}>{t.section_8.form_phone}</label>
+    <input
+      id={id('phone')}
+      type='tel'
+      name='phone_number'
+      required
+      autocomplete='tel'
+      inputmode='tel'
+      pattern='[0-9 +()\-]{6,20}'
+      maxlength='20'
+      aria-describedby={id('phone-help')}
+      class={inputClass}
+    />
+    <p id={id('phone-help')} class='text-xs text-slate mt-1.5'>{t.section_8.form_caption}</p>
+  </div>
+
+  <div>
+    <label for={id('note')} class={labelClass}>{t.section_8.form_note}</label>
+    <textarea id={id('note')} name='note' rows='3' maxlength='1000' class={inputClass}></textarea>
+  </div>
+
+  <button type='submit' class='press w-full py-4 bg-primary-dark text-white font-semibold rounded-xl hover:bg-navy disabled:opacity-70 disabled:cursor-wait transition-colors cursor-pointer'>
+    <span>{t.section_8.form_btn}</span>
+  </button>
+
+  <p data-form-status role='status' aria-live='polite' hidden class='rounded-xl border p-3 text-center text-sm data-[tone=success]:border-success/20 data-[tone=success]:bg-success-surface data-[tone=success]:text-success data-[tone=error]:border-danger/20 data-[tone=error]:bg-danger-surface data-[tone=error]:text-danger'></p>
+
+  <p class='text-center text-xs text-slate'>
+    {t.contact.form_cap1}
+    <a href={`/${country}/privacidad`} class='underline hover:text-navy'>{t.footer.privacy}</a>.
+  </p>
+</form>

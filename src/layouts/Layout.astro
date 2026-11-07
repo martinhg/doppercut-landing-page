@@ -1,321 +1,277 @@
 ---
 import '../styles/global.css';
-import '@fontsource/inter/300.css';
-import '@fontsource/inter/400.css';
-import '@fontsource/inter/500.css';
-import '@fontsource/inter/600.css';
-import '@fontsource/inter/700.css';
 
 import { countries } from '../i18n/config';
+import { chrome } from '../i18n/chrome';
+import { htmlLangFor, resolveLocale } from '../i18n/locale';
+import { site, whatsappLink } from '../config/site';
+import CookieNotice from '../components/CookieNotice.astro';
 
 interface Props {
   title?: string;
   description?: string;
   image?: string;
-  canonicalURL?: string | URL;
   noindex?: boolean;
-  lang?: string;
   country?: string;
+  /** Extra JSON-LD nodes for this page (FAQ, breadcrumbs...). */
+  schema?: Record<string, unknown>[];
 }
 
-// 1. Valores por Defecto (Tu Marca)
-const defaultTitle = 'DopperCut - Gestión Inteligente para Barberías y Peluquerías';
-const defaultDescription = 'La forma moderna de organizar tu negocio. Deja de perder tiempo en WhatsApp. Gestiona turnos, caja, clientes y empleados en una sola plataforma en la nube.';
-const defaultImage = '/og-doppercut.jpg';
+const { title, description, image = site.ogImage, noindex = false, schema = [] } = Astro.props;
+const locale = resolveLocale(Astro.props.country ?? Astro.params.country);
+const c = chrome[locale.lang];
 
-const { title = defaultTitle, description = defaultDescription, image = defaultImage, noindex = false, lang = 'es_ar', country = 'ar' } = Astro.props;
+const pageTitle = !title ? `${site.name} | ${c.seo_title}` : title.includes(site.name) ? title : `${title} | ${site.name}`;
+const pageDescription = description ?? c.seo_description;
 
-const currentCountryData = countries[country] || countries.ar;
+const siteUrl = Astro.site ?? new URL(site.url);
+const canonicalURL = new URL(Astro.url.pathname.replace(/\/$/, '') || '/', siteUrl);
+const socialImageURL = new URL(image, siteUrl);
+const pathWithoutCountry = Astro.url.pathname.replace(new RegExp(`^/${locale.code}(?=/|$)`), '').replace(/\/$/, '');
 
-const canonicalURL = new URL(Astro.props.canonicalURL ?? Astro.url.pathname, Astro.site);
-const socialImageURL = new URL('/og-doppercut.jpg', Astro.site);
+const numericPrice = locale.country.price_promo.replace(/[^0-9.,]+/g, '').replace(/\.(?=\d{3})/g, '').replace(',', '.');
 
-const { pathname } = Astro.url;
-const cleanPath = pathname.replace(new RegExp(`^/${country}`), '') || '';
-
-const getIsoCode = (cCode: string, cLang: string) => {
-  if (cCode === 'br') return 'pt-BR';
-  if (cCode === 'us') return 'en-US';
-  if (cCode === 'es') return 'es-ES';
-  return `es-${cCode.toUpperCase()}`; // Genera es-AR, es-MX, es-CO, etc.
-};
-
-const numericPrice = currentCountryData.price_promo.replace(/[^0-9.,]+/g, '').replace(',', '.');
-
-const seoData = {
-  es: {
-    title: 'Sistema de Turnos y Citas para Barberías | DopperCut',
-    desc: 'Software de gestión para barberías y peluquerías. La forma moderna de organizar tu negocio. Deja de perder tiempo en WhatsApp. Gestiona turnos, caja, clientes y empleados en una sola plataforma en la nube.',
+const graph = [
+  {
+    '@type': 'Organization',
+    '@id': `${site.url}/#organization`,
+    name: site.name,
+    url: site.url,
+    logo: new URL(site.logo.raster, siteUrl).href,
+    email: site.email,
+    sameAs: [site.instagram],
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'customer support',
+      email: site.email,
+      telephone: `+${site.whatsappNumber}`,
+      availableLanguage: ['es', 'pt', 'en'],
+    },
   },
-  pt: {
-    title: 'Sistema de Agendamento para Barbearias | DopperCut',
-    desc: 'Software de gestão para barbearias e salões. Agenda online, lembretes via WhatsApp e controle financeiro. Teste grátis.',
+  {
+    '@type': 'WebSite',
+    '@id': `${site.url}/#website`,
+    url: site.url,
+    name: site.name,
+    inLanguage: locale.htmlLang,
+    publisher: { '@id': `${site.url}/#organization` },
   },
-} as const;
-
-const langKey = lang.slice(0, 2) as keyof typeof seoData;
-const currentSEO = seoData[langKey] || seoData.es;
-const finalTitle = title === defaultTitle ? currentSEO.title : title;
-const finalDesc = description === defaultDescription ? currentSEO.desc : description;
-
-const pageTitle = title === defaultTitle ? title : `${title} | DopperCut`;
+  {
+    '@type': 'SoftwareApplication',
+    name: site.name,
+    url: canonicalURL.href,
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web',
+    description: pageDescription,
+    publisher: { '@id': `${site.url}/#organization` },
+    ...(locale.country.currency && Number(numericPrice)
+      ? {
+          offers: {
+            '@type': 'Offer',
+            price: numericPrice,
+            priceCurrency: locale.country.currency,
+            availability: 'https://schema.org/InStock',
+          },
+        }
+      : {}),
+  },
+  ...schema,
+];
 ---
 
 <!doctype html>
-<html lang={lang} class='scroll-smooth'>
+<html lang={locale.htmlLang} class='scroll-smooth'>
   <head>
     <meta charset='UTF-8' />
-    <meta name='viewport' content='width=device-width' />
-    <link rel='icon' type='image/png' href='/doppercut.png' />
-    <meta name='generator' content={Astro.generator} />
+    <meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover' />
+    <meta http-equiv='Content-Security-Policy' content='upgrade-insecure-requests' />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
 
-    <!-- SEO Principal -->
-    <title>{finalTitle}</title>
-    <meta name='description' content={finalDesc} />
+    <title>{pageTitle}</title>
+    <meta name='description' content={pageDescription} />
     <link rel='canonical' href={canonicalURL} />
-    <meta name='theme-color' content='#0A1A2F' />
+    <meta name='robots' content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
+    {site.googleSiteVerification && <meta name='google-site-verification' content={site.googleSiteVerification} />}
 
-    {noindex ? <meta name='robots' content='noindex, nofollow' /> : <meta name='robots' content='index, follow' />}
+    {
+      !noindex &&
+        Object.values(countries).map((country) => (
+          <link rel='alternate' hreflang={htmlLangFor(country.code as keyof typeof countries)} href={new URL(`/${country.code}${pathWithoutCountry}`, siteUrl)} />
+        ))
+    }
+    {!noindex && <link rel='alternate' hreflang='x-default' href={new URL(`/us${pathWithoutCountry}`, siteUrl)} />}
 
-    {Object.values(countries).map((c) => <link rel='alternate' hreflang={getIsoCode(c.code, c.lang)} href={`https://doppercut.com/${c.code}${cleanPath}`} />)}
-    <link rel="alternate" hreflang="x-default" href={`https://doppercut.com/us${cleanPath}`} />
+    <link rel='icon' href='/brand/favicon.ico' sizes='any' />
+    <link rel='icon' href='/brand/favicon.svg' type='image/svg+xml' />
+    <link rel='apple-touch-icon' href='/brand/icon-180.png' />
+    <link rel='manifest' href='/site.webmanifest' />
+    <meta name='theme-color' content={site.themeColor} />
+    <meta name='author' content={site.name} />
 
-    <!-- Palabras Clave (Keywords) - Opcional pero ayuda contexto -->
-    <meta name='keywords' content='sistema barbería, agenda online, turnos peluquería, software gestión, doppercut, argentina, app turnos, gestion estetica, app gestion, app, plataforma, plataforma gestion' />
-    <meta name='author' content='DopperCut' />
-
-    <!-- Open Graph / Facebook / WhatsApp -->
-    <meta property='og:site_name' content='DopperCut' />
+    <meta property='og:site_name' content={site.name} />
     <meta property='og:type' content='website' />
+    <meta property='og:locale' content={locale.ogLocale} />
     <meta property='og:url' content={canonicalURL} />
     <meta property='og:title' content={pageTitle} />
-    <meta property='og:description' content={description} />
+    <meta property='og:description' content={pageDescription} />
     <meta property='og:image' content={socialImageURL} />
     <meta property='og:image:type' content='image/jpeg' />
-    <meta property='og:image:alt' content='DopperCut Dashboard y Logo' />
     <meta property='og:image:width' content='1200' />
     <meta property='og:image:height' content='630' />
-    <meta property='og:image:secure_url' content={socialImageURL} />
+    <meta property='og:image:alt' content={`${site.name}: ${site.tagline}`} />
 
-    <!-- Twitter -->
     <meta name='twitter:card' content='summary_large_image' />
-    <meta property='twitter:url' content={canonicalURL} />
     <meta name='twitter:title' content={pageTitle} />
-    <meta name='twitter:description' content={description} />
+    <meta name='twitter:description' content={pageDescription} />
     <meta name='twitter:image' content={socialImageURL} />
 
-    <link rel='preconnect' href='https://fonts.googleapis.com' />
-    <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
-
-    <script
-      type='application/ld+json'
-      set:html={JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'SoftwareApplication',
-        name: 'DopperCut',
-        applicationCategory: 'BusinessApplication',
-        operatingSystem: 'Web, iOS, Android',
-        aggregateRating: {
-          '@type': 'AggregateRating',
-          ratingValue: '4.9',
-          ratingCount: '120',
-        },
-        offers: {
-          '@type': 'Offer',
-          price: numericPrice,
-          priceCurrency: currentCountryData.currency,
-          availability: 'https://schema.org/InStock',
-        },
-        description: description,
-      })}
-    />
+    <script type='application/ld+json' set:html={JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })} />
   </head>
-  <body class='bg-white text-navy font-sans antialiased selection:bg-accent selection:text-primary-dark overflow-x-hidden'>
+  <body class='bg-white text-ink font-sans antialiased overflow-x-hidden'>
+    <a href='#main' class='sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-navy focus:text-white'>{c.skip}</a>
+
     <slot />
 
-    <!-- Script para animaciones Reveal (Estilo Stripe) -->
-    <script>
-      const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1,
-      };
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, observerOptions);
-
-      document.querySelectorAll('.reveal').forEach((el) => {
-        observer.observe(el);
-      });
-
-      function easeOutQuart(x: number) {
-        return 1 - Math.pow(1 - x, 4);
-      }
-
-      const animateCounters = () => {
-        const counters = document.querySelectorAll('.counter-animate');
-        const speed = 2000; // Duración en milisegundos (2 segundos)
-
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                const counter = entry.target as HTMLElement | null;
-                const targetAttr = counter?.getAttribute('data-target');
-                const target = targetAttr ? +targetAttr : 0;
-
-                let startTime: number | null = null;
-
-                const updateCount = (currentTime: number) => {
-                  if (startTime === null) startTime = currentTime;
-                  const progress = currentTime - (startTime as number);
-
-                  // Calcular porcentaje completado (0 a 1)
-                  let percentage = Math.min(progress / speed, 1);
-
-                  // Aplicar easing
-                  percentage = easeOutQuart(percentage);
-
-                  // Calcular número actual
-                  const currentNum = Math.floor(percentage * target);
-
-                  // Formatear con puntos de mil (ej: 1.500)
-                  (counter as HTMLElement).innerText = currentNum.toLocaleString('es-AR');
-
-                  if (progress < speed) {
-                    window.requestAnimationFrame(updateCount);
-                  } else {
-                    (counter as HTMLElement).innerText = target.toLocaleString('es-AR'); // Asegurar número final exacto
-                  }
-                };
-
-                window.requestAnimationFrame(updateCount);
-                if (counter instanceof Element) {
-                  observer.unobserve(counter); // Solo animar una vez
-                }
-              }
-            });
-          },
-          { threshold: 0.5 },
-        ); // Se activa cuando el 50% del elemento es visible
-
-        counters.forEach((counter) => observer.observe(counter));
-      };
-
-      // Ejecutar cuando el DOM esté listo
-      document.addEventListener('DOMContentLoaded', animateCounters);
-    </script>
-
-    <!-- SCRIPT PARA MANEJAR EL ENVÍO SIN RECARGAR -->
-    <script is:inline>
-      const form = document.getElementById('form-alta');
-      const result = document.getElementById('result-message');
-      const btn = document.getElementById('btn-submit');
-      const btnText = btn.querySelector('span');
-      const iconArrow = document.getElementById('icon-arrow');
-      const iconLoading = document.getElementById('icon-loading');
-
-      form.addEventListener('submit', function (e) {
-        e.preventDefault(); // Evita que la página se recargue
-        const formData = new FormData(form);
-        const object = Object.fromEntries(formData);
-        const json = JSON.stringify(object);
-
-        // 1. Estado de "Cargando"
-        result.classList.add('hidden');
-        btn.disabled = true;
-        btn.classList.add('opacity-75', 'cursor-not-allowed');
-        btnText.textContent = 'Enviando...';
-
-        fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          body: json,
-        })
-          .then(async (response) => {
-            let json = await response.json();
-            if (response.status == 200) {
-              // 2. Éxito
-              result.innerHTML = '¡Recibido! Bienvenido a DopperCut. Te escribiremos al WhatsApp.';
-              result.classList.remove('hidden');
-              result.classList.remove('bg-red-50', 'text-red-700', 'border-red-100'); // Quitar estilo error si hubo
-              result.classList.add('bg-green-50', 'text-green-700', 'border-green-100');
-
-              form.reset(); // Limpiar campos
-            } else {
-              // Error del servidor
-              console.log(response);
-              result.innerHTML = json.message;
-              result.classList.remove('hidden');
-              result.classList.add('bg-red-50', 'text-red-700', 'border-red-100');
-            }
-          })
-          .catch((error) => {
-            // Error de red
-            console.log(error);
-            result.innerHTML = 'Hubo un error. Por favor intenta por WhatsApp.';
-            result.classList.remove('hidden');
-          })
-          .then(function () {
-            // 3. Restaurar botón
-            btn.disabled = false;
-            btn.classList.remove('opacity-75', 'cursor-not-allowed');
-            btnText.textContent = 'Solicitar mis 14 días gratis';
-
-            // Ocultar mensaje de éxito después de 5 segundos
-            setTimeout(() => {
-              result.classList.add('hidden');
-            }, 5000);
-          });
-      });
-    </script>
-
     <a
-      href='https://wa.me/5493513238509?text=Hola%20DopperCut,%20quiero%20más%20info%20del%20sistema'
+      href={whatsappLink(c.whatsapp_message)}
       target='_blank'
-      class='fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-2xl transition-transform hover:scale-110 flex items-center justify-center'
-      aria-label='Contactar por WhatsApp'
+      rel='noopener noreferrer'
+      class='press fixed right-4 sm:right-6 z-40 flex items-center gap-2 rounded-full bg-[#25D366] text-ink shadow-lg shadow-black/15 pl-4 pr-4 sm:pr-5 py-3.5 font-semibold text-sm'
+      style='bottom: max(1rem, env(safe-area-inset-bottom));'
+      aria-label={c.whatsapp_label}
+      data-whatsapp-fab
     >
-      <svg class='w-8 h-8' fill='currentColor' viewBox='0 0 24 24'>
+      <svg class='w-6 h-6 shrink-0' fill='currentColor' viewBox='0 0 24 24' aria-hidden='true'>
         <path
           d='M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z'
         ></path>
       </svg>
-      <span class='absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full animate-pulse'></span>
+      <span class='hidden sm:inline'>WhatsApp</span>
     </a>
+
+    <CookieNotice lang={locale.lang} country={locale.code} />
+
+    <div hidden data-form-messages={JSON.stringify({ sending: c.form_sending, success: c.form_success, error: c.form_error, tooFast: c.form_too_fast, required: c.form_required })}></div>
+
+    <script>
+      // Scroll reveal. Content is visible without JS; the `js` class opts into the effect.
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const revealTargets = document.querySelectorAll('.reveal');
+
+      if (reduceMotion || !('IntersectionObserver' in window)) {
+        revealTargets.forEach((el) => el.classList.add('in-view'));
+      } else {
+        const revealObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              entry.target.classList.add('in-view');
+              revealObserver.unobserve(entry.target);
+            });
+          },
+          { rootMargin: '0px 0px -10% 0px', threshold: 0.1 },
+        );
+        revealTargets.forEach((el) => revealObserver.observe(el));
+      }
+
+      // Counters: the final number is in the markup; the count-up is progressive enhancement.
+      const counters = document.querySelectorAll<HTMLElement>('.counter-animate');
+      const locale = document.documentElement.lang;
+      if (!reduceMotion && 'IntersectionObserver' in window) {
+        const counterObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              const counter = entry.target as HTMLElement;
+              counterObserver.unobserve(counter);
+              const target = Number(counter.dataset.target ?? 0);
+              const duration = 1600;
+              let start: number | null = null;
+              const tick = (now: number) => {
+                start ??= now;
+                const progress = Math.min((now - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 4);
+                counter.textContent = Math.floor(eased * target).toLocaleString(locale);
+                if (progress < 1) requestAnimationFrame(tick);
+              };
+              requestAnimationFrame(tick);
+            });
+          },
+          { threshold: 0.5 },
+        );
+        counters.forEach((counter) => counterObserver.observe(counter));
+      }
+
+      // Lead forms (Web3Forms). Spam protection: honeypot, minimum fill time and native validation.
+      const messagesEl = document.querySelector<HTMLElement>('[data-form-messages]');
+      const messages = JSON.parse(messagesEl?.dataset.formMessages ?? '{}');
+      const MIN_FILL_MS = 3000;
+
+      document.querySelectorAll<HTMLFormElement>('form[data-lead-form]').forEach((form) => {
+        const renderedAt = Date.now();
+        const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+        const label = button?.querySelector('span');
+        const idleLabel = label?.textContent ?? '';
+        const status = form.querySelector<HTMLElement>('[data-form-status]');
+
+        const show = (text: string, tone: 'success' | 'error') => {
+          if (!status) return;
+          status.textContent = text;
+          status.dataset.tone = tone;
+          status.hidden = false;
+        };
+
+        form.addEventListener('submit', async (event) => {
+          event.preventDefault();
+          if (!form.checkValidity()) {
+            form.reportValidity();
+            show(messages.required, 'error');
+            return;
+          }
+
+          const data = new FormData(form);
+          // Bots fill hidden fields and submit instantly; drop both silently or ask to retry.
+          if (data.get('botcheck') || data.get('website')) return;
+          if (Date.now() - renderedAt < MIN_FILL_MS) {
+            show(messages.tooFast, 'error');
+            return;
+          }
+          data.delete('website');
+
+          if (status) status.hidden = true;
+          if (button) {
+            button.disabled = true;
+            button.setAttribute('aria-busy', 'true');
+          }
+          if (label) label.textContent = messages.sending;
+
+          try {
+            const response = await fetch(form.action, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+              body: JSON.stringify(Object.fromEntries(data)),
+            });
+            const json = await response.json().catch(() => ({}));
+            if (response.ok && json.success !== false) {
+              show(messages.success, 'success');
+              form.reset();
+              (window as unknown as { va?: (...args: unknown[]) => void }).va?.('event', { name: 'lead_submitted', data: { form: form.dataset.leadForm ?? 'unknown' } });
+            } else {
+              show(messages.error, 'error');
+            }
+          } catch {
+            show(messages.error, 'error');
+          } finally {
+            if (button) {
+              button.disabled = false;
+              button.removeAttribute('aria-busy');
+            }
+            if (label) label.textContent = idleLabel;
+          }
+        });
+      });
+    </script>
   </body>
 </html>
-
-<style is:global>
-  /* Animación Reveal suave */
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
-  }
-
-  .reveal.in-view {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* Stagger delay utilidades */
-  .delay-100 {
-    transition-delay: 100ms;
-  }
-  .delay-200 {
-    transition-delay: 200ms;
-  }
-  .delay-300 {
-    transition-delay: 300ms;
-  }
-</style>

@@ -4,7 +4,7 @@ export const ui = {
   es_ar: {
     layout: {
       title: 'string',
-      description: 'Automatiza tu negocio con DopperCut. Agenda online 24/7, recordatorios por WhatsApp y control de caja. Probá 14 días gratis hoy mismo.',
+      description: 'Automatiza tu negocio con TurnosPlus. Agenda online 24/7, recordatorios por WhatsApp y control de caja. Probá 14 días gratis hoy mismo.',
     },
     nav: {
       home: 'Inicio',
@@ -24,7 +24,7 @@ export const ui = {
       social_proof: 'Barberías y salones líderes confían en nosotros',
       elements: {
         element_one: {
-          title: 'Nuevo {appointment} confirmado',
+          title: 'Nuevo turno confirmado',
           subtitle: 'Juan P. - Corte Clásico',
         },
         element_two: 'Ingresos hoy',
@@ -32,7 +32,7 @@ export const ui = {
       },
     },
     problems: {
-      title: 'Tu talento es cortar,',
+      title: 'Tu talento es tu trabajo,',
       subtitle: 'no ser recepcionista 24/7.',
       description: '¿Sentís que trabajás todo el día pero tu negocio no escala? El caos administrativo es el techo invisible que te impide crecer.',
       p1_title: 'Esclavitud de WhatsApp',
@@ -42,7 +42,7 @@ export const ui = {
       p1_elem3: 'Uh bueno avísame.',
       p1_elem4: 'sin leer',
       p2_title: 'El "Fantasma" de las 5PM',
-      p2_desc: 'Clientes que se olvidan de la {appointment} y te dejan el hueco. Dinero perdido.',
+      p2_desc: 'Clientes que se olvidan del turno y te dejan el hueco. Dinero perdido.',
       p2_elem1: 'Corte Juan',
       p2_elem2: 'AUSENTE',
       p3_title: 'Caja a Ciegas',
@@ -70,7 +70,7 @@ export const ui = {
       title: 'Todo lo que necesitas para crecer',
       subtitle: 'Hemos empaquetado las mejores herramientas en una interfaz intuitiva. Potencia, velocidad y diseño trabajando juntos para ti.',
       c1_title: 'Panel Administrativo Integral',
-      c1_desc: 'Gestiona {appointment}, visualiza métricas en tiempo real y administra tu base de datos de clientes. Todo sincronizado en la nube.',
+      c1_desc: 'Gestiona turnos, visualiza métricas en tiempo real y administra tu base de datos de clientes. Todo sincronizado en la nube.',
       c2_title: 'Mobile First',
       c2_desc: 'Tus clientes reservan en 3 clics desde cualquier celular. Sin descargar apps.',
     },
@@ -80,9 +80,9 @@ export const ui = {
       step1_title: 'Nosotros configuramos todo',
       step1_desc: 'Olvidate de cargar datos. Pasanos tu lista de precios y horarios, y nosotros armamos tu perfil profesional a medida.',
       step2_title: 'Compartí tu link único',
-      step2_desc: 'Recibís tu enlace personalizado (ej: doppercut.com/tu-barberia). Pegalo en tu Instagram, WhatsApp y Google Maps.',
+      step2_desc: 'Recibís tu enlace personalizado (ej: turnosplus.com/tu-negocio). Pegalo en tu Instagram, WhatsApp y Google Maps.',
       step3_title: 'Tu agenda se llena sola',
-      step3_desc: 'Los clientes reservan sus turnos sin llamarte. Vos solo recibís la notificación y te enfocás en cortar.',
+      step3_desc: 'Los clientes reservan sus turnos sin llamarte. Vos solo recibís la notificación y te enfocás en tu trabajo.',
       step: 'Paso',
     },
     section_7: {
@@ -115,8 +115,8 @@ export const ui = {
     },
     pricing: {
       title1: 'Tu negocio organizado.',
-      title2: 'Por el valor de 1 corte al mes.',
-      desc: 'Una inversión mínima para recuperar horas de tu vida y profesionalizar tu barbería o peluquería.',
+      title2: 'Por menos de lo que cuesta un turno perdido.',
+      desc: 'Una inversión mínima para recuperar horas de tu vida y profesionalizar tu negocio.',
       launch_offer: 'OFERTA LANZAMIENTO',
       founder_offer: '¡Sé un Socio Fundador! (Cupos Limitados)',
       founder_desc: 'Abonando ahora congelas el precio con un',
@@ -130,7 +130,7 @@ export const ui = {
       card_cancel: 'Cancelas cuando quieras. Sin ataduras.',
       guarantee: 'Prueba 14 días GRATIS',
       card_include: '¿Qué incluye tu inversión?',
-      features: ['Agenda inteligente y {appointment} ilimitados', 'Recordatorios automáticos por WhatsApp', 'Caja diaria y reportes de ganancias', 'Base de datos de clientes', 'Soporte técnico humano', 'Configuración inicial "Llave en mano"'],
+      features: ['Agenda inteligente y turnos ilimitados', 'Recordatorios automáticos por WhatsApp', 'Caja diaria y reportes de ganancias', 'Base de datos de clientes', 'Soporte técnico humano', 'Configuración inicial "Llave en mano"'],
       business: '¿Tienes más de una sucursal?',
       business_desc: 'Gestiona múltiples locales centralizados. Contáctanos para un precio especial por volumen.',
       card1_title: 'Desarrollo Colaborativo',
@@ -181,7 +181,7 @@ export const ui = {
   es_latam: {
     layout: {
       title: 'string',
-      description: 'Automatiza tu negocio con DopperCut. Agenda online 24/7, recordatorios por WhatsApp y control de finanzas. Prueba 14 días gratis hoy mismo.',
+      description: 'Automatiza tu negocio con TurnosPlus. Agenda online 24/7, recordatorios por WhatsApp y control de finanzas. Prueba 14 días gratis hoy mismo.',
     },
     nav: {
       home: 'Inicio',
@@ -201,7 +201,7 @@ export const ui = {
       social_proof: 'Barberías y salones líderes confían en nosotros',
       elements: {
         element_one: {
-          title: 'Nuevo {appointment} confirmado',
+          title: 'Nueva cita confirmada',
           subtitle: 'Juan P. - Corte Clásico',
         },
         element_two: 'Ingresos hoy',
@@ -209,7 +209,7 @@ export const ui = {
       },
     },
     problems: {
-      title: 'Tu talento es cortar,',
+      title: 'Tu talento es tu trabajo,',
       subtitle: 'no ser recepcionista 24/7.',
       description: '¿Sientes que trabajas todo el día pero tu negocio no escala? El caos administrativo es el techo invisible que te impide crecer.',
       p1_title: 'Esclavitud de WhatsApp',
@@ -219,7 +219,7 @@ export const ui = {
       p1_elem3: 'Ah bueno, avísame.',
       p1_elem4: 'sin leer',
       p2_title: 'El "Fantasma" de las 5PM',
-      p2_desc: 'Clientes que se olvidan de la {appointment} y te dejan el hueco. Dinero perdido.',
+      p2_desc: 'Clientes que se olvidan de su cita y te dejan el hueco. Dinero perdido.',
       p2_elem1: 'Corte Juan',
       p2_elem2: 'AUSENTE',
       p3_title: 'Finanzas a Ciegas',
@@ -238,7 +238,7 @@ export const ui = {
     },
     metrics: {
       active_business: 'Negocios activos',
-      appointments: '{appointment} completadas',
+      appointments: 'Citas completadas',
       professionals: 'Profesionales',
       caption: 'Barberías y salones líderes confían en nosotros',
     },
@@ -247,7 +247,7 @@ export const ui = {
       title: 'Todo lo que necesitas para crecer',
       subtitle: 'Hemos empaquetado las mejores herramientas en una interfaz intuitiva. Potencia, velocidad y diseño trabajando juntos para ti.',
       c1_title: 'Panel Administrativo Integral',
-      c1_desc: 'Gestiona {appointment}, visualiza métricas en tiempo real y administra tu base de datos de clientes. Todo sincronizado en la nube.',
+      c1_desc: 'Gestiona citas, visualiza métricas en tiempo real y administra tu base de datos de clientes. Todo sincronizado en la nube.',
       c2_title: 'Mobile First',
       c2_desc: 'Tus clientes reservan en 3 clics desde cualquier celular. Sin descargar apps.',
     },
@@ -257,9 +257,9 @@ export const ui = {
       step1_title: 'Nosotros configuramos todo',
       step1_desc: 'Olvídate de cargar datos. Pásanos tu lista de precios y horarios, y nosotros armamos tu perfil profesional a medida.',
       step2_title: 'Comparte tu link único',
-      step2_desc: 'Recibes tu enlace personalizado (ej: doppercut.com/tu-barberia). Pégalo en tu Instagram, WhatsApp y Google Maps.',
+      step2_desc: 'Recibes tu enlace personalizado (ej: turnosplus.com/tu-negocio). Pégalo en tu Instagram, WhatsApp y Google Maps.',
       step3_title: 'Tu agenda se llena sola',
-      step3_desc: 'Los clientes reservan sus {appointment} sin llamarte. Tú solo recibes la notificación y te enfocas en cortar.', 
+      step3_desc: 'Los clientes reservan sus citas sin llamarte. Tú solo recibes la notificación y te enfocas en tu trabajo.', 
       step: 'Paso',
     },
     section_7: {
@@ -292,8 +292,8 @@ export const ui = {
     },
     pricing: {
       title1: 'Tu negocio organizado.',
-      title2: 'Por el valor de 1 corte al mes.',
-      desc: 'Una inversión mínima para recuperar horas de tu vida y profesionalizar tu barbería o salón.',
+      title2: 'Por menos de lo que cuesta una cita perdida.',
+      desc: 'Una inversión mínima para recuperar horas de tu vida y profesionalizar tu negocio.',
       launch_offer: 'OFERTA LANZAMIENTO',
       founder_offer: '¡Sé un Socio Fundador! (Cupos Limitados)',
       founder_desc: 'Pagando ahora congelas el precio con un',
@@ -307,7 +307,7 @@ export const ui = {
       card_cancel: 'Cancelas cuando quieras. Sin ataduras.',
       guarantee: 'Prueba 14 días GRATIS',
       card_include: '¿Qué incluye tu inversión?',
-      features: ['Agenda inteligente y {appointment} ilimitados', 'Recordatorios automáticos por WhatsApp', 'Caja diaria y reportes de ganancias', 'Base de datos de clientes', 'Soporte técnico humano', 'Configuración inicial "Llave en mano"'],
+      features: ['Agenda inteligente y citas ilimitadas', 'Recordatorios automáticos por WhatsApp', 'Caja diaria y reportes de ganancias', 'Base de datos de clientes', 'Soporte técnico humano', 'Configuración inicial "Llave en mano"'],
       business: '¿Tienes más de una sucursal?',
       business_desc: 'Gestiona múltiples locales centralizados. Contáctanos para un precio especial por volumen.',
       card1_title: 'Desarrollo Colaborativo',
@@ -346,7 +346,7 @@ export const ui = {
       form_title: 'Solicitud de Alta (Sin cargo)',
     },
     footer: {
-      description: 'La plataforma todo en uno para modernizar tu negocio. Gestiona {appointment} y clientes sin estrés.',
+      description: 'La plataforma todo en uno para modernizar tu negocio. Gestiona citas y clientes sin estrés.',
       product: 'Producto',
       legal: 'Legal',
       privacy: 'Política de Privacidad',
@@ -358,7 +358,7 @@ export const ui = {
   en: {
     layout: {
       title: 'string',
-      description: 'Automate your business with DopperCut. 24/7 online booking, WhatsApp reminders, and financial control. Start your 14-day free trial today.',
+      description: 'Automate your business with TurnosPlus. 24/7 online booking, WhatsApp reminders, and financial control. Start your 14-day free trial today.',
     },
     nav: {
       home: 'Home',
@@ -386,7 +386,7 @@ export const ui = {
       },
     },
     problems: {
-      title: 'Your talent is cutting,',
+      title: 'Your talent is your craft,',
       subtitle: 'not being a 24/7 receptionist.',
       description: 'Feel like you work all day but your business isn’t scaling? Administrative chaos is the invisible ceiling holding you back.',
       p1_title: 'WhatsApp Slavery',
@@ -396,7 +396,7 @@ export const ui = {
       p1_elem3: 'Oh okay, let me know.',
       p1_elem4: 'unread',
       p2_title: 'The 5PM "Ghost"',
-      p2_desc: 'Clients who forget their {appointment} and leave a gap. Lost money.',
+      p2_desc: 'Clients who forget their appointment and leave a gap. Lost money.',
       p2_elem1: "John's Cut",
       p2_elem2: 'NO-SHOW',
       p3_title: 'Blind Finances',
@@ -424,7 +424,7 @@ export const ui = {
       title: 'Everything you need to grow',
       subtitle: 'We packaged the best tools into an intuitive interface. Power, speed, and design working together for you.',
       c1_title: 'Comprehensive Admin Panel',
-      c1_desc: 'Manage {appointment}, visualize real-time metrics, and manage your client database. Everything synced in the cloud.',
+      c1_desc: 'Manage appointments, visualize real-time metrics, and manage your client database. Everything synced in the cloud.',
       c2_title: 'Mobile First',
       c2_desc: 'Your clients book in 3 clicks from any phone. No app downloads required.',
     },
@@ -434,9 +434,9 @@ export const ui = {
       step1_title: 'We configure everything',
       step1_desc: 'Forget about data entry. Send us your price list and hours, and we build your professional profile to measure.',
       step2_title: 'Share your unique link',
-      step2_desc: 'You receive your personalized link (e.g., doppercut.com/your-barbershop). Paste it on Instagram, WhatsApp, and Google Maps.',
+      step2_desc: 'You receive your personalized link (e.g., turnosplus.com/your-business). Paste it on Instagram, WhatsApp, and Google Maps.',
       step3_title: 'Your agenda fills itself',
-      step3_desc: 'Clients book their appointments without calling you. You just receive the notification and focus on cutting.',
+      step3_desc: 'Clients book their appointments without calling you. You just receive the notification and focus on your work.',
       step: 'Step',
     },
     section_7: {
@@ -469,8 +469,8 @@ export const ui = {
     },
     pricing: {
       title1: 'Your business, organized.',
-      title2: 'For the price of 1 cut per month.',
-      desc: 'A minimal investment to recover hours of your life and professionalize your barbershop or salon.',
+      title2: 'For less than one missed appointment.',
+      desc: 'A minimal investment to recover hours of your life and professionalize your business.',
       launch_offer: 'LAUNCH OFFER',
       founder_offer: 'Become a Founding Member! (Limited Spots)',
       founder_desc: 'Pay now and lock in the price with a',
@@ -484,7 +484,7 @@ export const ui = {
       card_cancel: 'Cancel anytime. No strings attached.',
       guarantee: 'Try 14 days FREE',
       card_include: 'What does your investment include?',
-      features: ['Smart agenda and unlimited {appointment}', 'Automatic WhatsApp reminders', 'Daily cash and profit reports', 'Client database', 'Direct human support', 'Full "Turnkey" initial setup'],
+      features: ['Smart agenda and unlimited appointments', 'Automatic WhatsApp reminders', 'Daily cash and profit reports', 'Client database', 'Direct human support', 'Full "Turnkey" initial setup'],
       business: 'Have more than one branch?',
       business_desc: 'Manage multiple locations centrally. Contact us for special volume pricing.',
       card1_title: 'Collaborative Development',
@@ -535,7 +535,7 @@ export const ui = {
   pt: {
     layout: {
       title: 'string',
-      description: 'Automatize seu negócio com DopperCut. Agenda online 24/7, lembretes via WhatsApp e controle financeiro. Teste 14 dias grátis hoje mesmo.',
+      description: 'Automatize seu negócio com TurnosPlus. Agenda online 24/7, lembretes via WhatsApp e controle financeiro. Teste 14 dias grátis hoje mesmo.',
     },
     nav: {
       home: 'Início',
@@ -563,7 +563,7 @@ export const ui = {
       },
     },
     problems: {
-      title: 'Seu talento é cortar,',
+      title: 'Seu talento é o seu trabalho,',
       subtitle: 'não ser recepcionista 24h.',
       description: 'Sente que trabalha o dia todo mas seu negócio não escala? O caos administrativo é o teto invisível que te impede de crescer.',
       p1_title: 'Escravidão do WhatsApp',
@@ -573,7 +573,7 @@ export const ui = {
       p1_elem3: 'Ah bom, me avisa.',
       p1_elem4: 'não lido',
       p2_title: 'O "Fantasma" das 17h',
-      p2_desc: 'Clientes que esquecem do {appointment} e deixam o horário vago. Dinheiro perdido.',
+      p2_desc: 'Clientes que esquecem do agendamento e deixam o horário vago. Dinheiro perdido.',
       p2_elem1: 'Corte João',
       p2_elem2: 'AUSENTE',
       p3_title: 'Caixa às Cegas',
@@ -601,7 +601,7 @@ export const ui = {
       title: 'Tudo o que você precisa para crescer',
       subtitle: 'Empacotamos as melhores ferramentas em uma interface intuitiva. Potência, velocidade e design trabalhando juntos por você.',
       c1_title: 'Painel Administrativo Integral',
-      c1_desc: 'Gerencie {appointment}, visualize métricas em tempo real e administre seu banco de dados de clientes. Tudo sincronizado na nuvem.',
+      c1_desc: 'Gerencie agendamentos, visualize métricas em tempo real e administre seu banco de dados de clientes. Tudo sincronizado na nuvem.',
       c2_title: 'Mobile First',
       c2_desc: 'Seus clientes reservam em 3 cliques de qualquer celular. Sem baixar apps.',
     },
@@ -611,9 +611,9 @@ export const ui = {
       step1_title: 'Nós configuramos tudo',
       step1_desc: 'Esqueça a entrada de dados. Envie-nos sua lista de preços e horários, e montamos seu perfil profissional sob medida.',
       step2_title: 'Compartilhe seu link único',
-      step2_desc: 'Você recebe seu link personalizado (ex: doppercut.com/sua-barbearia). Cole no Instagram, WhatsApp e Google Maps.',
+      step2_desc: 'Você recebe seu link personalizado (ex: turnosplus.com/seu-negocio). Cole no Instagram, WhatsApp e Google Maps.',
       step3_title: 'Sua agenda se enche sozinha',
-      step3_desc: 'Os clientes reservam seus horários sem te ligar. Você só recebe a notificação e foca em cortar.',
+      step3_desc: 'Os clientes reservam seus horários sem te ligar. Você só recebe a notificação e foca no seu trabalho.',
       step: 'Passo',
     },
     section_7: {
@@ -646,8 +646,8 @@ export const ui = {
     },
     pricing: {
       title1: 'Seu negócio organizado.',
-      title2: 'Pelo valor de 1 corte por mês.',
-      desc: 'Um investimento mínimo para recuperar horas da sua vida e profissionalizar sua barbearia ou salão.',
+      title2: 'Por menos do que custa um horário perdido.',
+      desc: 'Um investimento mínimo para recuperar horas da sua vida e profissionalizar seu negócio.',
       launch_offer: 'OFERTA DE LANÇAMENTO',
       founder_offer: 'Seja um Sócio Fundador! (Vagas Limitadas)',
       founder_desc: 'Pagando agora você congela o preço com',
@@ -661,7 +661,7 @@ export const ui = {
       card_cancel: 'Cancele quando quiser. Sem amarras.',
       guarantee: 'Teste 14 dias GRÁTIS',
       card_include: 'O que seu investimento inclui?',
-      features: ['Agenda inteligente e {appointment} ilimitados', 'Lembretes automáticos por WhatsApp', 'Caixa diário e relatórios de lucros', 'Banco de dados de clientes', 'Suporte técnico humano', 'Configuração inicial "Chave na mão"'],
+      features: ['Agenda inteligente e agendamentos ilimitados', 'Lembretes automáticos por WhatsApp', 'Caixa diário e relatórios de lucros', 'Banco de dados de clientes', 'Suporte técnico humano', 'Configuração inicial "Chave na mão"'],
       business: 'Tem mais de uma filial?',
       business_desc: 'Gerencie múltiplos locais centralizados. Contate-nos para um preço especial por volume.',
       card1_title: 'Desenvolvimento Colaborativo',

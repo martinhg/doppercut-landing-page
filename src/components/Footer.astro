@@ -1,83 +1,78 @@
 ---
-import { countries } from '../i18n/config';
 import { ui } from '../i18n/content';
+import { countryTerms } from '../i18n/config';
+import { chrome } from '../i18n/chrome';
+import { resolveLocale } from '../i18n/locale';
+import { site, whatsappLink } from '../config/site';
 
-const country = (Astro.props.country ?? 'ar') as keyof typeof countries;
-const currentCountry = countries[country] ?? countries.ar;
-const lang = (currentCountry.lang ?? 'es_ar') as keyof typeof ui;
-const t = ui[lang];
-
-const link = (path: string) => `/${country}${path}`;
-
+const locale = resolveLocale(Astro.props.country ?? Astro.params.country);
+const t = ui[locale.lang];
+const c = chrome[locale.lang];
+const link = (path: string) => `/${locale.code}${path}`;
 const currentYear = new Date().getFullYear();
+
+const productLinks = [
+  { href: link('/#como-funciona'), label: t.nav.how },
+  { href: link('/precios'), label: t.nav.pricing },
+  { href: link('/contacto'), label: t.nav.trial },
+];
+const legalLinks = [
+  { href: link('/privacidad'), label: t.footer.privacy },
+  { href: link('/terminos'), label: t.footer.terms },
+  { href: link('/aviso-legal'), label: c.legal_notice },
+  { href: link('/cookies'), label: c.cookies },
+];
 ---
 
-<footer class='bg-navy text-slate-300 border-t border-white/5 pt-16 pb-8 relative overflow-hidden'>
-  <!-- Detalle de fondo sutil (Glow) -->
-  <div class='absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-primary-dark/20 blur-[120px] rounded-full pointer-events-none'></div>
-
-  <div class='max-w-6xl mx-auto px-6 relative z-10'>
-    <div class='grid md:grid-cols-4 gap-12 mb-16'>
-      <!-- Columna 1: Branding -->
+<footer class='bg-navy text-slate-300 pt-16 pb-10'>
+  <div class='max-w-6xl mx-auto px-6'>
+    <div class='grid gap-12 md:grid-cols-4 mb-14'>
       <div class='md:col-span-2'>
-        <a href={link('/')} class='text-2xl font-bold text-white flex items-center gap-2 mb-4'>
-          <img src="/logo-black.png" alt="Logo DopperCut" class="w-auto h-10 object-contain" width="150" height="40" />
-          DopperCut
+        <a href={link('')} class='inline-flex mb-5' aria-label={site.name}>
+          <img src={site.logo.dark} alt={c.logo_alt} class='h-9 w-auto' width='144' height='42' loading='lazy' />
         </a>
-        <p class='text-slate-400 text-sm leading-relaxed max-w-xs mb-6'>{t.footer.description}</p>
+        <p class='text-slate-300 text-sm leading-relaxed max-w-xs mb-6'>{t.footer.description.replace(/{appointment}/g, countryTerms[locale.code].appointment.toLowerCase())}</p>
 
-        <!-- Redes Sociales -->
-        <div class='flex gap-4'>
-          <a href='https://instagram.com/doppercut' target='_blank' rel='noopener noreferrer' aria-label='Instagram' class='w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors group'>
-            <!-- Icono Instagram -->
-            <svg class='w-5 h-5 text-slate-400 group-hover:text-white transition-colors' fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='2'>
-              <path
-                stroke-linecap='round'
-                stroke-linejoin='round'
-                d='M13.376 5.222c-3.525-.266-8.125-.266-11.65 0-1.61.122-2.693 1.47-2.693 3.07v8.416c0 1.6 1.083 2.948 2.693 3.07 3.525.266 8.125.266 11.65 0 1.61-.122 2.693-1.47 2.693-3.07V8.292c0-1.6-1.083-2.948-2.693-3.07z'
-                opacity='0'></path>
-              <!-- Placeholder shape, usando path real abajo -->
-              <rect x='2' y='2' width='20' height='20' rx='5' ry='5'></rect>
-              <path d='M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z'></path>
-              <line x1='17.5' y1='6.5' x2='17.51' y2='6.5'></line>
-            </svg>
-          </a>
-        </div>
-      </div>
-
-      <!-- Columna 2: Producto -->
-      <div>
-        <h4 class='text-white font-semibold mb-6 text-sm uppercase tracking-wider'>{t.footer.product}</h4>
-        <ul class='space-y-3 text-sm'>
-          <li><a href={link('/')} class='hover:text-primary-light transition-colors'>{t.nav.home}</a></li>
-          <li><a href={link('/#como-funciona')} class='hover:text-primary-light transition-colors'>{t.nav.how}</a></li>
-          <li><a href={link('/precios')} class='hover:text-primary-light transition-colors'>{t.nav.pricing}</a></li>
-          <li><a href={link('/contacto')} class='hover:text-primary-light transition-colors'>{t.nav.trial}</a></li>
+        <ul class='space-y-2 text-sm'>
+          <li><a href={`mailto:${site.email}`} class='hover:text-primary-light transition-colors'>{site.email}</a></li>
+          <li><a href={whatsappLink(c.whatsapp_message)} target='_blank' rel='noopener noreferrer' class='hover:text-primary-light transition-colors'>WhatsApp {site.whatsappDisplay}</a></li>
+          <li><a href={site.instagram} target='_blank' rel='noopener noreferrer' class='hover:text-primary-light transition-colors'>Instagram {site.instagramHandle}</a></li>
         </ul>
       </div>
 
-      <!-- Columna 3: Legal / Soporte -->
-      <div>
-        <h4 class='text-white font-semibold mb-6 text-sm uppercase tracking-wider'>Legal</h4>
+      <nav aria-labelledby='footer-product'>
+        <h2 id='footer-product' class='text-white font-semibold mb-5 text-sm'>{t.footer.product}</h2>
         <ul class='space-y-3 text-sm'>
-          <li><a href={link('/privacidad')} class='hover:text-primary-light transition-colors'>{t.footer.privacy}</a></li>
-          <li><a href={link('/terminos')} class='hover:text-primary-light transition-colors'>{t.footer.terms}</a></li>
-          <li><a href={link('/contacto')} class='hover:text-primary-light transition-colors'>{t.nav.contact}</a></li>
+          {
+            productLinks.map((item) => (
+              <li>
+                <a href={item.href} class='hover:text-primary-light transition-colors'>
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
         </ul>
-      </div>
+      </nav>
+
+      <nav aria-labelledby='footer-legal'>
+        <h2 id='footer-legal' class='text-white font-semibold mb-5 text-sm'>Legal</h2>
+        <ul class='space-y-3 text-sm'>
+          {
+            legalLinks.map((item) => (
+              <li>
+                <a href={item.href} class='hover:text-primary-light transition-colors'>
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
     </div>
 
-    <!-- Separador -->
-    <div class='border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4'>
-      <p class='text-xs text-slate-500'>
-        &copy; {currentYear} DopperCut. {t.footer.all_rights_reserved}
-      </p>
-      <div class='flex gap-6'>
-        <span class='text-xs text-slate-600 flex items-center gap-1'>
-          <span class='w-2 h-2 rounded-full bg-green-500'></span>
-          {t.footer.systems}
-        </span>
-      </div>
+    <div class='border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-400'>
+      <p>&copy; {currentYear} {site.name}. {t.footer.all_rights_reserved}</p>
     </div>
   </div>
 </footer>
