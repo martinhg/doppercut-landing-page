@@ -1,0 +1,57 @@
+---
+import { site } from '../../../config/site';
+
+interface Props {
+  country: string;
+}
+
+const { country } = Astro.props;
+const { holder, taxId, address, jurisdiction } = site.legal;
+const domain = new URL(site.url).host;
+---
+
+<h2>1. Titular do site</h2>
+<ul>
+  <li><strong>Titular:</strong> {holder}</li>
+  {taxId && <li><strong>CUIT:</strong> {taxId}</li>}
+  {address && <li><strong>Endereço:</strong> {address}</li>}
+  <li><strong>E-mail:</strong> <a href={`mailto:${site.email}`}>{site.email}</a></li>
+  <li><strong>WhatsApp:</strong> {site.whatsappDisplay}</li>
+  <li><strong>Site:</strong> {domain}</li>
+</ul>
+
+<h2>2. Objeto</h2>
+<p>
+  Este site informa sobre o {site.name}, uma plataforma de agendamento online para profissionais e negócios, e permite solicitar uma conta de teste. Navegar pelo site implica aceitar este aviso legal, a
+  <a href={`/${country}/privacidad`}>política de privacidade</a> e a <a href={`/${country}/cookies`}>política de cookies</a>. O uso da plataforma também é regido pelos
+  <a href={`/${country}/terminos`}>termos e condições</a>.
+</p>
+
+<h2>3. Uso do site</h2>
+<p>
+  Você se compromete a usar o site de forma lícita, sem prejudicar seu funcionamento nem o de terceiros, e a não enviar informações falsas pelos formulários. Podemos atualizar o conteúdo, os preços e as condições publicadas sem aviso
+  prévio; os preços vigentes são os informados no momento da contratação.
+</p>
+
+<h2>4. Propriedade intelectual e industrial</h2>
+<p>
+  A marca {site.name}, o logotipo, o símbolo, os textos, as imagens e o código deste site são propriedade de {holder} ou são usados com autorização. É proibida sua reprodução, distribuição ou modificação sem consentimento expresso.
+</p>
+
+<h2>5. Links externos</h2>
+<p>O site inclui links para serviços de terceiros, como WhatsApp ou Instagram. Não somos responsáveis por seus conteúdos nem por suas políticas de privacidade.</p>
+
+<h2>6. Responsabilidade</h2>
+<p>
+  Procuramos que as informações publicadas sejam exatas e estejam atualizadas, mas não garantimos a ausência de erros nem a disponibilidade ininterrupta do site. Não respondemos por danos decorrentes do uso das informações publicadas, exceto
+  aqueles que a lei não permita excluir.
+</p>
+
+<h2>7. Defesa do consumidor</h2>
+<p>
+  Se você contratar como consumidor na República Argentina, terá os direitos da Lei 24.240 de Defesa do Consumidor, incluindo o direito de revogar a aceitação dentro de 10 dias corridos a partir da contratação. Para exercê-lo,
+  escreva para <a href={`mailto:${site.email}`}>{site.email}</a>.
+</p>
+
+<h2>8. Legislação e foro</h2>
+<p>Este aviso é regido pelas leis da {jurisdiction}. Em caso de qualquer controvérsia, as partes se submetem aos Tribunales Ordinarios da Cidade de Córdoba.</p>

@@ -2,67 +2,22 @@
 export const prerender = true;
 
 import LegalPage from '../../layouts/LegalPage.astro';
+import Es from '../../components/legal/cookies/Es.astro';
+import Pt from '../../components/legal/cookies/Pt.astro';
+import En from '../../components/legal/cookies/En.astro';
+import { legalLangFor, legalMeta, legalUpdated } from '../../components/legal/lang';
 import { countries } from '../../i18n/config';
-import { site } from '../../config/site';
 
 export function getStaticPaths() {
   return Object.keys(countries).map((code) => ({ params: { country: code } }));
 }
 
 const country = String(Astro.params.country);
+const lang = legalLangFor(country);
+const meta = legalMeta.cookies[lang];
+const Body = { es: Es, pt: Pt, en: En }[lang];
 ---
 
-<LegalPage
-  title='Política de cookies'
-  description={`Qué cookies y almacenamiento local usa ${site.name}, para qué sirven y cómo podés borrarlos. Sin publicidad ni rastreo entre sitios.`}
-  updated='noviembre de 2026'
-  summary='Este sitio no usa cookies publicitarias ni de rastreo. Solo guardamos en tu navegador que ya leíste el aviso de cookies, y medimos visitas con una analítica que no usa cookies ni te identifica.'
->
-  <h2>1. Qué son las cookies</h2>
-  <p>
-    Las cookies y el almacenamiento local son pequeños datos que un sitio guarda en tu navegador para recordar información entre visitas. Algunos son técnicos, necesarios para que el sitio funcione, y otros sirven para analizar el uso o mostrar
-    publicidad.
-  </p>
-
-  <h2>2. Qué usamos en este sitio</h2>
-  <div class='overflow-x-auto'>
-    <table>
-      <thead>
-        <tr>
-          <th scope='col'>Nombre</th>
-          <th scope='col'>Tipo</th>
-          <th scope='col'>Finalidad</th>
-          <th scope='col'>Duración</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><code>tp-cookie-notice</code></td>
-          <td>Almacenamiento local, técnico</td>
-          <td>Recordar que cerraste el aviso de cookies.</td>
-          <td>Hasta que lo borres</td>
-        </tr>
-        <tr>
-          <td>Vercel Web Analytics</td>
-          <td>Analítica sin cookies</td>
-          <td>Contar visitas y páginas vistas de forma agregada. No guarda identificadores en tu navegador.</td>
-          <td>No aplica</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <h2>3. Servicios de terceros</h2>
-  <p>
-    Si hacés clic en el botón de WhatsApp o en el enlace a Instagram, salís de este sitio y se aplican las políticas de esos servicios. La aplicación en <a href={site.appUrl}>{new URL(site.appUrl).host}</a> puede usar cookies técnicas para
-    mantener tu sesión iniciada.
-  </p>
-
-  <h2>4. Cómo borrarlas</h2>
-  <p>
-    Podés eliminar las cookies y el almacenamiento local desde la configuración de privacidad de tu navegador en cualquier momento. Si borrás el dato <code>tp-cookie-notice</code>, el aviso vuelve a aparecer en tu próxima visita.
-  </p>
-
-  <h2>5. Más información</h2>
-  <p>Para saber cómo tratamos tus datos personales, leé la <a href={`/${country}/privacidad`}>política de privacidad</a>. Ante cualquier duda, escribinos a <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+<LegalPage title={meta.title} description={meta.description} updated={legalUpdated[lang]} summary={meta.summary}>
+  <Body country={country} />
 </LegalPage>

@@ -1,0 +1,52 @@
+---
+import { site } from '../../../config/site';
+
+interface Props {
+  country: string;
+}
+
+const { country } = Astro.props;
+---
+
+<p><strong>Welcome to {site.name}.</strong> By using our software you accept these terms, which form a binding agreement between you and {site.legal.holder}. Please read them carefully.</p>
+
+<h2>1. Description of the service</h2>
+<p>
+  {site.name} is a SaaS (software as a service) platform for managing appointments, customers and the finances of professionals and businesses that work by booking, such as barbershops, hair salons, beauty centers and private practices.
+  We may modify, suspend or discontinue features of the service, giving active users advance notice.
+</p>
+
+<h2>2. Trial period and subscription</h2>
+<p>We offer a <strong>free 14-day trial period</strong> with access to the features of the Professional plan, at no cost.</p>
+<ul>
+  <li>When the trial ends, you must pay the current monthly subscription to keep using the service.</li>
+  <li>If no payment is recorded, the account moves to "Suspended" status and we keep the data for 30 days before deleting it permanently.</li>
+  <li>Prices are stated in your country's currency and may be adjusted for inflation; any adjustment is announced 30 days in advance.</li>
+</ul>
+
+<h2>3. Payments and billing</h2>
+<p>
+  The service is paid in advance, between the 1st and the 10th of each month. We accept bank transfers and digital payment methods. In promotions paid every six months or yearly (for example, "Founding Member"), the amount is not
+  refundable in case of early cancellation, because the discount is granted in exchange for the commitment to stay.
+</p>
+
+<h2>4. Data ownership</h2>
+<p>
+  <strong>You own your data.</strong> Your customer base, appointment history and financial information belong to you. {site.name} acts as custodian and processor of that information. If you decide to leave, we will help you export your
+  data. More details in the <a href={`/${country}/privacidad`}>privacy policy</a>.
+</p>
+
+<h2>5. Intellectual property</h2>
+<p>The source code, design, logos and structure of {site.name} are the exclusive property of {site.legal.holder}. We grant you a limited, non-exclusive and non-transferable license of use.</p>
+
+<h2>6. Limitation of liability</h2>
+<p>
+  We work to keep the service continuously available, but {site.name} is not liable for loss of profits, accidental data loss due to force majeure, failures of third-party services (such as WhatsApp or cloud provider outages) or
+  interruptions of the user's internet connection.
+</p>
+
+<h2>7. Governing law and jurisdiction</h2>
+<p>These terms are governed by the laws of the República Argentina (Argentine Republic). In the event of any dispute, the parties submit to the Tribunales Ordinarios (ordinary courts) of the City of Córdoba, waiving any other jurisdiction.</p>
+
+<h2>8. Contact</h2>
+<p>For any questions about these terms, write to us at <a href={`mailto:${site.email}`}>{site.email}</a>.</p>

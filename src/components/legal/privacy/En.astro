@@ -1,0 +1,63 @@
+---
+import { site } from '../../../config/site';
+
+interface Props {
+  country: string;
+}
+
+const { country } = Astro.props;
+---
+
+<h2>1. Who is responsible for your data</h2>
+<p>
+  The controller of the data collected on this site is {site.legal.holder}. You can contact us at <a href={`mailto:${site.email}`}>{site.email}</a>. Full identification details are listed in the
+  <a href={`/${country}/aviso-legal`}>legal notice</a>.
+</p>
+
+<h2>2. What information we collect</h2>
+<ul>
+  <li><strong>Data you send us through the form:</strong> name, business name and WhatsApp number. We use it only to contact you and set up your account.</li>
+  <li><strong>Your business data within the platform:</strong> name, address, CUIT/DNI, phone number, services, opening hours and team.</li>
+  <li><strong>Your customers' data:</strong> the information you enter into the system (names, phone numbers for reminders, appointment history). For this data we act as data processors, following your instructions.</li>
+  <li><strong>Browsing data:</strong> aggregated, anonymous visit metrics (page views, country, device type). They use no cookies and do not identify individuals.</li>
+</ul>
+
+<h2>3. How we use the information</h2>
+<ul>
+  <li>To provide the online scheduling and management service.</li>
+  <li>To send automatic WhatsApp reminders through messaging providers.</li>
+  <li>To generate your financial and statistical reports.</li>
+  <li>To invoice the service and answer your questions.</li>
+  <li>To improve the site based on aggregated metrics.</li>
+</ul>
+
+<h2>4. Security and retention</h2>
+<p>
+  Data is hosted on secure servers with regular backups. All communication is encrypted with HTTPS (TLS). Access to your account is protected by a password, which you are responsible for keeping safe. We retain data while your account is
+  active and for up to 30 days after it is closed, unless a legal obligation requires us to keep it longer.
+</p>
+
+<h2>5. Providers involved</h2>
+<p>We share only the strictly necessary data with providers that are required to protect it:</p>
+<ul>
+  <li><strong>Vercel:</strong> site hosting and cookie-free web analytics.</li>
+  <li><strong>Web3Forms:</strong> receipt of contact forms.</li>
+  <li><strong>Meta (WhatsApp):</strong> delivery of messages and reminders.</li>
+  <li><strong>Mercado Pago or other payment methods:</strong> payment processing.</li>
+</ul>
+
+<h2>6. Your rights</h2>
+<p>
+  As the data subject, you may access, rectify, update or request the deletion of your personal information free of charge. Write to us at <a href={`mailto:${site.email}`}>{site.email}</a> and we will reply within the legal deadlines
+  (10 calendar days for access and 5 business days for rectification or deletion).
+</p>
+<p>
+  The Agencia de Acceso a la Información Pública (Agency for Access to Public Information), as the supervisory authority under Law 25,326, has the power to handle complaints and claims filed by anyone whose rights are affected by
+  non-compliance with the personal data protection rules in force.
+</p>
+
+<h2>7. Cookies</h2>
+<p>This site does not use advertising or tracking cookies. Details are in the <a href={`/${country}/cookies`}>cookie policy</a>.</p>
+
+<h2>8. Changes to this policy</h2>
+<p>If we change this policy, we will publish the new version on this page with its update date.</p>

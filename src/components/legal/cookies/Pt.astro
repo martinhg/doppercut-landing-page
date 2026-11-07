@@ -1,0 +1,58 @@
+---
+import { site } from '../../../config/site';
+
+interface Props {
+  country: string;
+}
+
+const { country } = Astro.props;
+const appHost = new URL(site.appUrl).host;
+---
+
+<h2>1. O que são cookies</h2>
+<p>
+  Cookies e armazenamento local são pequenos dados que um site guarda no seu navegador para lembrar informações entre visitas. Alguns são técnicos, necessários para que o site funcione, e outros servem para analisar o uso ou exibir
+  publicidade.
+</p>
+
+<h2>2. O que usamos neste site</h2>
+<div class='overflow-x-auto'>
+  <table>
+    <thead>
+      <tr>
+        <th scope='col'>Nome</th>
+        <th scope='col'>Tipo</th>
+        <th scope='col'>Finalidade</th>
+        <th scope='col'>Duração</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>tp-cookie-notice</code></td>
+        <td>Armazenamento local, técnico</td>
+        <td>Lembrar que você fechou o aviso de cookies.</td>
+        <td>Até que você o apague</td>
+      </tr>
+      <tr>
+        <td>Vercel Web Analytics</td>
+        <td>Análise sem cookies</td>
+        <td>Contar visitas e páginas vistas de forma agregada. Não guarda identificadores no seu navegador.</td>
+        <td>Não se aplica</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>3. Serviços de terceiros</h2>
+<p>
+  Se você clicar no botão do WhatsApp ou no link do Instagram, sairá deste site e passarão a valer as políticas desses serviços. O aplicativo em <a href={site.appUrl}>{appHost}</a> pode usar cookies técnicos para
+  manter sua sessão iniciada.
+</p>
+
+<h2>4. Como apagá-los</h2>
+<p>
+  Você pode excluir os cookies e o armazenamento local nas configurações de privacidade do seu navegador a qualquer momento. Se você apagar o dado <code>tp-cookie-notice</code>, o aviso voltará a aparecer na sua próxima visita.
+</p>
+
+<h2>5. Mais informações</h2>
+<p>Para saber como tratamos seus dados pessoais, leia a <a href={`/${country}/privacidad`}>política de privacidade</a>. Em caso de dúvida, escreva para <a href={`mailto:${site.email}`}>{site.email}</a>.</p>

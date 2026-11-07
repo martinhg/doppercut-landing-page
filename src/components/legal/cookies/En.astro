@@ -1,0 +1,56 @@
+---
+import { site } from '../../../config/site';
+
+interface Props {
+  country: string;
+}
+
+const { country } = Astro.props;
+const appHost = new URL(site.appUrl).host;
+---
+
+<h2>1. What cookies are</h2>
+<p>
+  Cookies and local storage are small pieces of data a site saves in your browser to remember information between visits. Some are technical and needed for the site to work, while others are used to analyze usage or show advertising.
+</p>
+
+<h2>2. What we use on this site</h2>
+<div class='overflow-x-auto'>
+  <table>
+    <thead>
+      <tr>
+        <th scope='col'>Name</th>
+        <th scope='col'>Type</th>
+        <th scope='col'>Purpose</th>
+        <th scope='col'>Duration</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>tp-cookie-notice</code></td>
+        <td>Local storage, technical</td>
+        <td>Remember that you closed the cookie notice.</td>
+        <td>Until you delete it</td>
+      </tr>
+      <tr>
+        <td>Vercel Web Analytics</td>
+        <td>Cookie-free analytics</td>
+        <td>Count visits and page views in aggregate. It stores no identifiers in your browser.</td>
+        <td>Not applicable</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>3. Third-party services</h2>
+<p>
+  If you click the WhatsApp button or the Instagram link, you leave this site and those services' policies apply. The app at <a href={site.appUrl}>{appHost}</a> may use technical cookies to keep you signed in.
+</p>
+
+<h2>4. How to delete them</h2>
+<p>
+  You can delete cookies and local storage from your browser's privacy settings at any time. If you delete the <code>tp-cookie-notice</code> entry, the notice will appear again on your next visit.
+</p>
+
+<h2>5. More information</h2>
+<p>To learn how we handle your personal data, read the <a href={`/${country}/privacidad`}>privacy policy</a>. If you have any questions, write to us at <a href={`mailto:${site.email}`}>{site.email}</a>.</p>

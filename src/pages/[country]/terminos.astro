@@ -2,61 +2,22 @@
 export const prerender = true;
 
 import LegalPage from '../../layouts/LegalPage.astro';
+import Es from '../../components/legal/terms/Es.astro';
+import Pt from '../../components/legal/terms/Pt.astro';
+import En from '../../components/legal/terms/En.astro';
+import { legalLangFor, legalMeta, legalUpdated } from '../../components/legal/lang';
 import { countries } from '../../i18n/config';
-import { site } from '../../config/site';
 
 export function getStaticPaths() {
   return Object.keys(countries).map((code) => ({ params: { country: code } }));
 }
 
 const country = String(Astro.params.country);
+const lang = legalLangFor(country);
+const meta = legalMeta.terms[lang];
+const Body = { es: Es, pt: Pt, en: En }[lang];
 ---
 
-<LegalPage
-  title='Términos y condiciones de uso'
-  description={`Condiciones de uso de ${site.name}: período de prueba, suscripción, pagos, propiedad de los datos y responsabilidades al usar la plataforma.`}
-  updated='noviembre de 2026'
->
-  <p><strong>Bienvenido a {site.name}.</strong> Al usar nuestro software aceptás estas condiciones, que forman un acuerdo vinculante entre vos y {site.legal.holder}. Leelas con atención.</p>
-
-  <h2>1. Descripción del servicio</h2>
-  <p>
-    {site.name} es una plataforma SaaS (software como servicio) para gestionar turnos, clientes y la administración financiera de profesionales y negocios que trabajan con reservas, como barberías, peluquerías, centros de estética y
-    consultorios. Podemos modificar, suspender o discontinuar funciones del servicio, avisando con anticipación a los usuarios activos.
-  </p>
-
-  <h2>2. Período de prueba y suscripción</h2>
-  <p>Ofrecemos un <strong>período de prueba gratuito de 14 días</strong> con acceso a las funciones del plan Profesional, sin costo.</p>
-  <ul>
-    <li>Al terminar la prueba, para seguir usando el servicio tenés que abonar la suscripción mensual vigente.</li>
-    <li>Si no se registra el pago, la cuenta pasa a estado "Suspendida" y conservamos los datos por 30 días antes de eliminarlos definitivamente.</li>
-    <li>Los precios se expresan en la moneda de tu país y pueden ajustarse por inflación; cualquier ajuste se comunica con 30 días de anticipación.</li>
-  </ul>
-
-  <h2>3. Pagos y facturación</h2>
-  <p>
-    El servicio se abona por adelantado, entre el día 1 y el 10 de cada mes. Aceptamos transferencias bancarias y medios de pago digitales. En promociones por pago semestral o anual (por ejemplo, "Socio Fundador") el monto no es reembolsable
-    ante una cancelación anticipada, porque el descuento se otorga por el compromiso de permanencia.
-  </p>
-
-  <h2>4. Propiedad de los datos</h2>
-  <p>
-    <strong>Vos sos dueño de tus datos.</strong> La base de clientes, el historial de turnos y tu información financiera te pertenecen. {site.name} actúa como custodio y encargado del tratamiento de esa información. Si decidís irte, te
-    facilitamos la exportación de tus datos. Más detalles en la <a href={`/${country}/privacidad`}>política de privacidad</a>.
-  </p>
-
-  <h2>5. Propiedad intelectual</h2>
-  <p>El código fuente, el diseño, los logotipos y la estructura de {site.name} son propiedad exclusiva de {site.legal.holder}. Te otorgamos una licencia de uso limitada, no exclusiva e intransferible.</p>
-
-  <h2>6. Limitación de responsabilidad</h2>
-  <p>
-    Trabajamos para mantener el servicio disponible de forma continua, pero {site.name} no se responsabiliza por lucro cesante, pérdida accidental de datos por causas de fuerza mayor, fallas de servicios de terceros (como caídas de WhatsApp o
-    de proveedores de nube) ni por interrupciones de la conexión a internet del usuario.
-  </p>
-
-  <h2>7. Ley aplicable y jurisdicción</h2>
-  <p>Estos términos se rigen por las leyes de la República Argentina. Ante cualquier controversia, las partes se someten a los Tribunales Ordinarios de la Ciudad de Córdoba, con renuncia a cualquier otro fuero.</p>
-
-  <h2>8. Contacto</h2>
-  <p>Por cualquier consulta sobre estos términos escribinos a <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+<LegalPage title={meta.title} description={meta.description} updated={legalUpdated[lang]} summary={meta.summary}>
+  <Body country={country} />
 </LegalPage>

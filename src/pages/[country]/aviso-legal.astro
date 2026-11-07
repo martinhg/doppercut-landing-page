@@ -2,66 +2,22 @@
 export const prerender = true;
 
 import LegalPage from '../../layouts/LegalPage.astro';
+import Es from '../../components/legal/legal-notice/Es.astro';
+import Pt from '../../components/legal/legal-notice/Pt.astro';
+import En from '../../components/legal/legal-notice/En.astro';
+import { legalLangFor, legalMeta, legalUpdated } from '../../components/legal/lang';
 import { countries } from '../../i18n/config';
-import { site } from '../../config/site';
 
 export function getStaticPaths() {
   return Object.keys(countries).map((code) => ({ params: { country: code } }));
 }
 
 const country = String(Astro.params.country);
-const { holder, taxId, address, jurisdiction } = site.legal;
-const domain = new URL(site.url).host;
+const lang = legalLangFor(country);
+const meta = legalMeta.legalNotice[lang];
+const Body = { es: Es, pt: Pt, en: En }[lang];
 ---
 
-<LegalPage
-  title='Aviso legal'
-  description={`Datos identificatorios del titular de ${domain}, condiciones de uso del sitio, propiedad intelectual y legislación aplicable.`}
-  updated='noviembre de 2026'
->
-  <h2>1. Titular del sitio</h2>
-  <ul>
-    <li><strong>Titular:</strong> {holder}</li>
-    {taxId && <li><strong>CUIT:</strong> {taxId}</li>}
-    {address && <li><strong>Domicilio:</strong> {address}</li>}
-    <li><strong>Correo electrónico:</strong> <a href={`mailto:${site.email}`}>{site.email}</a></li>
-    <li><strong>WhatsApp:</strong> {site.whatsappDisplay}</li>
-    <li><strong>Sitio web:</strong> {domain}</li>
-  </ul>
-
-  <h2>2. Objeto</h2>
-  <p>
-    Este sitio informa sobre {site.name}, una plataforma de turnos online para profesionales y negocios, y permite solicitar una cuenta de prueba. Navegar por el sitio implica aceptar este aviso legal, la
-    <a href={`/${country}/privacidad`}>política de privacidad</a> y la <a href={`/${country}/cookies`}>política de cookies</a>. El uso de la plataforma se rige además por los
-    <a href={`/${country}/terminos`}>términos y condiciones</a>.
-  </p>
-
-  <h2>3. Uso del sitio</h2>
-  <p>
-    Te comprometés a usar el sitio de forma lícita, sin dañar su funcionamiento ni el de terceros, y a no enviar información falsa a través de los formularios. Podemos actualizar el contenido, los precios y las condiciones publicadas sin previo
-    aviso; los precios vigentes son los informados al momento de contratar.
-  </p>
-
-  <h2>4. Propiedad intelectual e industrial</h2>
-  <p>
-    La marca {site.name}, el logotipo, el símbolo, los textos, las imágenes y el código de este sitio son propiedad de {holder} o se usan con autorización. Queda prohibida su reproducción, distribución o modificación sin consentimiento expreso.
-  </p>
-
-  <h2>5. Enlaces externos</h2>
-  <p>El sitio incluye enlaces a servicios de terceros, como WhatsApp o Instagram. No somos responsables de sus contenidos ni de sus políticas de privacidad.</p>
-
-  <h2>6. Responsabilidad</h2>
-  <p>
-    Procuramos que la información publicada sea exacta y esté actualizada, pero no garantizamos la ausencia de errores ni la disponibilidad ininterrumpida del sitio. No respondemos por daños derivados del uso de la información publicada, salvo
-    los que la ley no permita excluir.
-  </p>
-
-  <h2>7. Defensa del consumidor</h2>
-  <p>
-    Si contratás como consumidor en la República Argentina, te asisten los derechos de la Ley 24.240 de Defensa del Consumidor, incluido el derecho a revocar la aceptación dentro de los 10 días corridos desde la contratación. Para ejercerlo
-    escribinos a <a href={`mailto:${site.email}`}>{site.email}</a>.
-  </p>
-
-  <h2>8. Legislación y jurisdicción</h2>
-  <p>Este aviso se rige por las leyes de la {jurisdiction}. Ante cualquier controversia, las partes se someten a los Tribunales Ordinarios de la Ciudad de Córdoba.</p>
+<LegalPage title={meta.title} description={meta.description} updated={legalUpdated[lang]} summary={meta.summary}>
+  <Body country={country} />
 </LegalPage>

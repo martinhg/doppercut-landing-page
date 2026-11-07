@@ -3,6 +3,7 @@ import Layout from './Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import { site } from '../config/site';
+import { legalLangFor, legalUi } from '../components/legal/lang';
 
 interface Props {
   title: string;
@@ -13,6 +14,7 @@ interface Props {
 
 const { title, description, updated, summary } = Astro.props;
 const country = String(Astro.params.country ?? 'ar');
+const ui = legalUi[legalLangFor(country)];
 const breadcrumb = {
   '@type': 'BreadcrumbList',
   itemListElement: [
@@ -28,7 +30,7 @@ const breadcrumb = {
     <article class='max-w-3xl mx-auto px-4 sm:px-6'>
       <div class='bg-white rounded-3xl p-6 sm:p-10 md:p-12 border border-slate-200'>
         <h1 class='text-3xl sm:text-4xl font-bold text-navy tracking-tight'>{title}</h1>
-        <p class='mt-2 text-sm text-slate'>Última actualización: {updated}</p>
+        <p class='mt-2 text-sm text-slate'>{ui.updatedLabel}: {updated}</p>
 
         {
           summary && (
