@@ -1,5 +1,5 @@
 ---
-import { ui } from '../i18n/content';
+import { uiFor } from '../i18n/regional';
 import type { Lang } from '../i18n/locale';
 import { site } from '../config/site';
 
@@ -11,7 +11,7 @@ interface Props {
 }
 
 const { lang, country, source } = Astro.props;
-const t = ui[lang];
+const t = uiFor(country);
 const id = (field: string) => `${source}-${field}`;
 
 const inputClass =

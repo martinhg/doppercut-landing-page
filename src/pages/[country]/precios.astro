@@ -7,7 +7,7 @@ import Footer from '../../components/Footer.astro';
 import { site } from '../../config/site';
 import PricingMath from '../../components/PricingMath.astro';
 import { htmlLangFor, type CountryCode } from '../../i18n/locale';
-import { chrome } from '../../i18n/chrome';
+import { uiFor, chromeFor } from '../../i18n/regional';
 
 // i18n
 import { countries, countryTerms } from '../../i18n/config';
@@ -20,12 +20,12 @@ export function getStaticPaths() {
 const countryParam = typeof Astro.params?.country === 'string' ? Astro.params.country : 'ar';
 const currentCountry = countries[countryParam as keyof typeof countries] ?? countries.ar;
 const lang = (currentCountry.lang ?? 'es_latam') as keyof typeof ui;
-const t = ui[lang];
+const t = uiFor(countryParam);
 const terms = countryTerms[countryParam as keyof typeof countryTerms];
 
 const tr = (text: string) => text.replace(/{appointment}/g, terms.appointment);
 
-const titleSEO = `${t.nav.pricing}: ${chrome[lang].seo_short} | ${site.name} ${currentCountry.name}`;
+const titleSEO = `${t.nav.pricing}: ${chromeFor(countryParam).seo_short} | ${site.name} ${currentCountry.name}`;
 const withSymbol = (price: string) => (/^[\d.,]+$/.test(price) ? `$${price}` : price);
 const p = t.pricing;
 const faqs = [

@@ -2,7 +2,7 @@
 import '../styles/global.css';
 
 import { countries } from '../i18n/config';
-import { chrome } from '../i18n/chrome';
+import { chromeFor } from '../i18n/regional';
 import { htmlLangFor, resolveLocale } from '../i18n/locale';
 import { site, whatsappLink } from '../config/site';
 import CookieNotice from '../components/CookieNotice.astro';
@@ -19,7 +19,7 @@ interface Props {
 
 const { title, description, image = site.ogImage, noindex = false, schema = [] } = Astro.props;
 const locale = resolveLocale(Astro.props.country ?? Astro.params.country);
-const c = chrome[locale.lang];
+const c = chromeFor(locale.code);
 
 const pageTitle = !title ? `${site.name} | ${c.seo_title}` : title.includes(site.name) ? title : `${title} | ${site.name}`;
 const pageDescription = description ?? c.seo_description;

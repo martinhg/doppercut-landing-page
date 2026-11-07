@@ -3,13 +3,13 @@ export const prerender = true;
 
 import Layout from '../layouts/Layout.astro';
 import { countries, defaultCountry } from '../i18n/config';
-import { chrome } from '../i18n/chrome';
+import { chromeFor } from '../i18n/regional';
 import { site, whatsappLink } from '../config/site';
 
-const c = chrome.es_latam;
+const c = chromeFor(defaultCountry);
 const localized = Object.fromEntries(
   Object.values(countries).map((country) => {
-    const strings = chrome[country.lang as keyof typeof chrome];
+    const strings = chromeFor(country.code);
     return [country.code, { title: strings.not_found_title, text: strings.not_found_text, cta: strings.not_found_cta }];
   }),
 );

@@ -1,13 +1,12 @@
 ---
-import { ui } from '../i18n/content';
+import { uiFor, chromeFor } from '../i18n/regional';
 import { countryTerms } from '../i18n/config';
-import { chrome } from '../i18n/chrome';
 import { resolveLocale } from '../i18n/locale';
 import { site, whatsappLink } from '../config/site';
 
 const locale = resolveLocale(Astro.props.country ?? Astro.params.country);
-const t = ui[locale.lang];
-const c = chrome[locale.lang];
+const t = uiFor(locale.code);
+const c = chromeFor(locale.code);
 const link = (path: string) => `/${locale.code}${path}`;
 const currentYear = new Date().getFullYear();
 const legalIdentity = [site.legal.taxId && `CUIT ${site.legal.taxId}`, site.legal.address].filter(Boolean).join(' · ');

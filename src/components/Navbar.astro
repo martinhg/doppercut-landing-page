@@ -1,13 +1,12 @@
 ---
 import { countries } from '../i18n/config';
-import { ui } from '../i18n/content';
-import { chrome } from '../i18n/chrome';
+import { uiFor, chromeFor } from '../i18n/regional';
 import { htmlLangFor, resolveLocale, type CountryCode } from '../i18n/locale';
 import { site } from '../config/site';
 
 const locale = resolveLocale(Astro.props.country ?? Astro.params.country);
-const t = ui[locale.lang].nav;
-const c = chrome[locale.lang];
+const t = uiFor(locale.code).nav;
+const c = chromeFor(locale.code);
 
 const { pathname } = Astro.url;
 const pathWithoutCountry = pathname.replace(new RegExp(`^/${locale.code}(?=/|$)`), '');
