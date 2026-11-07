@@ -84,9 +84,16 @@ const graph = [
   <head>
     <meta charset='UTF-8' />
     <meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover' />
-    <meta http-equiv='Content-Security-Policy' content='upgrade-insecure-requests' />
     <script is:inline>
+      // Opt into scroll reveal. If the reveal script never runs (blocked or failed),
+      // show everything after a short delay so content can never stay hidden.
       document.documentElement.classList.add('js');
+      setTimeout(function () {
+        if (window.__revealReady) return;
+        document.querySelectorAll('.reveal').forEach(function (el) {
+          el.classList.add('in-view');
+        });
+      }, 2500);
     </script>
 
     <title>{pageTitle}</title>
@@ -159,6 +166,7 @@ const graph = [
       // Scroll reveal. Content is visible without JS; the `js` class opts into the effect.
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const revealTargets = document.querySelectorAll('.reveal');
+      (window as Window & { __revealReady?: boolean }).__revealReady = true;
 
       if (reduceMotion || !('IntersectionObserver' in window)) {
         revealTargets.forEach((el) => el.classList.add('in-view'));
