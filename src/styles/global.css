@@ -10,13 +10,13 @@
   --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 
   /* Brand palette */
-  --color-primary: #0095c7; /* Cian principal: brand, focus, large text only on white (3.43:1) */
-  --color-primary-dark: #006080; /* Cian profundo: CTAs and small cyan text (7.04:1 on white) */
-  --color-primary-light: #1ac6ff; /* Cian luminoso: accents on dark surfaces (7.81:1 on graphite) */
+  --color-primary: #00a8e8; /* Previous cyan, restored by request */
+  --color-primary-dark: #0095c7; /* Hover, CTAs and small cyan text */
+  --color-primary-light: #2ec5ff; /* Accents on dark surfaces */
   --color-navy: #21242c; /* Grafito: dark surfaces and headings */
   --color-ink: #020817; /* Tinta: body text and foreground on cyan */
   --color-slate: #676f7e; /* Gris texto: 5.06:1 on white */
-  --color-accent: #e5f8ff;
+  --color-accent: #ccf7ff;
   --color-surface: #f3f4f6;
 
   --color-success: #166534;
@@ -25,7 +25,7 @@
   --color-danger-surface: #fef2f2;
 
   --radius-brand: 0.75rem;
-  --shadow-brand: 0 10px 30px -10px rgb(0 149 199 / 0.3);
+  --shadow-brand: 0 10px 30px -10px rgb(0 168 232 / 0.3);
 
   --ease-out-brand: cubic-bezier(0.23, 1, 0.32, 1);
   --duration-brand: 180ms;
