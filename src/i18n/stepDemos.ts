@@ -26,6 +26,17 @@ export interface StepDemo {
     commissions: string;
     days: string[];
   };
+  /** Sample data for the dashboard and booking-page previews. */
+  app: {
+    nav: string[];
+    bookingsToday: string;
+    confirmed: string;
+    team: string[];
+    bookTitle: string;
+    chooseDay: string;
+    available: string;
+    confirm: string;
+  };
 }
 
 const esServices = [
@@ -65,6 +76,7 @@ export const stepDemos: Record<Lang, StepDemo> = {
       commissions: 'Comisiones',
       days: ['L', 'M', 'M', 'J', 'V', 'S'],
     },
+    app: { nav: ['Agenda', 'Clientes', 'Servicios', 'Caja', 'Equipo'], bookingsToday: 'Turnos hoy', confirmed: 'Confirmados', team: ['Juan', 'Caro', 'Sofi'], bookTitle: 'Reservá tu turno', chooseDay: 'Elegí el día', available: 'Horarios disponibles', confirm: 'Confirmar turno' },
   },
   es_latam: {
     greeting: '¡Hola! Te comparto mis servicios:',
@@ -88,6 +100,7 @@ export const stepDemos: Record<Lang, StepDemo> = {
       commissions: 'Comisiones',
       days: ['L', 'M', 'M', 'J', 'V', 'S'],
     },
+    app: { nav: ['Agenda', 'Clientes', 'Servicios', 'Caja', 'Equipo'], bookingsToday: 'Citas hoy', confirmed: 'Confirmadas', team: ['Juan', 'Caro', 'Sofi'], bookTitle: 'Reserva tu cita', chooseDay: 'Elige el día', available: 'Horarios disponibles', confirm: 'Confirmar cita' },
   },
   en: {
     greeting: 'Hi! Here are my services:',
@@ -121,6 +134,7 @@ export const stepDemos: Record<Lang, StepDemo> = {
       commissions: 'Commissions',
       days: ['M', 'T', 'W', 'T', 'F', 'S'],
     },
+    app: { nav: ['Schedule', 'Clients', 'Services', 'Cash', 'Team'], bookingsToday: 'Bookings today', confirmed: 'Confirmed', team: ['John', 'Kate', 'Sam'], bookTitle: 'Book your appointment', chooseDay: 'Pick a day', available: 'Available times', confirm: 'Confirm booking' },
   },
   pt: {
     greeting: 'Oi! Seguem meus serviços:',
@@ -154,5 +168,6 @@ export const stepDemos: Record<Lang, StepDemo> = {
       commissions: 'Comissões',
       days: ['S', 'T', 'Q', 'Q', 'S', 'S'],
     },
+    app: { nav: ['Agenda', 'Clientes', 'Serviços', 'Caixa', 'Equipe'], bookingsToday: 'Agendamentos hoje', confirmed: 'Confirmados', team: ['João', 'Carol', 'Bia'], bookTitle: 'Agende seu horário', chooseDay: 'Escolha o dia', available: 'Horários disponíveis', confirm: 'Confirmar horário' },
   },
 };

@@ -6,6 +6,8 @@ import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 import LeadForm from '../../components/LeadForm.astro';
+import DashboardPreview from '../../components/previews/DashboardPreview.astro';
+import BookingPreview from '../../components/previews/BookingPreview.astro';
 import PricingMath from '../../components/PricingMath.astro';
 import FeatureCards from '../../components/FeatureCards.astro';
 import StepConfigure from '../../components/steps/StepConfigure.astro';
@@ -24,8 +26,6 @@ import { ui } from '../../i18n/content';
 
 // Images
 import dashboardImg from '../../assets/dashboard.webp';
-import mobileImg from '../../assets/mobile.webp';
-import websiteImg from '../../assets/website.webp';
 
 export function getStaticPaths() {
   return Object.keys(countries).map((code) => ({ params: { country: code } }));
@@ -322,9 +322,10 @@ const link = (path: string) => {
     <!-- 5. FEATURES (Bento Grid Style - High Fidelity) -->
     <section class='py-20 lg:py-32 bg-white relative overflow-hidden'>
       <div class='max-w-7xl mx-auto px-6 relative z-10'>
-        <!-- Header -->
-        <div class='max-w-2xl mx-auto text-center mb-20'>
-          <h2 class='text-3xl font-bold tracking-tight text-navy sm:text-5xl mb-6'>{t.section_5.title}</h2>
+        <div class='max-w-3xl mx-auto text-center mb-12 lg:mb-16'>
+          <h2 class='text-3xl font-bold tracking-tight text-navy sm:text-5xl mb-6 text-balance'>
+            {t.section_5.title.split(/(?<=\.)\s+/).map((sentence) => <span class='block'>{sentence}</span>)}
+          </h2>
           <p class='text-lg leading-relaxed text-slate'>{t.section_5.subtitle}</p>
         </div>
 
@@ -333,21 +334,11 @@ const link = (path: string) => {
           <div class='reveal lg:col-span-2 bg-surface rounded-[2rem] p-8 lg:p-12 pb-0 lg:pb-0 border border-slate-200 overflow-hidden relative group flex flex-col min-h-[28rem] lg:min-h-[34rem]'>
             <!-- Texto -->
             <div class='relative z-10 max-w-md mb-8'>
-              <div class='w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center mb-6 text-primary-dark'>
-                <svg class='w-6 h-6' fill='none' viewBox='0 0 24 24' stroke='currentColor' aria-hidden='true'
-                  ><path
-                    stroke-linecap='round'
-                    stroke-linejoin='round'
-                    stroke-width='2'
-                    d='M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z'
-                  ></path></svg
-                >
-              </div>
               <h3 class='text-2xl font-bold text-navy mb-4'>{t.section_5.c1_title}</h3>
               <p class='text-slate leading-relaxed'>{tr(t.section_5.c1_desc)}</p>
             </div>
             <!-- Contenedor de la imagen con Efecto 3D -->
-            <div class='relative mt-auto -mr-8 lg:-mr-12 ml-4 lg:ml-24 h-56 sm:h-72 lg:h-80' aria-hidden='false'>
+            <div class='relative mt-auto -mr-8 lg:-mr-12 ml-0 sm:ml-4 lg:ml-24 h-72 lg:h-80'>
               <!-- Mockup Browser Frame (Simulado con CSS) -->
               <div class='w-full h-full bg-white rounded-tl-xl shadow-2xl border border-slate-200/60 overflow-hidden'>
                 <!-- Barra superior del navegador simulada -->
@@ -357,10 +348,8 @@ const link = (path: string) => {
                   <div class='w-2.5 h-2.5 rounded-full bg-green-400/50'></div>
                 </div>
 
-                <!-- IMAGEN DASHBOARD -->
-                <Image src={websiteImg} loading='lazy' alt={`${site.name}: ${t.section_5.c1_title}`} widths={[640, 1024, 1600]} sizes='(max-width: 1024px) 100vw, 800px' format='webp' quality={80} class='w-full h-full object-cover object-left-top' />
+                <DashboardPreview demo={demo} locale={htmlLangFor(countryParam as CountryCode)} countryCode={countryParam} />
               </div>
-              <!-- Sombra decorativa detrás para dar profundidad -->
             </div>
           </div>
 
@@ -368,11 +357,6 @@ const link = (path: string) => {
           <div class='reveal delay-100 lg:col-span-1 bg-navy rounded-[2rem] p-8 pb-0 relative overflow-hidden text-white flex flex-col'>
             <div class='absolute top-0 right-0 w-64 h-64 bg-primary rounded-full blur-[120px] opacity-20' aria-hidden='true'></div>
             <div class='relative z-10 mb-8'>
-              <div class='w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm border border-white/10 flex items-center justify-center mb-6 text-primary-light'>
-                <svg class='w-6 h-6' fill='none' viewBox='0 0 24 24' stroke='currentColor' aria-hidden='true'
-                  ><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z'></path></svg
-                >
-              </div>
               <h3 class='text-xl font-bold mb-3'>{t.section_5.c2_title}</h3>
               <p class='text-slate-300 text-sm leading-relaxed'>{t.section_5.c2_desc}</p>
             </div>
@@ -385,8 +369,7 @@ const link = (path: string) => {
                   <div class='w-12 h-1.5 bg-slate-800/50 rounded-full'></div>
                 </div>
 
-                <!-- IMAGEN MOBILE -->
-                <Image src={mobileImg} alt={`${site.name}: ${t.section_5.c2_title}`} loading='lazy' widths={[220, 440]} sizes='220px' format='webp' quality={80} class='w-full h-full object-cover object-top bg-white pt-4' />
+                <BookingPreview demo={demo} />
                 <!-- Brillo sobre la pantalla (Glass Reflection) -->
                 <div class='absolute inset-0 bg-linear-to-tr from-transparent via-white/5 to-transparent pointer-events-none z-10'></div>
               </div>

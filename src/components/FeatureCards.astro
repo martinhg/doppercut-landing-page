@@ -1,5 +1,6 @@
 ---
 import type { StepDemo } from '../i18n/stepDemos';
+import { moneyFormatter, sampleCashFor } from '../i18n/sampleMoney';
 
 interface Props {
   copy: { f1_title: string; f1_desc: string; f2_title: string; f2_desc: string; f3_title: string; f3_desc: string };
@@ -12,19 +13,8 @@ interface Props {
 const { copy, demo, locale, countryCode } = Astro.props;
 const f = demo.features;
 
-// Plausible "today's cash" per market, so the sample never reads as a typo (USD 84,500 a day).
-const cashByCountry: Record<string, [string, number]> = {
-  ar: ['ARS', 184500],
-  uy: ['UYU', 9800],
-  mx: ['MXN', 4800],
-  cl: ['CLP', 185000],
-  co: ['COP', 950000],
-  pe: ['PEN', 980],
-  es: ['EUR', 420],
-  br: ['BRL', 2400],
-};
-const [currency, cash] = cashByCountry[countryCode] ?? ['USD', 480];
-const money = (value: number) => new Intl.NumberFormat(locale, { style: 'currency', currency, maximumFractionDigits: 0 }).format(value);
+const { currency, amount: cash } = sampleCashFor(countryCode);
+const money = moneyFormatter(locale, currency);
 const staff = [
   { initial: 'J', name: 'Juan', amount: money(Math.round(cash * 0.18)) },
   { initial: 'C', name: 'Caro', amount: money(Math.round(cash * 0.12)) },

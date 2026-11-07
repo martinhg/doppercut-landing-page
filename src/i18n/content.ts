@@ -67,11 +67,11 @@ export const ui = {
     },
     section_5: {
       caption: 'Plataforma All-in-One',
-      title: 'Todo lo que necesitás para crecer',
-      subtitle: 'Hemos empaquetado las mejores herramientas en una interfaz intuitiva. Potencia, velocidad y diseño trabajando juntos para vos.',
-      c1_title: 'Panel Administrativo Integral',
+      title: 'Un panel para vos. Una página para tus clientes.',
+      subtitle: 'Vos manejás todo desde la compu o el celular. Tus clientes reservan desde un link, sin descargar nada.',
+      c1_title: 'Panel de gestión',
       c1_desc: 'Gestioná turnos, mirá métricas en tiempo real y administrá tu base de datos de clientes. Todo sincronizado en la nube.',
-      c2_title: 'Mobile First',
+      c2_title: 'Reservas desde el celular',
       c2_desc: 'Tus clientes reservan en 3 clics desde cualquier celular. Sin descargar apps.',
     },
     section_6: {
@@ -251,11 +251,11 @@ export const ui = {
     },
     section_5: {
       caption: 'Plataforma All-in-One',
-      title: 'Todo lo que necesitas para crecer',
-      subtitle: 'Hemos empaquetado las mejores herramientas en una interfaz intuitiva. Potencia, velocidad y diseño trabajando juntos para ti.',
-      c1_title: 'Panel Administrativo Integral',
+      title: 'Un panel para ti. Una página para tus clientes.',
+      subtitle: 'Tú manejas todo desde la computadora o el celular. Tus clientes reservan desde un link, sin descargar nada.',
+      c1_title: 'Panel de gestión',
       c1_desc: 'Gestiona citas, visualiza métricas en tiempo real y administra tu base de datos de clientes. Todo sincronizado en la nube.',
-      c2_title: 'Mobile First',
+      c2_title: 'Reservas desde el celular',
       c2_desc: 'Tus clientes reservan en 3 clics desde cualquier celular. Sin descargar apps.',
     },
     section_6: {
@@ -435,11 +435,11 @@ export const ui = {
     },
     section_5: {
       caption: 'All-in-One Platform',
-      title: 'Everything you need to grow',
-      subtitle: 'We packaged the best tools into an intuitive interface. Power, speed, and design working together for you.',
-      c1_title: 'Comprehensive Admin Panel',
+      title: 'A dashboard for you. A booking page for your clients.',
+      subtitle: 'You run everything from your laptop or phone. Your clients book from a link, no app needed.',
+      c1_title: 'Management dashboard',
       c1_desc: 'Manage appointments, visualize real-time metrics, and manage your client database. Everything synced in the cloud.',
-      c2_title: 'Mobile First',
+      c2_title: 'Booking from any phone',
       c2_desc: 'Your clients book in 3 clicks from any phone. No app downloads required.',
     },
     section_6: {
@@ -619,11 +619,11 @@ export const ui = {
     },
     section_5: {
       caption: 'Plataforma All-in-One',
-      title: 'Tudo o que você precisa para crescer',
-      subtitle: 'Empacotamos as melhores ferramentas em uma interface intuitiva. Potência, velocidade e design trabalhando juntos por você.',
-      c1_title: 'Painel Administrativo Integral',
+      title: 'Um painel para você. Uma página para seus clientes.',
+      subtitle: 'Você gerencia tudo do computador ou do celular. Seus clientes reservam por um link, sem baixar nada.',
+      c1_title: 'Painel de gestão',
       c1_desc: 'Gerencie agendamentos, visualize métricas em tempo real e administre seu banco de dados de clientes. Tudo sincronizado na nuvem.',
-      c2_title: 'Mobile First',
+      c2_title: 'Reservas pelo celular',
       c2_desc: 'Seus clientes reservam em 3 cliques de qualquer celular. Sem baixar apps.',
     },
     section_6: {
