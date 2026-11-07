@@ -1,0 +1,89 @@
+---
+import type { StepDemo } from '../../i18n/stepDemos';
+import { FLIGHT_PATH, SHARE_CHANNELS } from '../../scripts/stepSceneData';
+
+interface Props {
+  demo: StepDemo;
+}
+
+const { demo } = Astro.props;
+const ICON_X = 356;
+const [landX, landY] = [300, 110];
+---
+
+<!--
+  Step 2: the personal link folds into a paper plane, flies, and lands on the channels it gets shared to.
+  Drawn in one SVG so the plane and its trail share a coordinate system at every size.
+-->
+<div data-scene='share' class='relative h-full w-full'>
+  <svg class='h-full w-full' viewBox='0 0 400 240' preserveAspectRatio='xMidYMid meet' fill='none'>
+    <defs>
+      <mask id='tp-trail-mask' maskUnits='userSpaceOnUse'>
+        <path data-s='trail-mask' d={FLIGHT_PATH} stroke='white' stroke-width='8' pathLength='1' stroke-dasharray='1 1' stroke-dashoffset='0'></path>
+      </mask>
+    </defs>
+
+    <path data-s='trail' d={FLIGHT_PATH} class='stroke-primary' stroke-width='2' stroke-dasharray='4 6' stroke-linecap='round' mask='url(#tp-trail-mask)'></path>
+
+    {
+      SHARE_CHANNELS.map((channel, i) => (
+        <path
+          data-s={`branch-${i}`}
+          d={`M${landX} ${landY} Q 318 ${channel.y} ${ICON_X - 26} ${channel.y}`}
+          class='stroke-slate-300'
+          stroke-width='1.5'
+          stroke-linecap='round'
+          pathLength='1'
+          stroke-dasharray='1 1'
+          stroke-dashoffset='0'
+        />
+      ))
+    }
+
+    <g data-s='pill' style='transform-box: fill-box; transform-origin: center'>
+      <rect x='16' y='100' width='248' height='40' rx='20' fill='white' class='stroke-slate-200' stroke-width='1.5'></rect>
+      <g transform='translate(30 112)' class='stroke-primary-dark' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+        <path d='M7 9.5a3.5 3.5 0 0 0 5 0l2.5-2.5a3.5 3.5 0 0 0-5-5l-1 1'></path>
+        <path d='M9 6.5a3.5 3.5 0 0 0-5 0L1.5 9a3.5 3.5 0 0 0 5 5l1-1'></path>
+      </g>
+      <text x='54' y='125' font-size='12.5' font-weight='600' class='fill-ink' font-family='inherit'>{demo.link}</text>
+    </g>
+
+    <!-- Plane is drawn around (0,0) and positioned with transforms, so rotation pivots on its centre. -->
+    <g data-s='plane' style={`transform-box: view-box; transform-origin: 0 0; transform: translate(${landX}px, ${landY}px) rotate(69deg); opacity: 0`}>
+      <path d='M-14 -9 L16 0 L-14 9 L-8 0 Z' fill='white' class='stroke-primary-dark' stroke-width='1.5' stroke-linejoin='round'></path>
+      <path d='M-8 0 L16 0' class='stroke-primary-dark' stroke-width='1.2'></path>
+    </g>
+
+    {
+      SHARE_CHANNELS.map((channel, i) => (
+        <g data-s={`icon-${i}`} style='transform-box: fill-box; transform-origin: center'>
+          <circle data-s={`icon-bg-${i}`} cx={ICON_X} cy={channel.y} r='22' fill={channel.color} />
+          {channel.name === 'instagram' && (
+            <g stroke='white' stroke-width='2'>
+              <rect x={ICON_X - 9} y={channel.y - 9} width='18' height='18' rx='5' />
+              <circle cx={ICON_X} cy={channel.y} r='4' />
+              <circle cx={ICON_X + 5} cy={channel.y - 5} r='0.8' fill='white' />
+            </g>
+          )}
+          {channel.name === 'whatsapp' && (
+            <g stroke='white' stroke-width='2' stroke-linejoin='round'>
+              <path d={`M${ICON_X - 8} ${channel.y + 9} l1.6 -4.6 a9 9 0 1 1 3.2 3.2 z`} />
+            </g>
+          )}
+          {channel.name === 'maps' && (
+            <g>
+              <path d={`M${ICON_X} ${channel.y + 11} C ${ICON_X - 7} ${channel.y + 3} ${ICON_X - 8} ${channel.y} ${ICON_X - 8} ${channel.y - 3} A 8 8 0 0 1 ${ICON_X + 8} ${channel.y - 3} C ${ICON_X + 8} ${channel.y} ${ICON_X + 7} ${channel.y + 3} ${ICON_X} ${channel.y + 11} Z`} fill='white' />
+              <circle cx={ICON_X} cy={channel.y - 3} r='3' fill={channel.color} data-s={`icon-dot-${i}`} />
+            </g>
+          )}
+        </g>
+      ))
+    }
+  </svg>
+</div>
+
+<script>
+  import { initStepScenes } from '../../scripts/stepScenes';
+  initStepScenes();
+</script>

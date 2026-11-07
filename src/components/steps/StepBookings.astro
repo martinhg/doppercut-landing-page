@@ -1,0 +1,58 @@
+---
+import type { StepDemo } from '../../i18n/stepDemos';
+import { NOTIFICATION_SLOT } from '../../scripts/stepSceneData';
+
+interface Props {
+  demo: StepDemo;
+}
+
+const { demo } = Astro.props;
+const last = demo.bookings.length - 1;
+// Final frame: the three newest notifications stacked, older ones already pushed out.
+const restingStyle = (i: number) => {
+  const slot = last - i;
+  return slot < 3 ? `transform: translateY(${slot * NOTIFICATION_SLOT}px)` : 'opacity: 0';
+};
+---
+
+<!--
+  Step 3: a tilted phone fills up with booking notifications until the day is fully booked.
+-->
+<div data-scene='bookings' class='relative flex h-full w-full justify-center overflow-hidden pt-5 [perspective:900px]'>
+  <div class='h-[300px] w-[156px] shrink-0 rounded-[28px] bg-navy p-[6px] shadow-2xl shadow-navy/30 [transform:rotateX(12deg)_rotateY(-18deg)_rotateZ(3deg)]'>
+    <div class='relative h-full w-full overflow-hidden rounded-[22px] bg-surface'>
+      <div class='mx-auto mt-1.5 h-3.5 w-14 rounded-full bg-navy'></div>
+
+      <div class='px-3 pt-2'>
+        <p class='relative h-4 text-[10px] font-semibold'>
+          <span data-s='label-today' class='absolute inset-0 text-ink' style='opacity: 0'>{demo.today}</span>
+          <span data-s='label-full' class='absolute inset-0 text-success'>{demo.full}</span>
+        </p>
+        <div class='mt-1 h-1.5 overflow-hidden rounded-full bg-slate-200'>
+          <div data-s='bar' class='h-full w-full origin-left rounded-full bg-success'></div>
+        </div>
+      </div>
+
+      <div class='relative mx-2 mt-3 h-[140px] overflow-hidden'>
+        {
+          demo.bookings.map((booking, i) => (
+            <div data-s={`n-${i}`} class='absolute inset-x-0 top-0 flex items-start gap-2 rounded-xl bg-white p-2 shadow-md shadow-navy/10' style={restingStyle(i)}>
+              <img src='/brand/favicon.svg' alt='' width='20' height='20' class='h-5 w-5 shrink-0 rounded-md' />
+              <div class='min-w-0'>
+                <p class='text-[9px] font-semibold text-ink'>{demo.newBooking}</p>
+                <p class='truncate text-[9px] text-slate'>
+                  {booking.name} · {booking.when}
+                </p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { initStepScenes } from '../../scripts/stepScenes';
+  initStepScenes();
+</script>
