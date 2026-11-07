@@ -15,6 +15,17 @@ export interface StepDemo {
   full: string;
   newBooking: string;
   bookings: { name: string; when: string }[];
+  /** Sample data for the feature cards ("what the system does for you"). */
+  features: {
+    whileAsleep: string;
+    slots: { time: string; label: string; booked: boolean; isNew?: boolean }[];
+    reminder: string;
+    reminderSent: string;
+    cashToday: string;
+    trend: string;
+    commissions: string;
+    days: string[];
+  };
 }
 
 const esServices = [
@@ -44,6 +55,16 @@ export const stepDemos: Record<Lang, StepDemo> = {
     full: 'Agenda llena',
     newBooking: 'Nuevo turno',
     bookings: esBookings,
+    features: {
+      whileAsleep: 'Mientras dormías',
+      slots: [{ time: '09:00', label: 'Lucas · Corte', booked: true }, { time: '10:30', label: 'Sofía · Manicura', booked: true, isNew: true }, { time: '12:00', label: 'Libre', booked: false }],
+      reminder: 'Hola Sofía 👋 Te recordamos tu turno de mañana a las 10:30.',
+      reminderSent: 'Recordatorio enviado',
+      cashToday: 'Caja de hoy',
+      trend: '+12% vs. semana pasada',
+      commissions: 'Comisiones',
+      days: ['L', 'M', 'M', 'J', 'V', 'S'],
+    },
   },
   es_latam: {
     greeting: '¡Hola! Te comparto mis servicios:',
@@ -57,6 +78,16 @@ export const stepDemos: Record<Lang, StepDemo> = {
     full: 'Agenda llena',
     newBooking: 'Nueva cita',
     bookings: esBookings,
+    features: {
+      whileAsleep: 'Mientras dormías',
+      slots: [{ time: '09:00', label: 'Lucas · Corte', booked: true }, { time: '10:30', label: 'Sofía · Manicura', booked: true, isNew: true }, { time: '12:00', label: 'Libre', booked: false }],
+      reminder: 'Hola Sofía 👋 Te recordamos tu cita de mañana a las 10:30.',
+      reminderSent: 'Recordatorio enviado',
+      cashToday: 'Caja de hoy',
+      trend: '+12% vs. semana pasada',
+      commissions: 'Comisiones',
+      days: ['L', 'M', 'M', 'J', 'V', 'S'],
+    },
   },
   en: {
     greeting: 'Hi! Here are my services:',
@@ -80,6 +111,16 @@ export const stepDemos: Record<Lang, StepDemo> = {
       { name: 'Daniel', when: 'Sat 9:45 AM' },
       { name: 'Olivia', when: 'Today 7:30 PM' },
     ],
+    features: {
+      whileAsleep: 'While you slept',
+      slots: [{ time: '9:00', label: 'Lucas · Haircut', booked: true }, { time: '10:30', label: 'Sophie · Manicure', booked: true, isNew: true }, { time: '12:00', label: 'Open', booked: false }],
+      reminder: 'Hi Sophie 👋 Reminder: your appointment is tomorrow at 10:30 AM.',
+      reminderSent: 'Reminder sent',
+      cashToday: "Today's cash",
+      trend: '+12% vs last week',
+      commissions: 'Commissions',
+      days: ['M', 'T', 'W', 'T', 'F', 'S'],
+    },
   },
   pt: {
     greeting: 'Oi! Seguem meus serviços:',
@@ -103,5 +144,15 @@ export const stepDemos: Record<Lang, StepDemo> = {
       { name: 'Diego', when: 'Sáb 09:45' },
       { name: 'Beatriz', when: 'Hoje 19:30' },
     ],
+    features: {
+      whileAsleep: 'Enquanto você dormia',
+      slots: [{ time: '09:00', label: 'Lucas · Corte', booked: true }, { time: '10:30', label: 'Sofia · Manicure', booked: true, isNew: true }, { time: '12:00', label: 'Livre', booked: false }],
+      reminder: 'Oi Sofia 👋 Lembrete: seu horário é amanhã às 10:30.',
+      reminderSent: 'Lembrete enviado',
+      cashToday: 'Caixa de hoje',
+      trend: '+12% vs semana passada',
+      commissions: 'Comissões',
+      days: ['S', 'T', 'Q', 'Q', 'S', 'S'],
+    },
   },
 };

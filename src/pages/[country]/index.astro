@@ -6,10 +6,13 @@ import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 import LeadForm from '../../components/LeadForm.astro';
+import FeatureCards from '../../components/FeatureCards.astro';
 import StepConfigure from '../../components/steps/StepConfigure.astro';
 import StepShare from '../../components/steps/StepShare.astro';
 import StepBookings from '../../components/steps/StepBookings.astro';
 import { stepDemos } from '../../i18n/stepDemos';
+import { htmlLangFor } from '../../i18n/locale';
+import type { CountryCode } from '../../i18n/locale';
 import { Image } from 'astro:assets';
 import { site, whatsappLink } from '../../config/site';
 import { chrome } from '../../i18n/chrome';
@@ -274,83 +277,14 @@ const link = (path: string) => {
     </section>
 
     <!-- 3. BENEFICIOS (Grid 3 Cols - Final Polish) -->
-    <section class='py-20 bg-slate-50/50 relative'>
-      <!-- Decoración de fondo sutil -->
-      <div class='absolute inset-0 opacity-[0.03] pointer-events-none'></div>
+    <section class='py-20 lg:py-24 bg-slate-50/50 relative'>
       <div class='max-w-6xl mx-auto px-6 relative z-10'>
-        <!-- Header -->
-        <div class='text-center max-w-3xl mx-auto mb-20 reveal'>
+        <div class='text-center max-w-3xl mx-auto mb-12 lg:mb-14 reveal'>
           <h2 class='text-3xl lg:text-4xl font-bold text-navy mb-4 tracking-tight'>{t.features.title}</h2>
           <p class='text-slate text-lg leading-relaxed'>{t.features.subtitle}</p>
         </div>
 
-        <!-- Grid de Tarjetas -->
-        <div class='grid md:grid-cols-3 gap-8'>
-          <div class={`reveal delay-100 group relative bg-white rounded-3xl p-8 border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-navy/10 transition-shadow duration-300 overflow-hidden flex flex-col h-full`}>
-            <div class='absolute bottom-0 left-0 w-full h-1.5 bg-slate-50'>
-              <div class='w-full h-full bg-primary-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300'></div>
-            </div>
-            <div class='relative z-10 flex-1 flex flex-col items-start'>
-              <div
-                class='w-14 h-14 rounded-2xl bg-accent text-primary-dark flex items-center justify-center mb-6 group-hover:text-white transition-colors duration-300 shadow-sm  relative overflow-hidden'
-              >
-                <div class='absolute inset-0 bg-primary-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300'></div>
-                <svg class='w-7 h-7 relative z-10' fill='none' viewBox='0 0 24 24' stroke='currentColor' aria-hidden='true'>
-                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'></path>
-                </svg>
-              </div>
-
-              <h3 class='text-xl font-bold text-navy mb-3 group-hover:text-primary-dark transition-colors duration-300'>{t.features.f1_title}</h3>
-              <p class='text-slate leading-relaxed mb-4'>{t.features.f1_desc}</p>
-            </div>
-          </div>
-
-          <div class={`reveal delay-200 group relative bg-white rounded-3xl p-8 border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-navy/10 transition-shadow duration-300 overflow-hidden flex flex-col h-full`}>
-            <div class='absolute bottom-0 left-0 w-full h-1.5 bg-slate-50'>
-              <div class='w-full h-full bg-primary-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300'></div>
-            </div>
-            <div class='relative z-10 flex-1 flex flex-col items-start'>
-              <div
-                class='w-14 h-14 rounded-2xl bg-accent text-primary-dark flex items-center justify-center mb-6 group-hover:text-white transition-colors duration-300 shadow-sm  relative overflow-hidden'
-              >
-                <div class='absolute inset-0 bg-primary-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300'></div>
-                <svg class='w-7 h-7 relative z-10' fill='none' viewBox='0 0 24 24' stroke='currentColor' aria-hidden='true'>
-                  <path
-                    stroke-linecap='round'
-                    stroke-linejoin='round'
-                    stroke-width='1.5'
-                    d='M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9'></path>
-                </svg>
-              </div>
-
-              <h3 class='text-xl font-bold text-navy mb-3 group-hover:text-primary-dark transition-colors duration-300'>{t.features.f2_title}</h3>
-              <p class='text-slate leading-relaxed mb-4'>{t.features.f2_desc}</p>
-            </div>
-          </div>
-
-          <div class={`reveal delay-300 group relative bg-white rounded-3xl p-8 border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-navy/10 transition-shadow duration-300 overflow-hidden flex flex-col h-full`}>
-            <div class='absolute bottom-0 left-0 w-full h-1.5 bg-slate-50'>
-              <div class='w-full h-full bg-primary-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300'></div>
-            </div>
-            <div class='relative z-10 flex-1 flex flex-col items-start'>
-              <div
-                class='w-14 h-14 rounded-2xl bg-accent text-primary-dark flex items-center justify-center mb-6 group-hover:text-white transition-colors duration-300 shadow-sm  relative overflow-hidden'
-              >
-                <div class='absolute inset-0 bg-primary-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300'></div>
-                <svg class='w-7 h-7 relative z-10' fill='none' viewBox='0 0 24 24' stroke='currentColor' aria-hidden='true'>
-                  <path
-                    stroke-linecap='round'
-                    stroke-linejoin='round'
-                    stroke-width='1.5'
-                    d='M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'></path>
-                </svg>
-              </div>
-
-              <h3 class='text-xl font-bold text-navy mb-3 group-hover:text-primary-dark transition-colors duration-300'>{t.features.f3_title}</h3>
-              <p class='text-slate leading-relaxed mb-4'>{t.features.f3_desc}</p>
-            </div>
-          </div>
-        </div>
+        <FeatureCards copy={t.features} demo={demo} locale={htmlLangFor(countryParam as CountryCode)} countryCode={countryParam} />
       </div>
     </section>
 
