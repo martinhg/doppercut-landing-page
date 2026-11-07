@@ -3,27 +3,33 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/react": "^4.4.2",
-    "@astrojs/sitemap": "^3.6.0",
-    "@astrojs/vercel": "^9.0.2",
-    "@fontsource/inter": "^5.2.8",
-    "@tailwindcss/vite": "^4.1.17",
-    "@types/react": "^19.2.6",
-    "@types/react-dom": "^19.2.3",
-    "astro": "^5.15.9",
-    "astro-robots-txt": "^1.0.0",
-    "axios": "^1.13.2",
-    "clsx": "^2.1.1",
-    "lucide-react": "^0.554.0",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "react-hook-form": "^7.66.1",
-    "tailwindcss": "^4.1.17"
-  }
+    "@astrojs/react": "4.4.2",
+    "@astrojs/sitemap": "3.6.0",
+    "@astrojs/vercel": "9.0.2",
+    "@fontsource/inter": "5.2.8",
+    "@tailwindcss/vite": "4.1.17",
+    "@types/react": "19.2.6",
+    "@types/react-dom": "19.2.3",
+    "astro": "5.15.9",
+    "astro-robots-txt": "1.0.0",
+    "axios": "1.13.2",
+    "clsx": "2.1.1",
+    "lucide-react": "0.554.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "react-hook-form": "7.66.1",
+    "tailwindcss": "4.1.17"
+  },
+  "engines": {
+    "node": ">=24.22.1 <25",
+    "pnpm": ">=12.15.0"
+  },
+  "packageManager": "pnpm@12.15.0"
 }
