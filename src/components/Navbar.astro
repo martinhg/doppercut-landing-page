@@ -24,7 +24,7 @@ const isActive = (href: string) => !href.includes('#') && pathname.replace(/\/$/
 
 <header class='fixed inset-x-0 top-0 z-50' id='navbar'>
   <div class='absolute inset-0 bg-white md:bg-white/90 md:backdrop-blur-md border-b border-slate-200/70 transition-shadow duration-200' id='nav-bg'></div>
-  <nav class='relative max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-4' aria-label='Principal'>
+  <nav class='relative max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-4' aria-label={c.nav_label}>
     <a href={link('/')} class='shrink-0 flex items-center' aria-label={`${site.name}, ${t.home}`}>
       <img src={site.logo.light} alt={c.logo_alt} class='h-7 sm:h-9 w-auto' width='144' height='42' />
     </a>

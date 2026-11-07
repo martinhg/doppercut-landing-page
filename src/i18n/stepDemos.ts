@@ -43,29 +43,6 @@ const esBookings = [
 ];
 
 export const stepDemos: Record<Lang, StepDemo> = {
-  es_ar: {
-    greeting: '¡Hola! Te paso mis servicios:',
-    services: esServices,
-    hours: 'Lun a Sáb · 10 a 20 h',
-    sentAt: '10:24',
-    profile: 'Tu negocio',
-    ready: 'Perfil listo',
-    link: 'turnosplus.com/tu-negocio',
-    today: 'Agenda de hoy',
-    full: 'Agenda llena',
-    newBooking: 'Nuevo turno',
-    bookings: esBookings,
-    features: {
-      whileAsleep: 'Mientras dormías',
-      slots: [{ time: '09:00', label: 'Lucas · Corte', booked: true }, { time: '10:30', label: 'Sofía · Manicura', booked: true, isNew: true }, { time: '12:00', label: 'Libre', booked: false }],
-      reminder: 'Hola Sofía 👋 Te recordamos tu turno de mañana a las 10:30.',
-      reminderSent: 'Recordatorio enviado',
-      cashToday: 'Caja de hoy',
-      trend: '+12% vs. semana pasada',
-      commissions: 'Comisiones',
-      days: ['L', 'M', 'M', 'J', 'V', 'S'],
-    },
-  },
   es_latam: {
     greeting: '¡Hola! Te comparto mis servicios:',
     services: esServices,

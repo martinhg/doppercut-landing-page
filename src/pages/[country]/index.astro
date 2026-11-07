@@ -34,7 +34,7 @@ export function getStaticPaths() {
 
 const countryParam = typeof Astro.params?.country === 'string' ? Astro.params.country : 'ar';
 const currentCountry = countries[countryParam as keyof typeof countries] ?? countries.ar;
-const lang = (currentCountry.lang ?? 'es_ar') as keyof typeof ui;
+const lang = (currentCountry.lang ?? 'es_latam') as keyof typeof ui;
 const t = ui[lang];
 const terms = countryTerms[countryParam as keyof typeof countryTerms];
 

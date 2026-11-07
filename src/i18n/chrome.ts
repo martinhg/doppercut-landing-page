@@ -8,6 +8,7 @@ export const chrome: Record<
   {
     skip: string;
     menu_open: string;
+    nav_label: string;
     menu_close: string;
     country_label: string;
     whatsapp_label: string;
@@ -31,34 +32,10 @@ export const chrome: Record<
     seo_description: string;
   }
 > = {
-  es_ar: {
-    skip: 'Saltar al contenido',
-    menu_open: 'Abrir menú',
-    menu_close: 'Cerrar menú',
-    country_label: 'Elegí tu país',
-    whatsapp_label: 'Escribinos por WhatsApp',
-    whatsapp_message: 'Hola TurnosPlus, quiero más info del sistema de turnos.',
-    cookie_text: 'Usamos solo cookies técnicas y una analítica que no te identifica. No hay publicidad ni rastreo entre sitios.',
-    cookie_link: 'Ver política de cookies',
-    cookie_ok: 'Entendido',
-    form_sending: 'Enviando...',
-    form_success: '¡Recibido! Te escribimos por WhatsApp en breve.',
-    form_error: 'No pudimos enviar el formulario. Probá de nuevo o escribinos por WhatsApp.',
-    form_too_fast: 'Tomate unos segundos para revisar los datos y volvé a enviar.',
-    form_required: 'Completá los campos obligatorios.',
-    legal_notice: 'Aviso legal',
-    cookies: 'Política de cookies',
-    not_found_title: 'Esta página no existe',
-    not_found_text: 'Puede que el enlace esté mal escrito o que la página se haya movido.',
-    not_found_cta: 'Volver al inicio',
-    logo_alt: 'TurnosPlus',
-    seo_title: 'Sistema de turnos online para profesionales y negocios',
-    seo_short: 'Sistema de turnos online',
-    seo_description: 'Agenda online 24/7, recordatorios por WhatsApp y control de caja para barberías, peluquerías, estética y consultorios. Probá TurnosPlus 14 días gratis.',
-  },
   es_latam: {
     skip: 'Saltar al contenido',
     menu_open: 'Abrir menú',
+    nav_label: 'Principal',
     menu_close: 'Cerrar menú',
     country_label: 'Elige tu país',
     whatsapp_label: 'Escríbenos por WhatsApp',
@@ -84,6 +61,7 @@ export const chrome: Record<
   en: {
     skip: 'Skip to content',
     menu_open: 'Open menu',
+    nav_label: 'Main',
     menu_close: 'Close menu',
     country_label: 'Choose your country',
     whatsapp_label: 'Message us on WhatsApp',
@@ -109,6 +87,7 @@ export const chrome: Record<
   pt: {
     skip: 'Pular para o conteúdo',
     menu_open: 'Abrir menu',
+    nav_label: 'Principal',
     menu_close: 'Fechar menu',
     country_label: 'Escolha seu país',
     whatsapp_label: 'Fale conosco pelo WhatsApp',

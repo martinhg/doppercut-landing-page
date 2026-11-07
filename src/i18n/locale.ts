@@ -6,7 +6,7 @@ export type Lang = keyof typeof ui;
 
 export const isCountry = (code: unknown): code is CountryCode => typeof code === 'string' && code in countries;
 
-/** BCP 47 tag for `<html lang>` and `hreflang` (es_ar is not a valid tag). */
+/** BCP 47 tag for `<html lang>` and `hreflang` (es_latam is not a valid tag). */
 export const htmlLangFor = (code: CountryCode): string => {
   if (code === 'br') return 'pt-BR';
   if (code === 'us') return 'en-US';

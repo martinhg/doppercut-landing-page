@@ -6,7 +6,7 @@ import { countries, defaultCountry } from '../i18n/config';
 import { chrome } from '../i18n/chrome';
 import { site, whatsappLink } from '../config/site';
 
-const c = chrome.es_ar;
+const c = chrome.es_latam;
 const localized = Object.fromEntries(
   Object.values(countries).map((country) => {
     const strings = chrome[country.lang as keyof typeof chrome];
