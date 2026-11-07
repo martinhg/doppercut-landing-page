@@ -15,7 +15,23 @@ const t = ui[lang];
 const id = (field: string) => `${source}-${field}`;
 
 const inputClass =
-  'w-full px-4 py-3 rounded-xl bg-white border border-slate-300 text-ink placeholder:text-slate focus:border-primary-dark focus:outline-none focus:ring-2 focus:ring-primary/25 transition-[border-color,box-shadow] duration-150';
+  'w-full px-4 py-3 rounded-xl bg-white border border-slate-300 text-ink placeholder:text-slate-400 focus:border-primary-dark focus:outline-none focus:ring-2 focus:ring-primary/25 transition-[border-color,box-shadow] duration-150';
+// Example WhatsApp number per country, shown as a format hint (contact continues on WhatsApp).
+const phoneExamples: Record<string, string> = {
+  ar: '+54 9 351 123 4567',
+  uy: '+598 91 234 567',
+  mx: '+52 55 1234 5678',
+  cl: '+56 9 1234 5678',
+  co: '+57 300 123 4567',
+  pe: '+51 912 345 678',
+  es: '+34 612 34 56 78',
+  ec: '+593 99 123 4567',
+  pa: '+507 6123 4567',
+  ve: '+58 412 123 4567',
+  br: '+55 11 91234 5678',
+  us: '+1 305 555 0123',
+};
+const phoneExample = phoneExamples[country] ?? phoneExamples.us;
 const labelClass = 'block text-sm font-medium text-navy mb-1.5';
 ---
 
@@ -32,15 +48,9 @@ const labelClass = 'block text-sm font-medium text-navy mb-1.5';
     <input type='text' id={id('website')} name='website' tabindex='-1' autocomplete='off' />
   </div>
 
-  <div class='grid grid-cols-1 sm:grid-cols-2 gap-4'>
-    <div>
-      <label for={id('name')} class={labelClass}>{t.section_8.form_name}</label>
-      <input id={id('name')} type='text' name='name' required autocomplete='given-name' maxlength='80' class={inputClass} />
-    </div>
-    <div>
-      <label for={id('lastname')} class={labelClass}>{t.section_8.form_lastname}</label>
-      <input id={id('lastname')} type='text' name='lastname' required autocomplete='family-name' maxlength='80' class={inputClass} />
-    </div>
+  <div>
+    <label for={id('name')} class={labelClass}>{t.section_8.form_name}</label>
+    <input id={id('name')} type='text' name='name' required autocomplete='name' maxlength='80' class={inputClass} />
   </div>
 
   <div>
@@ -59,15 +69,11 @@ const labelClass = 'block text-sm font-medium text-navy mb-1.5';
       inputmode='tel'
       pattern='[0-9 +()\-]{6,20}'
       maxlength='20'
+      placeholder={phoneExample}
       aria-describedby={id('phone-help')}
       class={inputClass}
     />
-    <p id={id('phone-help')} class='text-xs text-slate mt-1.5'>{t.section_8.form_caption}</p>
-  </div>
-
-  <div>
-    <label for={id('note')} class={labelClass}>{t.section_8.form_note}</label>
-    <textarea id={id('note')} name='note' rows='3' maxlength='1000' class={inputClass}></textarea>
+    <p id={id('phone-help')} class='text-xs text-slate mt-1.5'>{t.section_8.form_phone_hint} <span class='tabular'>{phoneExample}</span></p>
   </div>
 
   <button type='submit' class='press w-full py-4 bg-primary-dark text-white font-semibold rounded-xl hover:bg-navy disabled:opacity-70 disabled:cursor-wait transition-colors cursor-pointer'>
