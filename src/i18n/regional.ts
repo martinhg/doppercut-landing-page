@@ -7,7 +7,7 @@ import type { Lang } from './locale';
 type Phrases = readonly (readonly [string, string])[];
 
 /**
- * Argentina books "turnos", not "citas". Whole phrases are listed (not the bare noun)
+ * Argentina and Uruguay book "turnos", not "citas". Whole phrases are listed (not the bare noun)
  * because the gender changes with it: "una cita perdida" → "un turno perdido".
  */
 const turnoPhrases: Phrases = [
@@ -26,7 +26,7 @@ const turnoPhrases: Phrases = [
   ['tu cita', 'tu turno'],
 ];
 
-const regionalPhrases: Partial<Record<string, Phrases>> = { ar: turnoPhrases };
+const regionalPhrases: Partial<Record<string, Phrases>> = { ar: turnoPhrases, uy: turnoPhrases };
 
 const rewrite = <T>(value: T, phrases: Phrases): T => {
   if (typeof value === 'string') return phrases.reduce<string>((text, [from, to]) => text.split(from).join(to), value) as T;
