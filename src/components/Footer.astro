@@ -10,6 +10,7 @@ const t = ui[locale.lang];
 const c = chrome[locale.lang];
 const link = (path: string) => `/${locale.code}${path}`;
 const currentYear = new Date().getFullYear();
+const legalIdentity = [site.legal.taxId && `CUIT ${site.legal.taxId}`, site.legal.address].filter(Boolean).join(' · ');
 
 const productLinks = [
   { href: link('/#como-funciona'), label: t.nav.how },
@@ -24,10 +25,10 @@ const legalLinks = [
 ];
 ---
 
-<footer class='bg-navy text-slate-300 pt-16 pb-10'>
+<footer class='bg-navy text-slate-300 pt-16 pb-28 sm:pb-10'>
   <div class='max-w-6xl mx-auto px-6'>
-    <div class='grid gap-12 md:grid-cols-4 mb-14'>
-      <div class='md:col-span-2'>
+    <div class='grid grid-cols-2 gap-x-6 gap-y-12 md:grid-cols-4 mb-14'>
+      <div class='col-span-2'>
         <a href={link('')} class='inline-flex mb-5' aria-label={site.name}>
           <img src={site.logo.dark} alt={c.logo_alt} class='h-9 w-auto' width='144' height='42' loading='lazy' />
         </a>
@@ -71,8 +72,9 @@ const legalLinks = [
       </nav>
     </div>
 
-    <div class='border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-400'>
+    <div class='border-t border-white/10 pt-8 flex flex-col md:flex-row md:items-center gap-2 md:gap-6 text-xs text-slate-400'>
       <p>&copy; {currentYear} {site.name}. {t.footer.all_rights_reserved}</p>
+      {legalIdentity && <p>{legalIdentity}</p>}
     </div>
   </div>
 </footer>
