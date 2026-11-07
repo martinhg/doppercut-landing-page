@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
 import { Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 
 export default function ContactForm() {
@@ -17,7 +16,17 @@ export default function ContactForm() {
   const onSubmit = async (data) => {
     setStatus('loading');
     try {
-      await axios.post(`${API_URL}/leads`, data);
+      const response = await fetch(`${API_URL}/leads`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      // Like axios, treat any non-2xx response as a failure
+      if (!response.ok) {
+        throw new Error(`Lead request failed with status ${response.status}`);
+      }
+
       setStatus('success');
     } catch (error) {
       console.error(error);

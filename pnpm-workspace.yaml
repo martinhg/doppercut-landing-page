@@ -1,3 +1,8 @@
 allowBuilds:
   esbuild: true
   sharp: true
+
+overrides:
+  # @vercel/routing-utils pins path-to-regexp 6.1.0 (high: backtracking regex); it
+  # already ships 6.3.0 side by side, so align both on the patched release
+  '@vercel/routing-utils>path-to-regexp': 6.3.0
