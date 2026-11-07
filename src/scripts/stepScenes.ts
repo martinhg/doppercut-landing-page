@@ -1,4 +1,4 @@
-import { animate, inView } from 'motion';
+import { animate, inView, scroll } from 'motion';
 import type { AnimationSequence } from 'motion';
 import { FLIGHT_KEYFRAMES, NOTIFICATION_SLOT, SHARE_CHANNELS } from './stepSceneData';
 
@@ -96,7 +96,48 @@ const bookings: Builder = (q) => {
   return { sequence: seq, hold: done + 0.3 };
 };
 
-const builders: Record<string, Builder> = { configure, share, bookings };
+/** Growth section: booking notifications take turns over the dashboard screenshot. */
+const growthToasts: Builder = (q) => {
+  const seq: AnimationSequence = [];
+  for (let i = 0; i < 3; i++) {
+    const t = i * 3;
+    seq.push(
+      [q(`toast-${i}`), { opacity: [0, 1], y: [10, 0], scale: [0.96, 1] }, { at: t + 0.2, duration: 0.4, ease: EASE_OUT }],
+      [q(`toast-${i}`), { opacity: 0, y: -6 }, { at: t + 2.6, duration: 0.3 }],
+    );
+  }
+  return { sequence: seq, hold: 0.8 };
+};
+
+/** Growth section: a "booking confirmed" bubble pops beside the phone screenshot. */
+const growthConfirmed: Builder = (q) => ({
+  sequence: [
+    [q('bubble'), { opacity: [0, 1], y: [12, 0], scale: [0.9, 1] }, { at: 0.3, duration: 0.45, ease: EASE_OUT }],
+    [q('check'), { strokeDashoffset: [1, 0] }, { at: 0.55, duration: 0.35, ease: EASE_OUT }],
+    [q('bubble'), { opacity: 0, y: 8 }, { at: 3.4, duration: 0.3 }],
+  ],
+  hold: 1.2,
+});
+
+const builders: Record<string, Builder> = { configure, share, bookings, 'growth-toasts': growthToasts, 'growth-confirmed': growthConfirmed };
+
+/**
+ * Scroll-linked depth: elements marked [data-tilt] start tilted back and settle flat as their
+ * [data-tilt-target] card scrolls into view. Driven by scroll position, so it never loops.
+ */
+const tilts: Record<string, Record<string, number[]>> = {
+  dashboard: { rotateX: [18, 0], y: [48, 0], scale: [0.94, 1] },
+  phone: { rotateX: [12, 0], y: [72, 0] },
+};
+
+function initScrollTilt() {
+  document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((el) => {
+    const keyframes = tilts[el.dataset.tilt ?? ''];
+    const target = el.closest<HTMLElement>('[data-tilt-target]') ?? el;
+    if (!keyframes) return;
+    scroll(animate(el, keyframes, { ease: 'linear' }), { target, offset: ['start end', 'end end'] });
+  });
+}
 
 let started = false;
 
@@ -104,6 +145,7 @@ export function initStepScenes() {
   if (started) return;
   started = true;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  initScrollTilt();
 
   document.querySelectorAll<HTMLElement>('[data-scene]').forEach((scene) => {
     const build = builders[scene.dataset.scene ?? ''];
