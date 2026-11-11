@@ -1,22 +1,15 @@
 import { defineMiddleware } from 'astro:middleware';
+import { countries, defaultCountry } from './i18n/config';
+
+const supportedCountries = new Set(Object.keys(countries));
 
 export const onRequest = defineMiddleware((context, next) => {
-  if (context.url.pathname === '/') {
-    const country = context.request.headers.get('x-vercel-ip-country')?.toLowerCase() || 'ar';
+  if (context.url.pathname !== '/') return next();
 
-    // 2. Definimos los países que tu web soporta realmente
-    // (Asegúrate de que estas carpetas existan en src/pages/[country])
-    const supportedCountries = ['ar', 'mx', 'br', 'cl', 'us'];
+  // Geo-redirect the bare root to the visitor's country; unsupported countries get the global (English) site.
+  const geo = context.request.headers.get('x-vercel-ip-country')?.toLowerCase();
+  const target = geo ? (supportedCountries.has(geo) ? geo : 'us') : defaultCountry;
 
-    // 3. Decidimos el destino
-    // Si el país del usuario está soportado, lo mandamos ahí.
-    // Si no (ej: viene de España), lo mandamos a la versión Global ('us') o a la default ('ar').
-    const target = supportedCountries.includes(country) ? country : 'us';
-
-    // 4. Ejecutamos la redirección (302 Found = Temporal, mejor para geo-redirects)
-    return context.redirect(`/${target}`, 302);
-  }
-
-  // Si no es la raíz, sigue tu camino
-  return next();
+  // 302: geo redirects must not be cached as permanent.
+  return context.redirect(`/${target}`, 302);
 });

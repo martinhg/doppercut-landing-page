@@ -1,88 +1,136 @@
 ---
 import { countries } from '../i18n/config';
-import { ui } from '../i18n/content';
+import { uiFor, chromeFor, countryPathFor } from '../i18n/regional';
+import { htmlLangFor, resolveLocale, type CountryCode } from '../i18n/locale';
+import { site } from '../config/site';
 
-const country = (Astro.props.country ?? 'ar') as keyof typeof countries;
-const currentCountry = countries[country] ?? countries.ar;
-const lang = (currentCountry.lang ?? 'es_ar') as keyof typeof ui;
-const t = ui[lang].nav;
+const locale = resolveLocale(Astro.props.country ?? Astro.params.country);
+const t = uiFor(locale.code).nav;
+const c = chromeFor(locale.code);
 
 const { pathname } = Astro.url;
+const pathWithoutCountry = pathname.replace(new RegExp(`^/${locale.code}(?=/|$)`), '');
+const countryUrl = (code: string) => countryPathFor(locale.code, code, pathWithoutCountry);
+const link = (path: string) => `/${locale.code}${path === '/' ? '' : path}`;
 
-const getCountryUrl = (targetCountryCode: string) => {
-  const cleanPath = pathname.replace(new RegExp(`^/${country}`), '') || '';
-  
-  return `/${targetCountryCode}${cleanPath}`;
-};
-
-const link = (path: string) => {
-  const cleanPath = path.startsWith('/') ? path : `/${path}`;
-  return `/${country}${cleanPath}`;
-};
-
+const navLinks = [
+  { href: link('/#como-funciona'), label: t.how },
+  { href: link('/precios'), label: t.pricing },
+  { href: link('/contacto'), label: t.contact },
+];
+const isActive = (href: string) => !href.includes('#') && pathname.replace(/\/$/, '') === href;
 ---
 
-<nav class='fixed w-full z-50 top-0 transition-all duration-300' id='navbar'>
-  <div class='absolute inset-0 bg-white/80 backdrop-blur-md border-b border-slate-100' id='nav-bg'></div>
-  <div class='max-w-7xl mx-auto px-6 h-20 flex items-center justify-between relative z-10'>
-    <a href={link('/')} class='text-2xl font-bold text-navy flex items-center gap-2'>
-      <img src="/logo.png" alt="Logo DopperCut" class="w-auto h-10 object-contain" width="150" height="40" />
-      DopperCut
+<header class='fixed inset-x-0 top-0 z-50' id='navbar'>
+  <div class='absolute inset-0 bg-white md:bg-white/90 md:backdrop-blur-md border-b border-slate-200/70 transition-shadow duration-200' id='nav-bg'></div>
+  <nav class='relative max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-4' aria-label={c.nav_label}>
+    <a href={link('/')} class='shrink-0 flex items-center' aria-label={`${site.name}, ${t.home}`}>
+      <img src={site.logo.light} alt={c.logo_alt} class='h-7 sm:h-9 w-auto' width='144' height='42' />
     </a>
 
-    <div class='hidden md:flex items-center gap-8'>
-      <a href={link('/')} class='text-sm font-medium text-slate hover:text-navy transition-colors'>{t.home}</a>
-      <a href={link('/#como-funciona')} class='text-sm font-medium text-slate hover:text-navy transition-colors'>{t.how}</a>
-      <a href={link('/precios')} class='text-sm font-medium text-slate hover:text-navy transition-colors'>{t.pricing}</a>
-      <a href={link('/contacto')} class='text-sm font-medium text-slate hover:text-navy transition-colors'>{t.contact}</a>
-    </div>
+    <ul class='hidden md:flex items-center gap-8'>
+      {
+        navLinks.map((item) => (
+          <li>
+            <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined} class='relative text-sm font-medium text-slate hover:text-navy aria-[current=page]:text-navy transition-colors after:absolute after:inset-x-0 after:-bottom-2 after:h-0.5 after:rounded-full after:bg-primary after:opacity-0 aria-[current=page]:after:opacity-100'>
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
 
-    <div class='flex items-center gap-4'>
-      <div class='relative group'>
-        <button class='flex items-center gap-2 text-sm font-bold text-navy hover:bg-slate-100 px-3 py-2 rounded-lg transition-colors border border-transparent hover:border-slate-200'>
-          <span class='text-lg'>{currentCountry.flag}</span>
-          <svg class='w-4 h-4 text-slate-400 group-hover:rotate-180 transition-transform duration-300' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
-            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'></path>
-          </svg>
-        </button>
-
-        <div class='absolute right-0 top-full pt-2 w-48 hidden group-hover:block z-50'>
-          <ul class='bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden'>
-            <li class='px-4 py-2 text-xs font-semibold text-slate-400 uppercase tracking-wider border-b border-slate-50 bg-slate-50/50'>Selecciona tu país</li>
+    <div class='flex items-center gap-1.5 sm:gap-4'>
+      <details class='relative' data-dropdown>
+        <summary class='list-none cursor-pointer flex items-center gap-1.5 px-1.5 sm:px-2.5 py-2 rounded-lg text-sm font-semibold text-navy hover:bg-slate-100 transition-colors' aria-label={`${c.country_label}: ${locale.country.name}`}>
+          <span class='text-lg leading-none' aria-hidden='true'>{locale.country.flag}</span>
+          <span class='hidden lg:inline'>{locale.code.toUpperCase()}</span>
+          <svg class='hidden sm:block w-4 h-4 text-slate' fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='2' aria-hidden='true'><path stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'></path></svg>
+        </summary>
+        <div class='absolute right-0 top-full pt-2 w-56 z-50'>
+          <ul class='max-h-[70svh] overflow-y-auto overscroll-contain bg-white rounded-xl shadow-xl border border-slate-200 py-1'>
+            <li class='px-4 py-2 text-xs font-semibold text-slate border-b border-slate-100'>{c.country_label}</li>
             {
-              Object.values(countries).map((c) => (
+              Object.values(countries).map((country) => (
                 <li>
-                  <a href={getCountryUrl(c.code)} class={`flex items-center gap-3 px-4 py-3 hover:bg-slate-50 text-sm transition-colors ${c.code === country ? 'bg-indigo-50/50 text-primary font-bold' : 'text-slate-700'}`}>
-                    <span class='text-lg'>{c.flag}</span>
-                    <span class='font-medium'>{c.name}</span>
-                    {c.code === country && <span class='ml-auto text-primary text-xs'>●</span>}
+                  <a
+                    href={countryUrl(country.code)}
+                    hreflang={htmlLangFor(country.code as CountryCode)}
+                    aria-current={country.code === locale.code ? 'true' : undefined}
+                    class='flex items-center gap-3 px-4 py-2.5 text-sm text-ink hover:bg-slate-50 aria-[current=true]:bg-accent aria-[current=true]:text-primary-dark aria-[current=true]:font-semibold transition-colors'
+                  >
+                    <span class='text-lg leading-none' aria-hidden='true'>{country.flag}</span>
+                    {country.name}
                   </a>
                 </li>
               ))
             }
           </ul>
         </div>
-      </div>
+      </details>
 
-      <a href='https://app.doppercut.com' target='_blank' class='hidden sm:block text-sm font-medium text-navy hover:text-primary transition-colors'>{t.login}</a>
+      <a href={site.appUrl} rel='noopener' class='hidden sm:block text-sm font-medium text-navy hover:text-primary-dark transition-colors'>{t.login}</a>
 
-      <a href={link('/contacto')} class='px-5 py-2.5 bg-navy text-white text-sm font-medium rounded-full hover:bg-slate-800 transition-colors shadow-lg shadow-navy/20'>
-        {t.trial}
+      <a href={link('/contacto')} class='press hidden sm:inline-flex px-5 py-2.5 bg-primary-dark text-white text-sm font-semibold rounded-full hover:bg-navy transition-colors'>
+        <span class='lg:hidden'>{t.trial_short}</span>
+        <span class='hidden lg:inline'>{t.trial}</span>
       </a>
+
+      <a href={link('/contacto')} class='press sm:hidden inline-flex px-3.5 py-2 bg-primary-dark text-white text-xs font-semibold rounded-full whitespace-nowrap'>
+        {t.trial_short}
+      </a>
+
+      <details class='md:hidden' data-dropdown>
+        <summary class='list-none cursor-pointer p-2 -mr-2 rounded-lg text-navy hover:bg-slate-100' aria-label={c.menu_open}>
+          <svg class='w-6 h-6' fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='2' aria-hidden='true'><path stroke-linecap='round' d='M4 7h16M4 12h16M4 17h16'></path></svg>
+        </summary>
+        <div class='absolute inset-x-0 top-full bg-white border-b border-slate-200 shadow-lg px-4 pt-2 pb-6'>
+          <ul class='flex flex-col'>
+            {
+              navLinks.map((item) => (
+                <li>
+                  <a href={item.href} class='block py-3 text-base font-medium text-ink border-b border-slate-100'>
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+            <li>
+              <a href={site.appUrl} rel='noopener' class='block py-3 text-base font-medium text-ink'>{t.login}</a>
+            </li>
+          </ul>
+          <a href={link('/contacto')} class='press mt-4 flex justify-center px-5 py-3.5 bg-primary-dark text-white font-semibold rounded-full'>{t.trial}</a>
+        </div>
+      </details>
     </div>
-  </div>
-</nav>
+  </nav>
+</header>
 
 <script>
-  // Efecto de sombra al hacer scroll
-  const nav = document.getElementById('nav-bg');
-  window.addEventListener('scroll', () => {
-    if (!nav) return;
+  const navBg = document.getElementById('nav-bg');
+  const onScroll = () => navBg?.classList.toggle('shadow-sm', window.scrollY > 20);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 
-    if (window.scrollY > 20) {
-      nav.classList.add('shadow-sm');
-    } else {
-      nav.classList.remove('shadow-sm');
-    }
+  // Close any open dropdown on outside click, Escape, or after following an in-page link.
+  const dropdowns = document.querySelectorAll<HTMLDetailsElement>('[data-dropdown]');
+  dropdowns.forEach((dropdown) => {
+    dropdown.addEventListener('toggle', () => {
+      if (dropdown.open) dropdowns.forEach((other) => other !== dropdown && (other.open = false));
+    });
+    dropdown.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => (dropdown.open = false)));
+  });
+  document.addEventListener('click', (event) => {
+    dropdowns.forEach((dropdown) => {
+      if (dropdown.open && !dropdown.contains(event.target as Node)) dropdown.open = false;
+    });
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    dropdowns.forEach((dropdown) => {
+      if (!dropdown.open) return;
+      dropdown.open = false;
+      dropdown.querySelector('summary')?.focus();
+    });
   });
 </script>

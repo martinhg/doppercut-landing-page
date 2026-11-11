@@ -4,6 +4,10 @@ export const prerender = true;
 import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
+import { site } from '../../config/site';
+import PricingMath from '../../components/PricingMath.astro';
+import { htmlLangFor, type CountryCode } from '../../i18n/locale';
+import { uiFor, chromeFor } from '../../i18n/regional';
 
 // i18n
 import { countries, countryTerms } from '../../i18n/config';
@@ -15,13 +19,26 @@ export function getStaticPaths() {
 
 const countryParam = typeof Astro.params?.country === 'string' ? Astro.params.country : 'ar';
 const currentCountry = countries[countryParam as keyof typeof countries] ?? countries.ar;
-const lang = (currentCountry.lang ?? 'es_ar') as keyof typeof ui;
-const t = ui[lang];
+const lang = (currentCountry.lang ?? 'es_latam') as keyof typeof ui;
+const t = uiFor(countryParam);
 const terms = countryTerms[countryParam as keyof typeof countryTerms];
 
 const tr = (text: string) => text.replace(/{appointment}/g, terms.appointment);
 
-const titleSEO = `Planes y Precios | Inversión Inteligente - DopperCut ${currentCountry.name}`;
+const titleSEO = `${t.nav.pricing}: ${chromeFor(countryParam).seo_short} | ${site.name} ${currentCountry.name}`;
+const withSymbol = (price: string) => (/^[\d.,]+$/.test(price) ? `$${price}` : price);
+const p = t.pricing;
+const faqs = [
+  [p.faq1_title, p.faq1_desc],
+  [p.faq3_title, p.faq3_desc],
+  [p.faq4_title, p.faq4_desc],
+  [p.faq5_title, p.faq5_desc],
+  [p.faq2_title, p.faq2_desc],
+];
+const faqSchema = {
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(([name, text]) => ({ '@type': 'Question', name, acceptedAnswer: { '@type': 'Answer', text } })),
+};
 
 const roadmapFeatures = [
   {
@@ -37,35 +54,35 @@ const roadmapFeatures = [
 ];
 ---
 
-<Layout title={titleSEO} description='Convertite en Socio Fundador con 25% OFF. Sin costos de alta ni contratos. Recupera tu inversión evitando solo una ausencia al mes.' lang={lang}>
+<Layout title={titleSEO} description={t.pricing.desc} schema={[faqSchema]}>
   <Navbar country={countryParam} />
 
-  <main class='pt-32 pb-24 bg-slate-50 min-h-screen'>
+  <main id='main' class='pt-28 sm:pt-32 pb-24 bg-surface min-h-svh'>
     <!-- HERO -->
     <div class='max-w-4xl mx-auto px-6 text-center mb-12'>
       <h1 class='text-4xl md:text-5xl font-bold text-navy mb-6 tracking-tight'>
         {t.pricing.title1}<br />
-        <span class='text-primary'>{t.pricing.title2}</span>
+        <span class='text-primary-dark'>{t.pricing.title2}</span>
       </h1>
-      <p class='text-lg text-slate-600 max-w-2xl mx-auto'>{t.pricing.desc}</p>
+      <p class='text-lg text-slate max-w-2xl mx-auto'>{t.pricing.desc}</p>
     </div>
 
     <div class='max-w-5xl mx-auto px-6 mb-12'>
-      <div class='bg-linear-to-r from-indigo-600 to-purple-700 rounded-2xl p-1 shadow-lg transform hover:scale-[1.01] transition-transform'>
-        <div class='bg-white/10 backdrop-blur-sm rounded-xl p-6 text-white flex flex-col md:flex-row items-center justify-between gap-6'>
-          <div class='flex items-start gap-4'>
-            <div class='bg-yellow-400 text-indigo-900 font-bold px-3 py-1 rounded text-xs uppercase tracking-wider mt-1 animate-pulse'>{t.pricing.launch_offer}</div>
+      <div class='bg-primary-gradient rounded-2xl p-1 shadow-[0_10px_30px_-10px_rgb(0_168_232/0.5)]'>
+        <div class='rounded-xl p-6 text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-6'>
+          <div class='flex flex-col sm:flex-row items-start gap-3 sm:gap-4'>
+            <div class='bg-white text-primary-dark font-bold px-3 py-1 rounded-full text-xs sm:mt-1 shrink-0'>{t.pricing.launch_offer}</div>
             <div>
-              <h3 class='text-xl font-bold text-white'>{t.pricing.founder_offer}</h3>
-              <p class='text-indigo-100 text-sm mt-1'>
-                {t.pricing.founder_desc} <span class='font-bold text-white underline decoration-yellow-400'>25% OFF</span> {t.pricing.offer_months}
+              <h2 class='text-xl font-bold text-white'>{t.pricing.founder_offer}</h2>
+              <p class='text-white/90 text-sm mt-1'>
+                {t.pricing.founder_desc} <span class='font-bold text-white underline decoration-white/60'>25% OFF</span> {t.pricing.offer_months}
               </p>
             </div>
           </div>
-          <div class='text-right'>
-            <div class='text-sm text-indigo-200 line-through'>${currentCountry.price_regular}</div>
-            <div class='text-3xl font-bold text-white'>${currentCountry.price_promo}<span class='text-sm font-normal'>/{t.pricing.month}</span></div>
-            <div class='text-xs text-indigo-200'>{t.pricing.biannual}</div>
+          <div class='md:text-right tabular'>
+            <div class='text-sm text-white/80 line-through'>{withSymbol(currentCountry.price_regular)}</div>
+            <div class='text-3xl font-bold text-white'>{withSymbol(currentCountry.price_promo)}<span class='text-sm font-normal'>/{t.pricing.month}</span></div>
+            <div class='text-xs text-white/80'>{t.pricing.biannual}</div>
           </div>
         </div>
       </div>
@@ -75,31 +92,30 @@ const roadmapFeatures = [
     <div class='max-w-5xl mx-auto px-6 mb-24'>
       <div class='bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden flex flex-col lg:flex-row relative'>
         <!-- Etiqueta de Garantía -->
-        <div class='absolute top-0 right-0 bg-green-500 text-white text-xs font-bold px-4 py-2 rounded-bl-xl z-20'>{t.pricing.guarantee}</div>
+        <div class='absolute top-0 right-0 bg-primary-dark text-white text-xs font-bold px-4 py-2 rounded-bl-xl z-20'>{t.pricing.guarantee}</div>
 
         <!-- Left Side: Price Anchor -->
         <div class='lg:w-1/2 p-8 md:p-12 flex flex-col justify-center border-b lg:border-b-0 lg:border-r border-slate-100 bg-slate-50/50'>
           <div class='text-center lg:text-left'>
-            <h3 class='text-xl font-semibold text-navy mb-2'>{t.pricing.card_title}</h3>
-            <p class='text-slate-500 text-sm mb-6'>{t.pricing.card_anchor}</p>
+            <h2 class='text-xl font-semibold text-navy mb-2'>{t.pricing.card_title}</h2>
+            <p class='text-slate text-sm mb-6'>{t.pricing.card_anchor}</p>
 
             <div class='flex items-baseline justify-center lg:justify-start gap-2 mb-2'>
-              <span class='text-2xl text-slate-400'>$</span>
-              <span class='text-6xl font-bold text-navy tracking-tighter'>{currentCountry.price_regular}</span>
-              <span class='text-xl text-slate-400 font-medium'>{currentCountry.currency}/{t.pricing.month}</span>
+              <span class='tabular text-5xl sm:text-6xl font-bold text-navy tracking-tight'>{withSymbol(currentCountry.price_regular)}</span>
+              <span class='text-lg text-slate font-medium'>{currentCountry.currency}/{t.pricing.month}</span>
             </div>
 
-            <p class='text-slate-500 text-sm mb-8'>{t.pricing.card_desc}</p>
+            <p class='text-slate text-sm mb-8'>{t.pricing.card_desc}</p>
 
             <!-- CTA Principal -->
-            <a href='/contacto' class='inline-flex justify-center items-center w-full px-8 py-4 bg-navy text-white text-lg font-bold rounded-xl hover:bg-slate-800 transition-all shadow-lg shadow-navy/20 hover:-translate-y-1 group'>
+            <a href={`/${countryParam}/contacto`} class='press inline-flex justify-center items-center w-full px-8 py-4 bg-primary-dark text-white text-lg font-semibold rounded-xl hover:bg-navy transition-colors group'>
               {t.pricing.cta}
-              <svg class='w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform' fill='none' viewBox='0 0 24 24' stroke='currentColor'
+              <svg class='w-5 h-5 ml-2' fill='none' viewBox='0 0 24 24' stroke='currentColor' aria-hidden='true'
                 ><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M14 5l7 7m0 0l-7 7m7-7H3'></path></svg
               >
             </a>
-            <div class='mt-4 flex items-center justify-center lg:justify-start gap-2 text-xs text-slate-500'>
-              <svg class='w-4 h-4 text-green-500' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'></path></svg>
+            <div class='mt-4 flex items-center justify-center lg:justify-start gap-2 text-xs text-slate'>
+              <svg aria-hidden='true' class='w-4 h-4 text-success' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'></path></svg>
               {t.pricing.card_cancel}
             </div>
           </div>
@@ -107,29 +123,44 @@ const roadmapFeatures = [
 
         <!-- Right Side: Value Stack -->
         <div class='lg:w-1/2 p-8 md:p-12 bg-white'>
-          <h4 class='text-lg font-bold text-navy mb-6'>{t.pricing.card_include}</h4>
+          <h3 class='text-lg font-bold text-navy mb-6'>{t.pricing.card_include}</h3>
           <ul class='space-y-4'>
             {
               t.pricing.features.map((item) => (
                 <li class='flex items-start gap-3'>
-                  <div class='bg-indigo-50 p-1 rounded-full mt-0.5 shrink-0'>
-                    <svg class='w-4 h-4 text-indigo-600' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+                  <div class='bg-accent p-1 rounded-full mt-0.5 shrink-0'>
+                    <svg aria-hidden='true' class='w-4 h-4 text-primary-dark' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
                       <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7' />
                     </svg>
                   </div>
-                  <span class='text-slate-700 text-sm font-medium leading-relaxed'>{tr(item)}</span>
+                  <span class='text-ink text-sm font-medium leading-relaxed'>{tr(item)}</span>
                 </li>
               ))
             }
           </ul>
 
           <!-- Multi-sucursal Upsell -->
-          <div class='mt-8 pt-6 border-t border-slate-100 bg-indigo-50/50 -mx-8 -mb-12 p-8'>
-            <h5 class='font-bold text-navy text-sm mb-1'>{t.pricing.business}</h5>
-            <p class='text-slate-600 text-xs'>{t.pricing.business_desc}</p>
+          <div class='mt-8 pt-6 border-t border-slate-100 bg-accent/60 -mx-8 md:-mx-12 -mb-8 md:-mb-12 p-8'>
+            <p class='font-bold text-navy text-sm mb-1'>{t.pricing.business}</p>
+            <p class='text-slate text-xs'>{t.pricing.business_desc}</p>
           </div>
         </div>
       </div>
+    </div>
+
+    <div class='max-w-3xl mx-auto px-6 -mt-12 mb-24'>
+      <PricingMath
+        copy={t.section_7}
+        planName={p.card_title}
+        monthLabel={p.month}
+        priceRegular={currentCountry.price_regular}
+        pricePromo={currentCountry.price_promo}
+        currency={currentCountry.currency}
+        countryCode={countryParam}
+        locale={htmlLangFor(countryParam as CountryCode)}
+        pricingHref={`/${countryParam}/precios`}
+        mathOnly
+      />
     </div>
 
     <!-- THE "WHY US" SECTION (Roadmap & Service) -->
@@ -138,10 +169,10 @@ const roadmapFeatures = [
         {
           roadmapFeatures.map((feature) => (
             <div class='bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow flex gap-6 items-start'>
-              <div class='p-4 bg-primary/10 text-primary rounded-xl shrink-0' set:html={feature.icon} />
+              <div class='p-4 bg-accent text-primary-dark rounded-xl shrink-0' set:html={feature.icon} />
               <div>
                 <h3 class='text-xl font-bold text-navy mb-2'>{feature.title}</h3>
-                <p class='text-slate-600'>{feature.desc}</p>
+                <p class='text-slate'>{feature.desc}</p>
               </div>
             </div>
           ))
@@ -159,42 +190,42 @@ const roadmapFeatures = [
         <!-- Step 1 -->
         <div class='bg-white p-6 rounded-xl border border-slate-200 shadow-sm w-full md:w-64'>
           <div class='w-10 h-10 bg-navy text-white rounded-full flex items-center justify-center font-bold mx-auto mb-4 text-lg'>1</div>
-          <h4 class='font-bold text-navy mb-2'>{t.pricing.f1_title}</h4>
-          <p class='text-sm text-slate-500'>{t.pricing.f1_desc}</p>
+          <h3 class='font-bold text-navy mb-2'>{t.pricing.f1_title}</h3>
+          <p class='text-sm text-slate'>{t.pricing.f1_desc}</p>
         </div>
 
         <!-- Step 2 -->
         <div class='bg-white p-6 rounded-xl border border-slate-200 shadow-sm w-full md:w-64'>
           <div class='w-10 h-10 bg-navy text-white rounded-full flex items-center justify-center font-bold mx-auto mb-4 text-lg'>2</div>
-          <h4 class='font-bold text-navy mb-2'>{t.pricing.f2_title}</h4>
-          <p class='text-sm text-slate-500'>{t.pricing.f2_desc}</p>
+          <h3 class='font-bold text-navy mb-2'>{t.pricing.f2_title}</h3>
+          <p class='text-sm text-slate'>{t.pricing.f2_desc}</p>
         </div>
 
         <!-- Step 3 -->
         <div class='bg-white p-6 rounded-xl border border-primary ring-2 ring-primary/20 shadow-md w-full md:w-64'>
           <div class='w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold mx-auto mb-4 text-lg'>3</div>
-          <h4 class='font-bold text-navy mb-2'>{t.pricing.f3_title}</h4>
-          <p class='text-sm text-slate-500'>{t.pricing.f3_desc}</p>
+          <h3 class='font-bold text-navy mb-2'>{t.pricing.f3_title}</h3>
+          <p class='text-sm text-slate'>{t.pricing.f3_desc}</p>
         </div>
       </div>
 
       <div class='mt-12'>
-        <a href='/contacto' class='text-primary font-semibold hover:text-primary-dark transition-colors'> {t.pricing.ask} &rarr; </a>
+        <a href={`/${countryParam}/contacto`} class='text-primary-dark font-semibold underline hover:text-navy transition-colors'> {t.pricing.ask} &rarr; </a>
       </div>
     </div>
 
     <!-- FAQ / OBJECTIONS -->
     <div class='max-w-3xl mx-auto px-6 mt-10'>
       <h2 class='text-2xl font-bold text-navy mb-8 text-center'>{t.pricing.faq_title}</h2>
-      <div class='grid gap-6'>
-        <div class='bg-white p-6 rounded-xl border border-slate-100 shadow-sm'>
-          <h3 class='font-bold text-navy'>{t.pricing.faq1_title}</h3>
-          <p class='text-slate-600 text-sm mt-2'>{t.pricing.faq1_desc}</p>
-        </div>
-        <div class='bg-white p-6 rounded-xl border border-slate-100 shadow-sm'>
-          <h3 class='font-bold text-navy'>{t.pricing.faq2_title}</h3>
-          <p class='text-slate-600 text-sm mt-2'>{t.pricing.faq2_desc}</p>
-        </div>
+      <div class='grid gap-4'>
+        {
+          faqs.map(([question, answer]) => (
+            <div class='bg-white p-6 rounded-xl border border-slate-100 shadow-sm'>
+              <h3 class='font-bold text-navy'>{question}</h3>
+              <p class='text-slate text-sm mt-2'>{answer}</p>
+            </div>
+          ))
+        }
       </div>
     </div>
   </main>

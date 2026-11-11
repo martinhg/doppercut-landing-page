@@ -1,0 +1,49 @@
+---
+export const prerender = true;
+
+import Layout from '../layouts/Layout.astro';
+import { countries, defaultCountry } from '../i18n/config';
+import { chromeFor } from '../i18n/regional';
+import { site, whatsappLink } from '../config/site';
+
+const c = chromeFor(defaultCountry);
+const localized = Object.fromEntries(
+  Object.values(countries).map((country) => {
+    const strings = chromeFor(country.code);
+    return [country.code, { title: strings.not_found_title, text: strings.not_found_text, cta: strings.not_found_cta }];
+  }),
+);
+---
+
+<Layout title={c.not_found_title} noindex country={defaultCountry}>
+  <main id='main' class='relative min-h-svh bg-navy text-white flex items-center overflow-hidden'>
+    <img src={site.logo.symbol} alt='' aria-hidden='true' class='pointer-events-none absolute -right-24 -bottom-24 w-[28rem] opacity-15 select-none' width='448' height='448' />
+
+    <div class='relative max-w-2xl mx-auto px-6 py-24'>
+      <a href={`/${defaultCountry}`} class='inline-flex mb-16' data-home-link aria-label={site.name}>
+        <img src={site.logo.dark} alt={site.name} class='h-9 w-auto' width='144' height='42' />
+      </a>
+      <p class='tabular text-7xl sm:text-8xl font-bold text-primary-light'>404</p>
+      <h1 class='mt-4 text-3xl sm:text-4xl font-bold tracking-tight' data-404-title>{c.not_found_title}</h1>
+      <p class='mt-4 text-lg text-slate-300 max-w-md' data-404-text>{c.not_found_text}</p>
+      <div class='mt-10 flex flex-col sm:flex-row gap-3 sm:items-center'>
+        <a href={`/${defaultCountry}`} class='press inline-flex justify-center px-7 py-3.5 bg-primary-light text-ink rounded-full font-semibold hover:bg-white transition-colors' data-home-link data-404-cta>
+          {c.not_found_cta}
+        </a>
+        <a href={whatsappLink(c.whatsapp_message)} target='_blank' rel='noopener noreferrer' class='px-2 py-3 text-slate-200 underline underline-offset-4 hover:text-white'>WhatsApp</a>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script is:inline define:vars={{ localized }}>
+  // A static 404 cannot know the visitor's country, so read it from the missing URL.
+  const code = location.pathname.split('/')[1];
+  const strings = localized[code];
+  if (strings) {
+    document.querySelectorAll('[data-home-link]').forEach((a) => a.setAttribute('href', `/${code}`));
+    document.querySelector('[data-404-title]').textContent = strings.title;
+    document.querySelector('[data-404-text]').textContent = strings.text;
+    document.querySelector('[data-404-cta]').textContent = strings.cta;
+  }
+</script>

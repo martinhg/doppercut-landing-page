@@ -2,7 +2,7 @@ export const countries = {
   ar: {
     code: 'ar',
     name: 'Argentina',
-    lang: 'es_ar',
+    lang: 'es_latam',
     currency: 'ARS',
     flag: '🇦🇷',
     price_regular: '20.000',
@@ -12,7 +12,7 @@ export const countries = {
   uy: {
     code: 'uy',
     name: 'Uruguay',
-    lang: 'es_ar',
+    lang: 'es_latam',
     currency: 'UYU',
     flag: '🇺🇾',
     price_regular: '800',

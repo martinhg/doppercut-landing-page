@@ -1,0 +1,57 @@
+---
+import { site } from '../../../config/site';
+
+interface Props {
+  country: string;
+}
+
+const { country } = Astro.props;
+const { holder, taxId, address, jurisdiction } = site.legal;
+const domain = new URL(site.url).host;
+---
+
+<h2>1. Site owner</h2>
+<ul>
+  <li><strong>Owner:</strong> {holder}</li>
+  {taxId && <li><strong>CUIT (tax ID):</strong> {taxId}</li>}
+  {address && <li><strong>Address:</strong> {address}</li>}
+  <li><strong>Email:</strong> <a href={`mailto:${site.email}`}>{site.email}</a></li>
+  <li><strong>WhatsApp:</strong> {site.whatsappDisplay}</li>
+  <li><strong>Website:</strong> {domain}</li>
+</ul>
+
+<h2>2. Purpose</h2>
+<p>
+  This site provides information about {site.name}, an online appointment platform for professionals and businesses, and lets you request a trial account. Browsing the site implies accepting this legal notice, the
+  <a href={`/${country}/privacidad`}>privacy policy</a> and the <a href={`/${country}/cookies`}>cookie policy</a>. Use of the platform is also governed by the
+  <a href={`/${country}/terminos`}>terms and conditions</a>.
+</p>
+
+<h2>3. Use of the site</h2>
+<p>
+  You agree to use the site lawfully, without harming its operation or that of third parties, and not to submit false information through the forms. We may update the content, prices and published conditions without prior notice; the
+  applicable prices are those stated at the time of purchase.
+</p>
+
+<h2>4. Intellectual and industrial property</h2>
+<p>
+  The {site.name} brand, logo, symbol, texts, images and code of this site are the property of {holder} or are used with permission. Their reproduction, distribution or modification without express consent is prohibited.
+</p>
+
+<h2>5. External links</h2>
+<p>The site includes links to third-party services, such as WhatsApp or Instagram. We are not responsible for their content or their privacy policies.</p>
+
+<h2>6. Liability</h2>
+<p>
+  We strive to keep the published information accurate and up to date, but we do not guarantee the absence of errors or the uninterrupted availability of the site. We are not liable for damages arising from the use of the published
+  information, except those that the law does not allow to be excluded.
+</p>
+
+<h2>7. Consumer protection</h2>
+<p>
+  If you contract as a consumer in the República Argentina (Argentine Republic), you are entitled to the rights under Consumer Protection Law 24,240, including the right to revoke your acceptance within 10 calendar days of contracting. To
+  exercise it, write to us at <a href={`mailto:${site.email}`}>{site.email}</a>.
+</p>
+
+<h2>8. Governing law and jurisdiction</h2>
+<p>This notice is governed by the laws of the {jurisdiction}. In the event of any dispute, the parties submit to the Tribunales Ordinarios (ordinary courts) of the City of Córdoba.</p>

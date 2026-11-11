@@ -1,0 +1,63 @@
+---
+import { site } from '../../../config/site';
+
+interface Props {
+  country: string;
+}
+
+const { country } = Astro.props;
+---
+
+<h2>1. Quién es responsable de tus datos</h2>
+<p>
+  El responsable del tratamiento de los datos recopilados en este sitio es {site.legal.holder}. Puedes contactarnos en <a href={`mailto:${site.email}`}>{site.email}</a>. Los datos identificatorios completos figuran en el
+  <a href={`/${country}/aviso-legal`}>aviso legal</a>.
+</p>
+
+<h2>2. Qué información recopilamos</h2>
+<ul>
+  <li><strong>Datos que nos envías en el formulario:</strong> nombre, nombre del negocio y número de WhatsApp. Los usamos solo para contactarte y darte de alta.</li>
+  <li><strong>Datos de tu negocio dentro de la plataforma:</strong> nombre, dirección, CUIT/DNI, teléfono, servicios, horarios y equipo.</li>
+  <li><strong>Datos de tus clientes:</strong> la información que cargas en el sistema (nombres, teléfonos para recordatorios, historial de turnos). Sobre estos datos actuamos como encargados del tratamiento, siguiendo tus instrucciones.</li>
+  <li><strong>Datos de navegación:</strong> métricas agregadas y anónimas de visitas (páginas vistas, país, tipo de dispositivo). No usan cookies ni identifican a personas.</li>
+</ul>
+
+<h2>3. Para qué usamos la información</h2>
+<ul>
+  <li>Prestar el servicio de agenda online y gestión.</li>
+  <li>Enviar recordatorios automáticos por WhatsApp a través de proveedores de mensajería.</li>
+  <li>Generar tus reportes financieros y estadísticos.</li>
+  <li>Facturar el servicio y responder tus consultas.</li>
+  <li>Mejorar el sitio a partir de métricas agregadas.</li>
+</ul>
+
+<h2>4. Seguridad y conservación</h2>
+<p>
+  Los datos se alojan en servidores seguros con copias de seguridad periódicas. Toda la comunicación viaja cifrada con HTTPS (TLS). El acceso a tu cuenta está protegido por contraseña, cuya custodia es tu responsabilidad. Conservamos los
+  datos mientras tu cuenta esté activa y hasta 30 días después de su baja, salvo obligación legal de conservarlos por más tiempo.
+</p>
+
+<h2>5. Proveedores que intervienen</h2>
+<p>Compartimos solo los datos estrictamente necesarios con proveedores obligados a protegerlos:</p>
+<ul>
+  <li><strong>Vercel:</strong> alojamiento del sitio y analítica web sin cookies.</li>
+  <li><strong>Web3Forms:</strong> recepción de los formularios de contacto.</li>
+  <li><strong>Meta (WhatsApp):</strong> envío de mensajes y recordatorios.</li>
+  <li><strong>Mercado Pago u otros medios de pago:</strong> procesamiento de cobros.</li>
+</ul>
+
+<h2>6. Tus derechos</h2>
+<p>
+  Como titular de los datos puedes acceder, rectificar, actualizar o pedir la supresión de tu información personal en forma gratuita. Escríbenos a <a href={`mailto:${site.email}`}>{site.email}</a> y te respondemos dentro de los plazos
+  legales (10 días corridos para el acceso y 5 días hábiles para la rectificación o supresión).
+</p>
+<p>
+  La Agencia de Acceso a la Información Pública, en su carácter de órgano de control de la Ley 25.326, tiene la atribución de atender las denuncias y reclamos que interpongan quienes resulten afectados en sus derechos por incumplimiento de
+  las normas vigentes en materia de protección de datos personales.
+</p>
+
+<h2>7. Cookies</h2>
+<p>Este sitio no usa cookies publicitarias ni de rastreo. El detalle está en la <a href={`/${country}/cookies`}>política de cookies</a>.</p>
+
+<h2>8. Cambios en esta política</h2>
+<p>Si modificamos esta política, publicaremos la nueva versión en esta página con su fecha de actualización.</p>

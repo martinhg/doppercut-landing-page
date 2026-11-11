@@ -1,0 +1,113 @@
+---
+interface Props {
+  copy: {
+    card_caption: string;
+    card_credit: string;
+    support: string;
+    price_biannual: string;
+    math_title: string;
+    math_example: string;
+    math_loss: string;
+    math_cost: string;
+    math_result: string;
+    cta_pricing: string;
+  };
+  planName: string;
+  monthLabel: string;
+  priceRegular: string;
+  pricePromo: string;
+  currency: string;
+  countryCode: string;
+  /** BCP 47 tag used to format amounts, e.g. es-AR. */
+  locale: string;
+  pricingHref: string;
+  /** Render only the math panel, for pages that already show the plan card. */
+  mathOnly?: boolean;
+}
+
+const { copy, planName, monthLabel, priceRegular, pricePromo, currency, countryCode, locale, pricingHref, mathOnly = false } = Astro.props;
+
+// Example average ticket per market, labelled as an example in the copy ("Si tu servicio promedio cuesta…").
+const exampleTicket: Record<string, number> = {
+  ar: 15000,
+  uy: 800,
+  mx: 350,
+  cl: 15000,
+  co: 40000,
+  pe: 40,
+  es: 20,
+  ec: 15,
+  pa: 15,
+  ve: 15,
+  br: 60,
+  us: 40,
+};
+
+const isoCurrency = currency || (countryCode === 'pe' ? 'PEN' : 'USD');
+// Prices in config are display strings ("20.000", "S/50", "12€"); none use decimals.
+const toNumber = (price: string) => Number(price.replace(/\D/g, ''));
+const money = (value: number) => new Intl.NumberFormat(locale, { style: 'currency', currency: isoCurrency, maximumFractionDigits: 0 }).format(value);
+
+const regular = money(toNumber(priceRegular));
+const promo = money(toNumber(pricePromo));
+const ticket = exampleTicket[countryCode] ?? 40;
+const loss = money(ticket * 2);
+
+const perks = [copy.card_credit, copy.card_caption, copy.support];
+---
+
+<div class:list={['reveal delay-100 grid gap-3 rounded-3xl border border-slate-200 bg-white p-3 shadow-sm', !mathOnly && 'md:grid-cols-2']}>
+  {!mathOnly && (
+  <div class='flex flex-col rounded-2xl bg-navy p-7 text-white sm:p-8'>
+    <p class='text-sm text-white/70'>{planName}</p>
+    <p class='mt-3 flex items-baseline gap-1'>
+      <span class='tabular text-4xl font-bold sm:text-5xl'>{regular}</span>
+      <span class='text-white/70'>/{monthLabel}</span>
+    </p>
+    <p class='mt-2 text-sm text-primary-light'>{copy.price_biannual.replace('{price}', promo)}</p>
+
+    <ul class='mt-6 space-y-2.5 text-sm text-white/85'>
+      {
+        perks.map((perk) => (
+          <li class='flex items-center gap-2'>
+            <svg class='h-4 w-4 shrink-0 text-primary-light' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'>
+              <path d='M5 13l4 4L19 7' />
+            </svg>
+            {perk}
+          </li>
+        ))
+      }
+    </ul>
+
+    <a href={pricingHref} class='group mt-auto inline-flex w-fit items-center gap-2 pt-8 font-semibold text-white transition-colors hover:text-primary-light'>
+      {copy.cta_pricing}
+      <svg class='h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'>
+        <path d='M5 12h14M13 6l6 6-6 6' />
+      </svg>
+    </a>
+  </div>
+  )}
+
+  <div class='flex flex-col p-5 sm:p-7'>
+    <h3 class='text-lg font-bold text-navy'>{copy.math_title}</h3>
+    <p class='mt-1 text-slate'>{copy.math_example.replace('{ticket}', money(ticket))}</p>
+
+    <dl class='mt-6 space-y-3'>
+      <div class='flex items-baseline justify-between gap-4 rounded-xl bg-danger-surface px-4 py-3'>
+        <dt class='text-ink'>{copy.math_loss}</dt>
+        <dd class='tabular font-bold text-danger'>−{loss}</dd>
+      </div>
+      <div class='flex items-baseline justify-between gap-4 rounded-xl bg-surface px-4 py-3'>
+        <dt class='text-ink'>{copy.math_cost}</dt>
+        <dd class='tabular font-bold text-ink'>{regular}</dd>
+      </div>
+    </dl>
+
+    <p class='mt-auto flex items-start gap-2 pt-6 font-semibold text-success'>
+      <svg class='mt-0.5 h-5 w-5 shrink-0' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'>
+        <path d='M5 13l4 4L19 7' />
+      </svg>
+      {copy.math_result}
+    </p>
+  </div>
+</div>

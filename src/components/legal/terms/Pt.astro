@@ -1,0 +1,52 @@
+---
+import { site } from '../../../config/site';
+
+interface Props {
+  country: string;
+}
+
+const { country } = Astro.props;
+---
+
+<p><strong>Boas-vindas ao {site.name}.</strong> Ao usar nosso software, você aceita estas condições, que constituem um acordo vinculante entre você e {site.legal.holder}. Leia-as com atenção.</p>
+
+<h2>1. Descrição do serviço</h2>
+<p>
+  O {site.name} é uma plataforma SaaS (software como serviço) para gerenciar agendamentos, clientes e a administração financeira de profissionais e negócios que trabalham com reservas, como barbearias, salões de beleza, centros de estética e
+  consultórios. Podemos modificar, suspender ou descontinuar funções do serviço, avisando com antecedência os usuários ativos.
+</p>
+
+<h2>2. Período de teste e assinatura</h2>
+<p>Oferecemos um <strong>período de teste gratuito de 14 dias</strong> com acesso às funções do plano Profissional, sem custo.</p>
+<ul>
+  <li>Ao final do teste, para continuar usando o serviço, você precisa pagar a assinatura mensal vigente.</li>
+  <li>Se o pagamento não for registrado, a conta passa ao status "Suspensa" e conservamos os dados por 30 dias antes de excluí-los definitivamente.</li>
+  <li>Os preços são expressos na moeda do seu país e podem ser reajustados pela inflação; qualquer reajuste é comunicado com 30 dias de antecedência.</li>
+</ul>
+
+<h2>3. Pagamentos e faturamento</h2>
+<p>
+  O serviço é pago antecipadamente, entre os dias 1 e 10 de cada mês. Aceitamos transferências bancárias e meios de pagamento digitais. Em promoções com pagamento semestral ou anual (por exemplo, "Sócio Fundador"), o valor não é reembolsável
+  em caso de cancelamento antecipado, porque o desconto é concedido pelo compromisso de permanência.
+</p>
+
+<h2>4. Propriedade dos dados</h2>
+<p>
+  <strong>Você é o dono dos seus dados.</strong> A base de clientes, o histórico de agendamentos e suas informações financeiras pertencem a você. O {site.name} atua como custodiante e operador do tratamento dessas informações. Se você
+  decidir sair, facilitamos a exportação dos seus dados. Mais detalhes na <a href={`/${country}/privacidad`}>política de privacidade</a>.
+</p>
+
+<h2>5. Propriedade intelectual</h2>
+<p>O código-fonte, o design, os logotipos e a estrutura do {site.name} são propriedade exclusiva de {site.legal.holder}. Concedemos a você uma licença de uso limitada, não exclusiva e intransferível.</p>
+
+<h2>6. Limitação de responsabilidade</h2>
+<p>
+  Trabalhamos para manter o serviço disponível de forma contínua, mas o {site.name} não se responsabiliza por lucros cessantes, perda acidental de dados por motivos de força maior, falhas de serviços de terceiros (como quedas do WhatsApp ou
+  de provedores de nuvem) nem por interrupções da conexão à internet do usuário.
+</p>
+
+<h2>7. Lei aplicável e foro</h2>
+<p>Estes termos são regidos pelas leis da República Argentina. Em caso de qualquer controvérsia, as partes se submetem aos Tribunales Ordinarios da Cidade de Córdoba, com renúncia a qualquer outro foro.</p>
+
+<h2>8. Contato</h2>
+<p>Para qualquer dúvida sobre estes termos, escreva para <a href={`mailto:${site.email}`}>{site.email}</a>.</p>

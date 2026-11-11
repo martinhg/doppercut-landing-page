@@ -1,0 +1,14 @@
+{
+  "name": "TurnosPlus",
+  "short_name": "TurnosPlus",
+  "description": "Tu agenda, en orden. Turnos simples para profesionales y negocios.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#21242C",
+  "icons": [
+    { "src": "/brand/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/brand/favicon.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/brand/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

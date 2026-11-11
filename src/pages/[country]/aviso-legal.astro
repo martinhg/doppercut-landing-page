@@ -1,0 +1,23 @@
+---
+export const prerender = true;
+
+import LegalPage from '../../layouts/LegalPage.astro';
+import Es from '../../components/legal/legal-notice/Es.astro';
+import Pt from '../../components/legal/legal-notice/Pt.astro';
+import En from '../../components/legal/legal-notice/En.astro';
+import { legalLangFor, legalMeta, legalUpdated } from '../../components/legal/lang';
+import { countries } from '../../i18n/config';
+
+export function getStaticPaths() {
+  return Object.keys(countries).map((code) => ({ params: { country: code } }));
+}
+
+const country = String(Astro.params.country);
+const lang = legalLangFor(country);
+const meta = legalMeta.legalNotice[lang];
+const Body = { es: Es, pt: Pt, en: En }[lang];
+---
+
+<LegalPage title={meta.title} description={meta.description} updated={legalUpdated[lang]} summary={meta.summary}>
+  <Body country={country} />
+</LegalPage>

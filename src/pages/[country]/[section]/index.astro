@@ -1,0 +1,39 @@
+---
+export const prerender = true;
+
+import Layout from '../../../layouts/Layout.astro';
+import Navbar from '../../../components/Navbar.astro';
+import Footer from '../../../components/Footer.astro';
+import IndustryStrip from '../../../components/IndustryStrip.astro';
+import { countries } from '../../../i18n/config';
+import { site } from '../../../config/site';
+import { industriesFor, industrySectionFor, industryUiFor } from '../../../i18n/regional';
+
+export function getStaticPaths() {
+  return Object.keys(countries)
+    .filter((code) => industriesFor(code).length > 0)
+    .map((code) => ({ params: { country: code, section: industrySectionFor(code) } }));
+}
+
+const country = String(Astro.params.country);
+const u = industryUiFor(country);
+const countryName = countries[country as keyof typeof countries].name;
+const names = industriesFor(country).map(({ copy }) => copy.name.toLowerCase());
+const description = `${u.indexSubtitle} ${names.slice(0, 6).join(', ')}…`.slice(0, 158);
+---
+
+<Layout title={`${u.indexTitle} | ${site.name} ${countryName}`} description={description}>
+  <Navbar country={country} />
+  <main id='main' class='bg-surface pt-28 sm:pt-36 pb-24'>
+    <div class='max-w-6xl mx-auto px-6'>
+      <div class='max-w-2xl'>
+        <h1 class='text-4xl md:text-5xl font-bold text-navy tracking-tight text-balance'>{u.indexTitle}</h1>
+        <p class='mt-5 text-lg text-slate leading-relaxed'>{u.indexSubtitle}</p>
+      </div>
+      <div class='mt-12'>
+        <IndustryStrip country={country} detailed />
+      </div>
+    </div>
+  </main>
+  <Footer country={country} />
+</Layout>
